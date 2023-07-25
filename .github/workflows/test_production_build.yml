@@ -8,7 +8,7 @@ on:
       - development
 
 env:
-  DOCKER_REGISTRY_HOST: ${{ secrets.DOCKER_REGISTRY_HOST }}
+  DOCKER_REGISTRY_HOST: ${{ vars.DOCKER_REGISTRY_HOST }}
   GH_REPOSITORY: ${{ github.repository }}
 
 concurrency:
