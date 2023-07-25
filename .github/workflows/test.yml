@@ -101,39 +101,39 @@ jobs:
       - name: Run codebase test
         run: docker-compose run test bundle exec rspec spec/codebase/codebase_spec.rb --format progress
 
-  # unit_tests:
-  #   name: Unit tests
-  #   runs-on: ubuntu-latest
-  #   needs:
-  #     - prepare_image_name
-  #     - build
-  #   env:
-  #     DOCKER_IMAGE: ${{ needs.prepare_image_name.outputs.image_name }}
-  #   timeout-minutes: 15
-  #   steps:
-  #     - uses: actions/checkout@v3
+  unit_tests:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    needs:
+      - prepare_image_name
+      - build
+    env:
+      DOCKER_IMAGE: ${{ needs.prepare_image_name.outputs.image_name }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v3
 
-  #     - name: Set env BRANCH_TAG
-  #       uses: nimblehq/branch-tag-action@1
+      - name: Set env BRANCH_TAG
+        uses: nimblehq/branch-tag-action@1
 
-  #     - name: Login to Docker registry
-  #       uses: docker/login-action@v2
-  #       with:
-  #         registry: ${{ env.DOCKER_REGISTRY_HOST }}
-  #         username: ${{ env.DOCKER_REGISTRY_USERNAME }}
-  #         password: ${{ env.DOCKER_REGISTRY_TOKEN }}
+      - name: Login to Docker registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.DOCKER_REGISTRY_HOST }}
+          username: ${{ env.DOCKER_REGISTRY_USERNAME }}
+          password: ${{ env.DOCKER_REGISTRY_TOKEN }}
 
-  #     - name: Pull Docker image
-  #       run: docker-compose pull test || true
+      - name: Pull Docker image
+        run: docker-compose pull test || true
 
-  #     - name: Run unit tests
-  #       run: docker-compose run test bundle exec rspec --exclude-pattern "spec/systems/**/*_spec.rb, spec/codebase/codebase_spec.rb" --profile --format progress
+      - name: Run unit tests
+        run: docker-compose run test bundle exec rspec --exclude-pattern "spec/systems/**/*_spec.rb, spec/codebase/codebase_spec.rb" --profile --format progress
 
-  #     - name: Upload tests coverage artifact
-  #       uses: actions/upload-artifact@v3
-  #       with:
-  #         name: coverage
-  #         path: coverage
+      - name: Upload tests coverage artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: coverage
 
   # system_tests:
   #   name: System tests
