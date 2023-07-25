@@ -135,90 +135,90 @@ jobs:
           name: coverage
           path: coverage
 
-  # system_tests:
-  #   name: System tests
-  #   runs-on: ubuntu-latest
-  #   needs:
-  #     - prepare_image_name
-  #     - build
+  system_tests:
+    name: System tests
+    runs-on: ubuntu-latest
+    needs:
+      - prepare_image_name
+      - build
 
-  #   env:
-  #     DOCKER_IMAGE: ${{ needs.prepare_image_name.outputs.image_name }}
-  #   timeout-minutes: 15
-  #   env:
-  #     TEST_RETRY: 2
-  #   steps:
-  #     - uses: actions/checkout@v3
+    env:
+      DOCKER_IMAGE: ${{ needs.prepare_image_name.outputs.image_name }}
+    timeout-minutes: 15
+    env:
+      TEST_RETRY: 2
+    steps:
+      - uses: actions/checkout@v3
 
-  #     - name: Set env BRANCH_TAG
-  #       uses: nimblehq/branch-tag-action@1
+      - name: Set env BRANCH_TAG
+        uses: nimblehq/branch-tag-action@1
 
-  #     - name: Login to Docker registry
-  #       uses: docker/login-action@v2
-  #       with:
-  #         registry: ${{ env.DOCKER_REGISTRY_HOST }}
-  #         username: ${{ env.DOCKER_REGISTRY_USERNAME }}
-  #         password: ${{ env.DOCKER_REGISTRY_TOKEN }}
+      - name: Login to Docker registry
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.DOCKER_REGISTRY_HOST }}
+          username: ${{ env.DOCKER_REGISTRY_USERNAME }}
+          password: ${{ env.DOCKER_REGISTRY_TOKEN }}
 
-  #     - name: Pull Docker image
-  #       run: docker-compose pull test || true
+      - name: Pull Docker image
+        run: docker-compose pull test || true
 
-  #     - name: Run system tests
-  #       run: docker-compose run test bundle exec rspec spec/systems --profile --format progress
+      - name: Run system tests
+        run: docker-compose run test bundle exec rspec spec/systems --profile --format progress
 
-  #     - name: Upload system tests screenshots artifact
-  #       uses: actions/upload-artifact@v2
-  #       if: ${{ failure() }}
-  #       with:
-  #         name: system_tests_screenshots
-  #         path: tmp/screenshots/
+      - name: Upload system tests screenshots artifact
+        uses: actions/upload-artifact@v2
+        if: ${{ failure() }}
+        with:
+          name: system_tests_screenshots
+          path: tmp/screenshots/
 
-  # automated_code_review:
-  #   name: Run Danger
-  #   needs: unit_tests
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 5
-  #   if: github.event_name == 'pull_request' && !contains(join(github.event.pull_request.labels.*.name, ','), 'wip') && !contains(github.event.pull_request.title, '[wip]') && !github.event.pull_request.draft
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #       with:
-  #         fetch-depth: 0
+  automated_code_review:
+    name: Run Danger
+    needs: unit_tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: github.event_name == 'pull_request' && !contains(join(github.event.pull_request.labels.*.name, ','), 'wip') && !contains(github.event.pull_request.title, '[wip]') && !github.event.pull_request.draft
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
-  #     - name: Download tests coverage artifact
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         github_token: ${{ secrets.GITHUB_TOKEN }}
-  #         workflow: test.yml
-  #         workflow_conclusion: success
-  #         name: coverage
-  #         path: coverage
+      - name: Download tests coverage artifact
+        uses: actions/download-artifact@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          workflow: test.yml
+          workflow_conclusion: success
+          name: coverage
+          path: coverage
 
-  #     - name: Setup Ruby
-  #       uses: ruby/setup-ruby@v1
-  #       with:
-  #         bundler-cache: true
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
 
-  #     - name: Setup Node
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: ${{ env.NODE_VERSION }}
-  #         cache: "yarn"
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "yarn"
 
-  #     - name: Cache Node modules
-  #       id: node-modules-cache
-  #       uses: actions/cache@v3
-  #       with:
-  #         path: node_modules
-  #         key: ${{ runner.os }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
-  #         restore-keys: |
-  #           ${{ runner.os }}-nodemodules-
+      - name: Cache Node modules
+        id: node-modules-cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-nodemodules-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-nodemodules-
 
-  #     - name: Yarn install
-  #       if: steps.node-modules-cache.outputs.cache-hit != 'true'
-  #       run: yarn
+      - name: Yarn install
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: yarn
 
-  #     - name: Run Undercover
-  #       run: bundle exec undercover-report
+      - name: Run Undercover
+        run: bundle exec undercover-report
 
-  #     - name: Run Danger
-  #       run: bundle exec danger
+      - name: Run Danger
+        run: bundle exec danger
