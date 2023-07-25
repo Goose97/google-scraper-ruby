@@ -8,8 +8,8 @@ on:
       - development
 
 env:
-  DOCKER_REGISTRY_HOST: ${{ secrets.DOCKER_REGISTRY_HOST }}
-  DOCKER_IMAGE: ${{ github.repository }}
+  DOCKER_REGISTRY_HOST: ${{ vars.DOCKER_REGISTRY_HOST }}
+  GH_REPOSITORY: ${{ github.repository }}
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -24,6 +24,13 @@ jobs:
 
       - name: Set env BRANCH_TAG
         uses: nimblehq/branch-tag-action@1
+
+      - name: Set env DOCKER_IMAGE
+        run: |
+          # Docker image consists of only lowercase character while repository name can include uppercase ones
+          # We must downcase it. Reference: https://github.com/orgs/community/discussions/25768
+          DOCKER_IMAGE=${GH_REPOSITORY,,}
+          echo "image_name=$DOCKER_IMAGE" >> "$GITHUB_ENV"
 
       - name: Build Docker image
         run: bin/docker-prepare && docker compose build
