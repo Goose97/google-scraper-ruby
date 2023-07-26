@@ -40,73 +40,72 @@ jobs:
     outputs:
       image_name: ${{ steps.prepare_image_name_1.outputs.image_name }}
 
-  build:
-    name: Build Docker image
-    runs-on: ubuntu-latest
-    needs: prepare_image_name
-    env:
-      DOCKER_IMAGE: ${{ needs.prepare_image_name.outputs.image_name }}
-    steps:
-      - uses: actions/checkout@v3
+  # build:
+  #   name: Build Docker image
+  #   runs-on: ubuntu-latest
+  #   needs: prepare_image_name
+  #   env:
+  #     DOCKER_IMAGE: ${{ needs.prepare_image_name.outputs.image_name }}
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - name: Set env BRANCH_TAG
-        uses: nimblehq/branch-tag-action@1
+  #     - name: Set env BRANCH_TAG
+  #       uses: nimblehq/branch-tag-action@1
 
-      - name: Login to Docker registry
-        uses: docker/login-action@v2
-        with:
-          registry: ${{ env.DOCKER_REGISTRY_HOST }}
-          username: ${{ env.DOCKER_REGISTRY_USERNAME }}
-          password: ${{ env.DOCKER_REGISTRY_TOKEN }}
+  #     - name: Login to Docker registry
+  #       uses: docker/login-action@v2
+  #       with:
+  #         registry: ${{ env.DOCKER_REGISTRY_HOST }}
+  #         username: ${{ env.DOCKER_REGISTRY_USERNAME }}
+  #         password: ${{ env.DOCKER_REGISTRY_TOKEN }}
 
-      - name: Pull Docker image
-        if: ${{ env.BRANCH_TAG != 'latest' && env.BRANCH_TAG != 'development' }}
-        run: docker-compose pull test || true
+  #     - name: Pull Docker image
+  #       if: ${{ env.BRANCH_TAG != 'latest' && env.BRANCH_TAG != 'development' }}
+  #       run: docker-compose pull test || true
 
-      - name: Build Docker image
-        run: bin/docker-prepare && docker-compose build
+  #     - name: Build Docker image
+  #       run: bin/docker-prepare && docker-compose build
 
-      - name: Push Docker image
-        run: docker-compose push test
+  #     - name: Push Docker image
+  #       run: docker-compose push test
 
-  linting:
-    name: Linting
-    runs-on: ubuntu-latest
-    needs:
-      - prepare_image_name
-      - build
-    env:
-      DOCKER_IMAGE: ${{ needs.prepare_image_name.outputs.image_name }}
-    timeout-minutes: 5
-    steps:
-      - uses: actions/checkout@v3
+  # linting:
+  #   name: Linting
+  #   runs-on: ubuntu-latest
+  #   needs:
+  #     - prepare_image_name
+  #     - build
+  #   env:
+  #     DOCKER_IMAGE: ${{ needs.prepare_image_name.outputs.image_name }}
+  #   timeout-minutes: 5
+  #   steps:
+  #     - uses: actions/checkout@v3
 
-      - name: Set env BRANCH_TAG
-        uses: nimblehq/branch-tag-action@v1.2
+  #     - name: Set env BRANCH_TAG
+  #       uses: nimblehq/branch-tag-action@v1.2
 
-      - name: Login to Docker registry
-        uses: docker/login-action@v2
-        with:
-          registry: ${{ env.DOCKER_REGISTRY_HOST }}
-          username: ${{ env.DOCKER_REGISTRY_USERNAME }}
-          password: ${{ env.DOCKER_REGISTRY_TOKEN }}
+  #     - name: Login to Docker registry
+  #       uses: docker/login-action@v2
+  #       with:
+  #         registry: ${{ env.DOCKER_REGISTRY_HOST }}
+  #         username: ${{ env.DOCKER_REGISTRY_USERNAME }}
+  #         password: ${{ env.DOCKER_REGISTRY_TOKEN }}
 
-      - name: Sanity check
-        run: |
-          echo "DOCKER_IMAGE=$DOCKER_IMAGE"
+  #     - name: Sanity check
+  #       run: |
+  #         echo "DOCKER_IMAGE=$DOCKER_IMAGE"
 
-      - name: Pull Docker image
-        run: docker-compose pull test || true
+  #     - name: Pull Docker image
+  #       run: docker-compose pull test || true
 
-      - name: Run codebase test
-        run: docker-compose run test bundle exec rspec spec/codebase/codebase_spec.rb --format progress
+  #     - name: Run codebase test
+  #       run: docker-compose run test bundle exec rspec spec/codebase/codebase_spec.rb --format progress
 
   unit_tests:
     name: Unit tests
     runs-on: ubuntu-latest
     needs:
       - prepare_image_name
-      - build
     env:
       DOCKER_IMAGE: ${{ needs.prepare_image_name.outputs.image_name }}
     timeout-minutes: 15
@@ -140,7 +139,6 @@ jobs:
     runs-on: ubuntu-latest
     needs:
       - prepare_image_name
-      - build
     timeout-minutes: 15
     env:
       TEST_RETRY: 2

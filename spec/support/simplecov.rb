@@ -19,6 +19,7 @@ if ENV['CIRCLE_ARTIFACTS']
 end
 
 SimpleCov.start 'rails' do
+  puts "Hello World 0112"
   add_filter '/vendor/'
   add_filter '/config/'
   add_filter '/spec/'
