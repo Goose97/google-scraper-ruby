@@ -180,14 +180,14 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Download tests coverage artifact
-        uses: actions/download-artifact@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          workflow: test.yml
-          workflow_conclusion: success
-          name: coverage
-          path: coverage
+      # - name: Download tests coverage artifact
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     github_token: ${{ secrets.GITHUB_TOKEN }}
+      #     workflow: test.yml
+      #     workflow_conclusion: success
+      #     name: coverage
+      #     path: coverage
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
