@@ -2,6 +2,8 @@
 
 require 'rails_helper'
 
+SearchServiceError = GoogleScraperRuby::Errors::SearchServiceError
+
 RSpec.describe ScrapeCommand, type: :service do
   describe '#run' do
     context 'given an existing keyword_id' do
@@ -17,13 +19,13 @@ RSpec.describe ScrapeCommand, type: :service do
       end
 
       it 'reraise the error and log an error message if an error occurs' do
-        allow(Google::SearchService).to receive(:search!).and_raise(Google::SearchServiceError, '')
+        allow(Google::SearchService).to receive(:search!).and_raise(SearchServiceError, '')
         allow(Rails.logger).to receive(:error)
         keyword = Fabricate :keyword
 
         expect do
           described_class.new(keyword_id: keyword.id).run
-        end.to raise_error(Google::SearchServiceError)
+        end.to raise_error(SearchServiceError)
         expect(Rails.logger).to have_received(:error).with(/error while processing command/)
       end
     end

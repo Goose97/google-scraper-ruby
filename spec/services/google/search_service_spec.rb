@@ -36,23 +36,23 @@ RSpec.describe Google::SearchService, type: :service do
         expect(described_class.search!('hello world')).to eq(html)
       end
 
-      it 'raise Google::SearchServiceError if the request returns a 4xx/5xx status code' do
+      it 'raise GoogleScraperRuby::Errors::SearchServiceError if the request returns a 4xx/5xx status code' do
         stubs.get('/search') { [429, {}, 'Too Many Requests'] }
         expect do
           described_class.search!('hello world')
-        end.to raise_error(Google::SearchServiceError)
+        end.to raise_error(GoogleScraperRuby::Errors::SearchServiceError)
 
         stubs.get('/search') { [500, {}, 'Internal Server Error'] }
         expect do
           described_class.search!('hello world')
-        end.to raise_error(Google::SearchServiceError)
+        end.to raise_error(GoogleScraperRuby::Errors::SearchServiceError)
       end
 
-      it "raise Google::SearchServiceError if it can't connect to the host" do
+      it "raise GoogleScraperRuby::Errors::SearchServiceError if it can't connect to the host" do
         stubs.get('/search') { raise Faraday::ConnectionFailed }
         expect do
           described_class.search!('hello world')
-        end.to raise_error(Google::SearchServiceError)
+        end.to raise_error(GoogleScraperRuby::Errors::SearchServiceError)
       end
     end
   end
