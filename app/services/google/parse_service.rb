@@ -13,15 +13,27 @@ module Google
     def call
       Result.new(
         search_entries: [*top_ads, *bottom_ads, *non_ads_normal, *non_ads_video],
-        links_count: @doc.css('a[href]').count,
-        result_page_html: @html
+        links_count: doc.css(GENERAL_LINKS_SELECTOR).count,
+        result_page_html: html
       )
     end
 
     private
 
+    TOP_ADS_SELECTOR = '#taw div[data-text-ad]'
+    BOTTOM_ADS_SELECTOR = '#bottomads div[data-text-ad]'
+    NON_ADS_NORMAL_SELECTOR = '#search div[data-snhf]'
+    NON_ADS_VIDEO_SELECTOR = '#search div[data-vurl][jsaction]'
+    GENERAL_LINKS_SELECTOR = 'a[href]'
+    INSIDE_SEARCH_ENTRY_LINKS_SELECTOR = 'a[href][data-ved]'
+
+    private_constant :TOP_ADS_SELECTOR, :BOTTOM_ADS_SELECTOR, :NON_ADS_NORMAL_SELECTOR, :NON_ADS_VIDEO_SELECTOR,
+                     :GENERAL_LINKS_SELECTOR, :INSIDE_SEARCH_ENTRY_LINKS_SELECTOR
+
+    attr_accessor :doc, :html
+
     def top_ads
-      @doc.css('#taw div[data-text-ad]').map do |ad_div|
+      doc.css(TOP_ADS_SELECTOR).map do |ad_div|
         SearchEntry.new(
           kind: :ads,
           urls: extract_links(ad_div),
@@ -31,7 +43,7 @@ module Google
     end
 
     def bottom_ads
-      @doc.css('#bottomads div[data-text-ad]').map do |ad_div|
+      doc.css(BOTTOM_ADS_SELECTOR).map do |ad_div|
         SearchEntry.new(
           kind: :ads,
           urls: extract_links(ad_div),
@@ -41,7 +53,7 @@ module Google
     end
 
     def non_ads_normal
-      @doc.css('#search div[data-snhf]').map do |div|
+      doc.css(NON_ADS_NORMAL_SELECTOR).map do |div|
         SearchEntry.new(
           kind: :non_ads,
           urls: extract_links(div),
@@ -51,7 +63,7 @@ module Google
     end
 
     def non_ads_video
-      @doc.css('#search div[data-vurl][jsaction]').map do |div|
+      doc.css(NON_ADS_VIDEO_SELECTOR).map do |div|
         SearchEntry.new(
           kind: :non_ads,
           urls: extract_links(div),
@@ -60,6 +72,8 @@ module Google
       end
     end
 
-    def extract_links(doc) = doc.css('a[href][data-ved]').pluck(:href)
+    def extract_links(doc)
+      doc.css(INSIDE_SEARCH_ENTRY_LINKS_SELECTOR).pluck(:href)
+    end
   end
 end
