@@ -13,7 +13,8 @@ class ScrapeCommand
     keyword = Keyword.find(@keyword_id)
     html = Google::SearchService.search!(keyword.content)
     result = Google::ParseService.new(html).call
-    persist_scrape_result keyword, result
+
+    save_scrape_result keyword, result
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.error "[#{self.class.name}]: keyword doesn't exist
     - keyword_id: #{@keyword_id}"
@@ -31,7 +32,7 @@ class ScrapeCommand
 
   private
 
-  def persist_scrape_result(keyword, parse_result)
+  def save_scrape_result(keyword, parse_result)
     Keyword.transaction do
       keyword.update!(
         links_count: parse_result.links_count,
