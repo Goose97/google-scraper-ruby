@@ -21,9 +21,6 @@ AllCops:
 Style/Documentation:
   Enabled: false
 
-Style/NegatedIf:
-  Enabled: false
-
 Layout/LineLength:
   Max: 130
   Exclude:
@@ -52,7 +49,4 @@ RSpec/NestedGroups:
   Max: 5
 
 RSpec/MultipleExpectations:
-  Max: 10
-
-RSpec/ExampleLength:
   Max: 10
