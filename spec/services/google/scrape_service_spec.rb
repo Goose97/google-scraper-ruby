@@ -4,13 +4,13 @@ require 'rails_helper'
 
 SearchServiceError = GoogleScraperRuby::Errors::SearchServiceError
 
-RSpec.describe ScrapeCommand, type: :service do
-  describe '#run' do
+RSpec.describe Google::ScrapeService, type: :service do
+  describe '#call' do
     context 'given an existing keyword_id' do
       it 'updates the scrape result to the database if the command succeeds', vcr: 'google/google_no_ads' do
         keyword = Fabricate :keyword
 
-        described_class.new(keyword_id: keyword.id).run
+        described_class.new(keyword_id: keyword.id).call
         updated = Keyword.includes(:keyword_search_entries).find(keyword.id)
 
         expect(updated.result_page_html).to be_a String
@@ -24,7 +24,7 @@ RSpec.describe ScrapeCommand, type: :service do
         keyword = Fabricate :keyword
 
         expect do
-          described_class.new(keyword_id: keyword.id).run
+          described_class.new(keyword_id: keyword.id).call
         end.to raise_error(SearchServiceError)
         expect(Rails.logger).to have_received(:error).with(/error while processing command/)
       end
@@ -36,7 +36,7 @@ RSpec.describe ScrapeCommand, type: :service do
         allow(Rails.logger).to receive(:error)
 
         expect do
-          command.run
+          command.call
         end.to raise_error(ActiveRecord::RecordNotFound)
         expect(Rails.logger).to have_received(:error).with(/keyword doesn't exist/)
       end
