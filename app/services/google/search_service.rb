@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Google
-  module SearchService
+  class SearchService
     SearchServiceError = GoogleScraperRuby::Errors::SearchServiceError
     HOST = 'www.google.com'
     # rubocop:disable Layout/LineLength
@@ -10,7 +10,7 @@ module Google
 
     def self.search!(keyword)
       uri = URI::HTTPS.build(host: HOST, path: '/search', query: { q: keyword }.to_query)
-      conn = build_conn uri
+      conn = http_client uri
       response = conn.get(uri, {}, { 'User-Agent' => USER_AGENT })
       if !response.success?
         raise SearchServiceError.new(uri,
@@ -22,7 +22,7 @@ module Google
       raise SearchServiceError.new uri, e
     end
 
-    def self.build_conn(uri)
+    def self.http_client(uri)
       Faraday.new(
         url: uri,
         headers: { 'User-Agent' => USER_AGENT }

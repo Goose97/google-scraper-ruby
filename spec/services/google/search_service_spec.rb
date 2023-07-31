@@ -8,7 +8,7 @@ RSpec.describe Google::SearchService, type: :service do
 
   describe '#search!' do
     before(:each) do
-      allow(described_class).to receive(:build_conn).and_return(stubbed_conn)
+      allow(described_class).to receive(:http_client).and_return(stubbed_conn)
     end
 
     context 'when search a keyword' do
