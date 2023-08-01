@@ -6,13 +6,15 @@ module Google
       @keyword_id = keyword_id
     end
 
-    def call
+    # rubocop:disable Metrics/MethodLength
+    def call!(search_service: nil)
       keyword = Keyword.find_by id: keyword_id
       raise_keyword_not_found unless keyword
       @keyword = keyword
 
       begin
-        html = Google::SearchService.search!(keyword.content)
+        search_service ||= Google::SearchService.new(keyword.content)
+        html = search_service.search!
       rescue GoogleScraperRuby::Errors::SearchServiceError => e
         raise_unexpected_error e
       end
@@ -21,6 +23,7 @@ module Google
 
       save_scrape_result keyword, result
     end
+    # rubocop:enable Metrics/MethodLength
 
     private
 

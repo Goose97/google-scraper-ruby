@@ -3,13 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe Google::ScrapeService, type: :service do
-  describe '#call' do
+  describe '#call!' do
     context 'given a VALID keyword_id' do
       context 'given NO errors' do
         it 'saves the html of the result page', vcr: 'google/google_no_ads' do
           keyword = Fabricate :keyword
 
-          described_class.new(keyword_id: keyword.id).call
+          described_class.new(keyword_id: keyword.id).call!
           updated_keyword = keyword.reload
 
           expect(updated_keyword.result_page_html).to be_a String
@@ -18,7 +18,7 @@ RSpec.describe Google::ScrapeService, type: :service do
         it 'saves the links count', vcr: 'google/google_no_ads' do
           keyword = Fabricate :keyword
 
-          described_class.new(keyword_id: keyword.id).call
+          described_class.new(keyword_id: keyword.id).call!
           updated_keyword = keyword.reload
 
           expect(updated_keyword.links_count).to be_a Integer
@@ -27,7 +27,7 @@ RSpec.describe Google::ScrapeService, type: :service do
         it 'saves all search entires', vcr: 'google/google_no_ads' do
           keyword = Fabricate :keyword
 
-          described_class.new(keyword_id: keyword.id).call
+          described_class.new(keyword_id: keyword.id).call!
           updated_keyword = keyword.reload
 
           expect(updated_keyword.keyword_search_entries).not_to be_empty
@@ -36,20 +36,22 @@ RSpec.describe Google::ScrapeService, type: :service do
 
       context 'given errors' do
         it 'raises an error' do
-          allow(Google::SearchService).to receive(:search!).and_raise(GoogleScraperRuby::Errors::SearchServiceError.new(url: ''))
+          search_service = Google::SearchService.new(nil)
+          allow(search_service).to receive(:search!).and_raise(GoogleScraperRuby::Errors::SearchServiceError.new(url: ''))
           allow(Rails.logger).to receive(:error)
 
           expect do
-            described_class.new(keyword_id: Fabricate(:keyword).id).call
+            described_class.new(keyword_id: Fabricate(:keyword).id).call!(search_service: search_service)
           end.to raise_error GoogleScraperRuby::Errors::ScrapeServiceError
         end
 
         it 'logs an error' do
-          allow(Google::SearchService).to receive(:search!).and_raise(GoogleScraperRuby::Errors::SearchServiceError.new(url: ''))
+          search_service = Google::SearchService.new(nil)
+          allow(search_service).to receive(:search!).and_raise(GoogleScraperRuby::Errors::SearchServiceError.new(url: ''))
           allow(Rails.logger).to receive(:error)
 
           begin
-            described_class.new(keyword_id: Fabricate(:keyword).id).call
+            described_class.new(keyword_id: Fabricate(:keyword).id).call!(search_service: search_service)
           rescue GoogleScraperRuby::Errors::ScrapeServiceError
             expect(Rails.logger).to have_received(:error).with(/unexpected error while processing request/)
           end
@@ -62,7 +64,7 @@ RSpec.describe Google::ScrapeService, type: :service do
         allow(Rails.logger).to receive(:error)
 
         expect do
-          described_class.new(keyword_id: 42).call
+          described_class.new(keyword_id: 42).call!
         end.to raise_error(GoogleScraperRuby::Errors::ScrapeServiceError)
       end
 
@@ -70,7 +72,7 @@ RSpec.describe Google::ScrapeService, type: :service do
         allow(Rails.logger).to receive(:error)
 
         begin
-          described_class.new(keyword_id: 42).call
+          described_class.new(keyword_id: 42).call!
         rescue GoogleScraperRuby::Errors::ScrapeServiceError
           expect(Rails.logger).to have_received(:error).with(/keyword doesn't exist/)
         end
