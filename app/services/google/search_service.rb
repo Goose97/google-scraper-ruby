@@ -2,8 +2,6 @@
 
 module Google
   class SearchService
-    SearchServiceError = GoogleScraperRuby::Errors::SearchServiceError
-
     HOST = 'www.google.com'
 
     # rubocop:disable Layout/LineLength
@@ -30,7 +28,7 @@ module Google
       conn = http_client uri
       response = conn.get(uri, {})
       unless response.success?
-        raise SearchServiceError.new(
+        raise GoogleScraperRuby::Errors::SearchServiceError.new(
           url: uri,
           error: "Response with status code #{response.status}"
         )
@@ -38,7 +36,7 @@ module Google
 
       response.body
     rescue Faraday::ConnectionFailed, Faraday::ServerError, Faraday::ClientError => e
-      raise SearchServiceError.new url: uri, error: e
+      raise GoogleScraperRuby::Errors::SearchServiceError.new url: uri, error: e
     end
 
     def self.http_client(uri)
