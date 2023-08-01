@@ -6,7 +6,7 @@ SearchServiceError = GoogleScraperRuby::Errors::SearchServiceError
 
 RSpec.describe Google::ScrapeService, type: :service do
   describe '#call' do
-    context 'given an existing keyword_id' do
+    context 'given a VALID keyword_id' do
       context 'given NO errors' do
         it 'saves the html of the result page', vcr: 'google/google_no_ads' do
           keyword = Fabricate :keyword
