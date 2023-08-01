@@ -5,7 +5,7 @@ require 'support/http_client_helpers'
 
 RSpec.describe Google::SearchService, type: :service do
   describe '#search!' do
-    context 'when search a keyword' do
+    context 'given a successful request' do
       it 'returns the result page html when the request succeeds' do
         html = '<html><title>Search results</title></html>'
         HttpClientHelpers.stub_http_adapter do |adapter, connection|
@@ -15,7 +15,9 @@ RSpec.describe Google::SearchService, type: :service do
 
         expect(described_class.search!('hello world')).to eq(html)
       end
+    end
 
+    context 'given a failed request' do
       it 'raise GoogleScraperRuby::Errors::SearchServiceError if the request returns a 4xx status code' do
         HttpClientHelpers.stub_http_adapter do |adapter, connection|
           allow(described_class).to receive(:http_client).and_return(connection)
