@@ -10,27 +10,27 @@ RSpec.describe Google::ScrapeService, type: :service do
           keyword = Fabricate :keyword
 
           described_class.new(keyword_id: keyword.id).call
-          updated = Keyword.includes(:keyword_search_entries).find(keyword.id)
+          updated_keyword = keyword.reload
 
-          expect(updated.result_page_html).to be_a String
+          expect(updated_keyword.result_page_html).to be_a String
         end
 
         it 'saves the links count', vcr: 'google/google_no_ads' do
           keyword = Fabricate :keyword
 
           described_class.new(keyword_id: keyword.id).call
-          updated = Keyword.includes(:keyword_search_entries).find(keyword.id)
+          updated_keyword = keyword.reload
 
-          expect(updated.links_count).to be_a Integer
+          expect(updated_keyword.links_count).to be_a Integer
         end
 
         it 'saves all search entires', vcr: 'google/google_no_ads' do
           keyword = Fabricate :keyword
 
           described_class.new(keyword_id: keyword.id).call
-          updated = Keyword.includes(:keyword_search_entries).find(keyword.id)
+          updated_keyword = keyword.reload
 
-          expect(updated.keyword_search_entries).not_to be_empty
+          expect(updated_keyword.keyword_search_entries).not_to be_empty
         end
       end
 
