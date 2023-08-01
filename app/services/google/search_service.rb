@@ -30,13 +30,15 @@ module Google
       conn = http_client uri
       response = conn.get(uri, {})
       unless response.success?
-        raise SearchServiceError.new(uri,
-                                     "Response with status code #{response.status}")
+        raise SearchServiceError.new(
+          url: uri,
+          error: "Response with status code #{response.status}"
+        )
       end
 
       response.body
     rescue Faraday::ConnectionFailed, Faraday::ServerError, Faraday::ClientError => e
-      raise SearchServiceError.new uri, e
+      raise SearchServiceError.new url: uri, error: e
     end
 
     def self.http_client(uri)
