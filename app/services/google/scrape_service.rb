@@ -22,7 +22,7 @@ module Google
 
       raise e
     rescue GoogleScraperRuby::Errors::SearchServiceError => e
-      Rails.logger.error "[#{self.class.name}]: error while processing command
+      Rails.logger.error "[#{self.class.name}]: error while processing request
     - keyword: #{keyword.content}
     - error: #{e}"
 
