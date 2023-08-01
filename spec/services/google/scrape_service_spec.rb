@@ -41,7 +41,7 @@ RSpec.describe Google::ScrapeService, type: :service do
 
           expect do
             described_class.new(keyword_id: Fabricate(:keyword).id).call
-          end.to raise_error GoogleScraperRuby::Errors::SearchServiceError
+          end.to raise_error GoogleScraperRuby::Errors::ScrapeServiceError
         end
 
         it 'logs an error' do
@@ -50,20 +50,20 @@ RSpec.describe Google::ScrapeService, type: :service do
 
           begin
             described_class.new(keyword_id: Fabricate(:keyword).id).call
-          rescue GoogleScraperRuby::Errors::SearchServiceError
-            expect(Rails.logger).to have_received(:error).with(/error while processing request/)
+          rescue GoogleScraperRuby::Errors::ScrapeServiceError
+            expect(Rails.logger).to have_received(:error).with(/unexpected error while processing request/)
           end
         end
       end
     end
 
     context 'given an INVALID keyword_id' do
-      it 'raise ActiveRecord::RecordNotFound error' do
+      it 'raises an error' do
         allow(Rails.logger).to receive(:error)
 
         expect do
           described_class.new(keyword_id: 42).call
-        end.to raise_error(ActiveRecord::RecordNotFound)
+        end.to raise_error(GoogleScraperRuby::Errors::ScrapeServiceError)
       end
 
       it 'logs an error' do
@@ -71,7 +71,7 @@ RSpec.describe Google::ScrapeService, type: :service do
 
         begin
           described_class.new(keyword_id: 42).call
-        rescue ActiveRecord::RecordNotFound
+        rescue GoogleScraperRuby::Errors::ScrapeServiceError
           expect(Rails.logger).to have_received(:error).with(/keyword doesn't exist/)
         end
       end

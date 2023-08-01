@@ -21,13 +21,26 @@ module GoogleScraperRuby
       attr_reader :original_error, :url
     end
 
-      def initialize(url, error = nil)
+    class ScrapeServiceError < StandardError
+      def initialize(keyword_id:, kind:, error: nil)
+        @keyword_id = keyword_id
+        @kind = kind
         @original_error = error
-        msg = "Failed to perform search request with URL: #{url}"
-        super(msg)
+        super('')
       end
 
-      def to_s = "#{super}\nOriginal error: #{@original_error}"
+      def to_s
+        <<~ERR_MESSAGE
+          Failed to perform scrape request:
+          - keyword_id: #{keyword_id}"
+          - kind: #{kind}"
+          - original_error: #{original_error}"
+        ERR_MESSAGE
+      end
+
+      private
+
+      attr_reader :keyword_id, :kind, :original_error
     end
   end
 end

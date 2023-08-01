@@ -2,36 +2,55 @@
 
 module Google
   class ScrapeService
-    attr_reader :keyword
-
     def initialize(keyword_id:)
       @keyword_id = keyword_id
     end
 
-    # rubocop:disable Metrics/MethodLength
-    # rubocop:disable Metrics/AbcSize
     def call
-      keyword = Keyword.find(@keyword_id)
-      html = Google::SearchService.search!(keyword.content)
+      keyword = Keyword.find_by id: keyword_id
+      raise_keyword_not_found unless keyword
+      @keyword = keyword
+
+      begin
+        html = Google::SearchService.search!(keyword.content)
+      rescue GoogleScraperRuby::Errors::SearchServiceError => e
+        raise_unexpected_error e
+      end
+
       result = Google::ParseService.new(html).call
 
       save_scrape_result keyword, result
-    rescue ActiveRecord::RecordNotFound => e
-      Rails.logger.error "[#{self.class.name}]: keyword doesn't exist
-    - keyword_id: #{@keyword_id}"
-
-      raise e
-    rescue GoogleScraperRuby::Errors::SearchServiceError => e
-      Rails.logger.error "[#{self.class.name}]: error while processing request
-    - keyword: #{keyword.content}
-    - error: #{e}"
-
-      raise e
     end
-    # rubocop:enable Metrics/MethodLength
-    # rubocop:enable Metrics/AbcSize
 
     private
+
+    attr_reader :keyword_id, :keyword
+
+    def raise_keyword_not_found
+      Rails.logger.error <<~ERROR
+        [#{self.class.name}]: keyword doesn't exist
+        - keyword_id: #{keyword_id}
+      ERROR
+
+      raise GoogleScraperRuby::Errors::ScrapeServiceError.new(
+        keyword_id: keyword_id,
+        kind: :invalid_keyword
+      )
+    end
+
+    def raise_unexpected_error(error)
+      Rails.logger.error <<~ERROR
+        [#{self.class.name}]: unexpected error while processing request
+        - keyword: #{keyword.content}
+        - error: #{error}
+      ERROR
+
+      raise GoogleScraperRuby::Errors::ScrapeServiceError.new(
+        keyword_id: keyword_id,
+        kind: :unexpected_error,
+        error: error
+      )
+    end
 
     def save_scrape_result(keyword, parse_result)
       Keyword.transaction do
