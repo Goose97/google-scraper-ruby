@@ -59,7 +59,7 @@ RSpec.describe Google::ScrapeService, type: :service do
       end
     end
 
-    context 'given an non-existing keyword_id' do
+    context 'given an INVALID keyword_id' do
       it 'raise ActiveRecord::RecordNotFound error' do
         command = described_class.new(keyword_id: 42)
         allow(Rails.logger).to receive(:error)
