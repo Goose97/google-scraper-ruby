@@ -23,10 +23,15 @@ module Google
 
     private_constant :HOST, :USER_AGENT
 
-    def self.search!(keyword)
-      uri = URI::HTTPS.build(host: HOST, path: '/search', query: { q: keyword }.to_query)
+    def initialize(keyword)
+      @keyword = keyword
+    end
+
+    # rubocop:disable Metrics/MethodLength
+    def search!
+      uri = URI::HTTPS.build host: HOST, path: '/search', query: { q: keyword }.to_query
       conn = http_client uri
-      response = conn.get(uri, {})
+      response = conn.get uri, {}
       unless response.success?
         raise GoogleScraperRuby::Errors::SearchServiceError.new(
           url: uri,
@@ -38,8 +43,13 @@ module Google
     rescue Faraday::ConnectionFailed, Faraday::ServerError, Faraday::ClientError => e
       raise GoogleScraperRuby::Errors::SearchServiceError.new url: uri, error: e
     end
+    # rubocop:enable Metrics/MethodLength
 
-    def self.http_client(uri)
+    private
+
+    attr_reader :keyword
+
+    def http_client(uri)
       Faraday.new(
         url: uri,
         headers: { 'User-Agent' => USER_AGENT.sample }
