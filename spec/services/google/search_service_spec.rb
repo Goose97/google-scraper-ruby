@@ -1,22 +1,19 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'support/http_client_helpers'
 
 RSpec.describe Google::SearchService, type: :service do
-  let(:stubs) { Faraday::Adapter::Test::Stubs.new }
-  let(:stubbed_conn) { Faraday.new { |b| b.adapter(:test, stubs) } }
-
   describe '#search!' do
-    before(:each) do
-      allow(described_class).to receive(:http_client).and_return(stubbed_conn)
-    end
-
     context 'when search a keyword' do
       it 'perform a request against www.google.com' do
         outer_env = nil
-        stubs.get('/search') do |env|
-          outer_env = env
-          200
+        HttpClientHelpers.stub_http_adapter do |adapter, connection|
+          allow(described_class).to receive(:http_client).and_return(connection)
+          adapter.get('/search') do |env|
+            outer_env = env
+            200
+          end
         end
 
         described_class.search!('hello world')
@@ -25,31 +22,42 @@ RSpec.describe Google::SearchService, type: :service do
 
       it 'returns the result page html when the request succeeds' do
         html = '<html><title>Search results</title></html>'
-        stubs.get('/search') do |_env|
-          [
-            200,
-            { 'Content-Type': 'text/html' },
-            html
-          ]
+        HttpClientHelpers.stub_http_adapter do |adapter, connection|
+          allow(described_class).to receive(:http_client).and_return(connection)
+          adapter.get('/search') { [200, { 'Content-Type': 'text/html' }, html] }
         end
 
         expect(described_class.search!('hello world')).to eq(html)
       end
 
-      it 'raise GoogleScraperRuby::Errors::SearchServiceError if the request returns a 4xx/5xx status code' do
-        stubs.get('/search') { [429, {}, 'Too Many Requests'] }
+      it 'raise GoogleScraperRuby::Errors::SearchServiceError if the request returns a 4xx status code' do
+        HttpClientHelpers.stub_http_adapter do |adapter, connection|
+          allow(described_class).to receive(:http_client).and_return(connection)
+          adapter.get('/search') { [429, {}, 'Too Many Requests'] }
+        end
+
         expect do
           described_class.search!('hello world')
         end.to raise_error(GoogleScraperRuby::Errors::SearchServiceError)
+      end
 
-        stubs.get('/search') { [500, {}, 'Internal Server Error'] }
+      it 'raise GoogleScraperRuby::Errors::SearchServiceError if the request returns a 5xx status code' do
+        HttpClientHelpers.stub_http_adapter do |adapter, connection|
+          allow(described_class).to receive(:http_client).and_return(connection)
+          adapter.get('/search') { [500, {}, 'Internal Server Error'] }
+        end
+
         expect do
           described_class.search!('hello world')
         end.to raise_error(GoogleScraperRuby::Errors::SearchServiceError)
       end
 
       it "raise GoogleScraperRuby::Errors::SearchServiceError if it can't connect to the host" do
-        stubs.get('/search') { raise Faraday::ConnectionFailed }
+        HttpClientHelpers.stub_http_adapter do |adapter, connection|
+          allow(described_class).to receive(:http_client).and_return(connection)
+          adapter.get('/search') { raise Faraday::ConnectionFailed }
+        end
+
         expect do
           described_class.search!('hello world')
         end.to raise_error(GoogleScraperRuby::Errors::SearchServiceError)
