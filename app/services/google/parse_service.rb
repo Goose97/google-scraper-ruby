@@ -30,7 +30,7 @@ module Google
     private_constant :TOP_ADS_SELECTOR, :BOTTOM_ADS_SELECTOR, :NON_ADS_NORMAL_SELECTOR, :NON_ADS_VIDEO_SELECTOR,
                      :GENERAL_LINKS_SELECTOR, :INSIDE_SEARCH_ENTRY_LINKS_SELECTOR
 
-    attr_accessor :doc, :html
+    attr_reader :doc, :html
 
     def top_ads
       doc.css(TOP_ADS_SELECTOR).map do |ad_div|
