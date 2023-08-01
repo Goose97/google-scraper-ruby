@@ -6,7 +6,7 @@ module GoogleScraperRuby
       def initialize(url:, error: nil)
         @original_error = error
         @url = url
-        super('')
+        super(error)
       end
 
       def to_s
