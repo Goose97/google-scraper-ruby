@@ -5,10 +5,6 @@ require 'csv'
 class CsvUploadForm
   include ActiveModel::Validations
 
-  INVALID_KEYWORD_COUNT_ERROR = 'file must contains between 1 to 1000 keywords'
-  INVALID_FILE_TYPE_ERROR = 'file must have content type of text/csv'
-  INVALID_KEYWORD_LENGTH_ERROR = 'keyword must have the maximum length of 255 characters'
-
   attr_reader :keyword_ids
 
   validates :file, presence: true, valid_keyword_file: true
@@ -23,7 +19,7 @@ class CsvUploadForm
       # rubocop:enable Rails/SkipsModelValidations
       true
     rescue ActiveRecord::ValueTooLong
-      errors.add(:file, INVALID_KEYWORD_LENGTH_ERROR)
+      errors.add(:file, I18n.t('csv.errors.invalid_keyword_length'))
       false
     end
   end

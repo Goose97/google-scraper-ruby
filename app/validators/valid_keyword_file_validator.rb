@@ -6,8 +6,8 @@ class ValidKeywordFileValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     @file = value
 
-    record.errors.add(attribute, CsvUploadForm::INVALID_KEYWORD_COUNT_ERROR) unless valid_record_count?
-    record.errors.add(attribute, CsvUploadForm::INVALID_FILE_TYPE_ERROR) unless valid_content_type?
+    record.errors.add(attribute, I18n.t('csv.errors.invalid_keyword_count')) unless valid_record_count?
+    record.errors.add(attribute, I18n.t('csv.errors.invalid_file_type')) unless valid_content_type?
   end
 
   private
