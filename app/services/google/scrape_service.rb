@@ -64,7 +64,7 @@ module Google
         )
 
         # rubocop:disable Rails/SkipsModelValidations
-        keyword.keyword_search_entries.insert_all parse_result.search_entries.map(&:to_h)
+        keyword.keyword_search_entries.insert_all(parse_result.search_entries.map(&:to_h))
         # rubocop:enable Rails/SkipsModelValidations
       end
     end
