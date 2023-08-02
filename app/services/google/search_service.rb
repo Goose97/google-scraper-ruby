@@ -30,8 +30,8 @@ module Google
     # rubocop:disable Metrics/MethodLength
     def search!
       uri = URI::HTTPS.build host: HOST, path: '/search', query: { q: keyword }.to_query
-      conn = http_client uri
-      response = conn.get uri, {}
+      client = http_client uri
+      response = client.get uri, {}
       unless response.success?
         raise GoogleScraperRuby::Errors::SearchServiceError.new(
           url: uri,
