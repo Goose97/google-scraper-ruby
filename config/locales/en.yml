@@ -31,3 +31,5 @@
 
 en:
   hello: "Hello world"
+  csv:
+    upload_success: "Your file has been uploaded"
