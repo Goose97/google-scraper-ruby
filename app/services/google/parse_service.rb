@@ -2,8 +2,8 @@
 
 module Google
   class ParseService
-    Result = Struct.new(:search_entries, :links_count, :result_page_html)
-    SearchEntry = Struct.new(:kind, :urls, :position)
+    ResultStruct = Struct.new(:search_entries, :links_count, :result_page_html)
+    SearchEntryStruct = Struct.new(:kind, :urls, :position)
 
     def initialize(html)
       @html = html
@@ -11,7 +11,7 @@ module Google
     end
 
     def call
-      Result.new(
+      ResultStruct.new(
         search_entries: [*top_ads, *bottom_ads, *non_ads_normal, *non_ads_video],
         links_count: doc.css(GENERAL_LINKS_SELECTOR).count,
         result_page_html: html
@@ -34,7 +34,7 @@ module Google
 
     def top_ads
       doc.css(TOP_ADS_SELECTOR).map do |ad_div|
-        SearchEntry.new(
+        SearchEntryStruct.new(
           kind: :ads,
           urls: extract_links(ad_div),
           position: :top
@@ -44,7 +44,7 @@ module Google
 
     def bottom_ads
       doc.css(BOTTOM_ADS_SELECTOR).map do |ad_div|
-        SearchEntry.new(
+        SearchEntryStruct.new(
           kind: :ads,
           urls: extract_links(ad_div),
           position: :bottom
@@ -54,7 +54,7 @@ module Google
 
     def non_ads_normal
       doc.css(NON_ADS_NORMAL_SELECTOR).map do |div|
-        SearchEntry.new(
+        SearchEntryStruct.new(
           kind: :non_ads,
           urls: extract_links(div),
           position: nil
@@ -64,7 +64,7 @@ module Google
 
     def non_ads_video
       doc.css(NON_ADS_VIDEO_SELECTOR).map do |div|
-        SearchEntry.new(
+        SearchEntryStruct.new(
           kind: :non_ads,
           urls: extract_links(div),
           position: nil
