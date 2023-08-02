@@ -57,7 +57,7 @@ module Google
         SearchEntryStruct.new(
           kind: :non_ads,
           urls: extract_links(div),
-          position: nil
+          position: :main_search
         )
       end
     end
@@ -67,7 +67,7 @@ module Google
         SearchEntryStruct.new(
           kind: :non_ads,
           urls: extract_links(div),
-          position: nil
+          position: :main_search
         )
       end
     end

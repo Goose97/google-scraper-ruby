@@ -2,7 +2,7 @@
 
 class KeywordSearchEntry < ApplicationRecord
   enum kind: { ads: 'ads', non_ads: 'non_ads' }
-  enum position: { top: 'top', bottom: 'bottom' }
+  enum position: { top: 'top', bottom: 'bottom', main_search: 'main_search' }
 
   belongs_to :keyword
 
