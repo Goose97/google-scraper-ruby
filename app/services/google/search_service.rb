@@ -30,6 +30,7 @@ module Google
       uri = URI::HTTPS.build host: HOST, path: '/search', query: { q: keyword }.to_query
       client = http_client uri
       response = client.get uri, {}
+
       unless response.success?
         raise GoogleScraperRuby::Errors::SearchServiceError.new(
           url: uri,
