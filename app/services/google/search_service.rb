@@ -23,12 +23,10 @@ module Google
 
     private_constant :HOST, :USER_AGENT
 
-    def initialize(keyword)
-      @keyword = keyword
-    end
-
     # rubocop:disable Metrics/MethodLength
-    def search!
+    def search!(keyword)
+      @keyword = keyword
+
       uri = URI::HTTPS.build host: HOST, path: '/search', query: { q: keyword }.to_query
       client = http_client uri
       response = client.get uri, {}

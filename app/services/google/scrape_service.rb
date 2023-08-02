@@ -2,19 +2,18 @@
 
 module Google
   class ScrapeService
-    def initialize(keyword_id:)
+    def initialize(keyword_id:, search_service: Google::SearchService.new)
       @keyword_id = keyword_id
+      @search_service = search_service
     end
 
-    # rubocop:disable Metrics/MethodLength
-    def call!(search_service: nil)
+    def call!
       keyword = Keyword.find_by id: keyword_id
       raise_keyword_not_found unless keyword
       @keyword = keyword
 
       begin
-        search_service ||= Google::SearchService.new(keyword.content)
-        html = search_service.search!
+        html = search_service.search! keyword.content
       rescue GoogleScraperRuby::Errors::SearchServiceError => e
         raise_unexpected_error e
       end
@@ -23,11 +22,10 @@ module Google
 
       save_scrape_result keyword, result
     end
-    # rubocop:enable Metrics/MethodLength
 
     private
 
-    attr_reader :keyword_id, :keyword
+    attr_reader :keyword_id, :keyword, :search_service
 
     def raise_keyword_not_found
       Rails.logger.error <<~ERROR

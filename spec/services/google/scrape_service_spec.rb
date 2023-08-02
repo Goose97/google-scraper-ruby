@@ -36,26 +36,34 @@ RSpec.describe Google::ScrapeService, type: :service do
 
       context 'given errors' do
         it 'raises an error' do
-          search_service = Google::SearchService.new(nil)
+          search_service = Google::SearchService.new
           allow(search_service).to receive(:search!).and_raise(GoogleScraperRuby::Errors::SearchServiceError.new(url: ''))
           allow(Rails.logger).to receive(:error)
 
           expect do
-            described_class.new(keyword_id: Fabricate(:keyword).id).call!(search_service: search_service)
+            described_class.new(
+              keyword_id: Fabricate(:keyword).id,
+              search_service: search_service
+            ).call!
           end.to raise_error GoogleScraperRuby::Errors::ScrapeServiceError
         end
 
+        # rubocop:disable Rspec/ExampleLength
         it 'logs an error' do
-          search_service = Google::SearchService.new(nil)
+          search_service = Google::SearchService.new
           allow(search_service).to receive(:search!).and_raise(GoogleScraperRuby::Errors::SearchServiceError.new(url: ''))
           allow(Rails.logger).to receive(:error)
 
           begin
-            described_class.new(keyword_id: Fabricate(:keyword).id).call!(search_service: search_service)
+            described_class.new(
+              keyword_id: Fabricate(:keyword).id,
+              search_service: search_service
+            ).call!
           rescue GoogleScraperRuby::Errors::ScrapeServiceError
             expect(Rails.logger).to have_received(:error).with(/unexpected error while processing request/)
           end
         end
+        # rubocop:enable Rspec/ExampleLength
       end
     end
 

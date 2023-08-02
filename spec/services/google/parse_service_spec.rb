@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe Google::ParseService, type: :service do
   describe '#call' do
     it 'retrieves non-ads entries', vcr: 'google/ruby_11_non_ads' do
-      html = Google::SearchService.new('ruby').search!
+      html = Google::SearchService.new.search! 'ruby'
 
       non_ads = described_class.new(html).call.search_entries.count { |e| e.kind == :non_ads }
 
@@ -13,7 +13,7 @@ RSpec.describe Google::ParseService, type: :service do
     end
 
     it 'extracts the non-ads entry URLs', vcr: 'google/ruby_11_non_ads' do
-      html = Google::SearchService.new('ruby').search!
+      html = Google::SearchService.new.search! 'ruby'
 
       entry = described_class.new(html).call.search_entries.find do |e|
         e.kind == :non_ads && e.urls.any? { |u| /ruby-lang.org/ =~ u }
@@ -23,7 +23,7 @@ RSpec.describe Google::ParseService, type: :service do
     end
 
     it 'counts the number of links', vcr: 'google/monitor_50_links' do
-      html = Google::SearchService.new('monitor').search!
+      html = Google::SearchService.new.search! 'monitor'
 
       count = described_class.new(html).call.links_count
 
@@ -31,7 +31,7 @@ RSpec.describe Google::ParseService, type: :service do
     end
 
     it 'includes the html of such page', vcr: 'google/monitor_50_links' do
-      html = Google::SearchService.new('monitor').search!
+      html = Google::SearchService.new.search! 'monitor'
 
       result_page = described_class.new(html).call.result_page_html
 
@@ -40,7 +40,7 @@ RSpec.describe Google::ParseService, type: :service do
 
     context 'given a page with top and bottom ads' do
       it 'retrieves the top ads', vcr: 'google/programming_courses_3_top_1_bottom' do
-        html = Google::SearchService.new('programming courses').search!
+        html = Google::SearchService.new.search! 'programming courses'
 
         top_ads = described_class.new(html).call.search_entries.count { |e| e.kind == :ads && e.position == :top }
 
@@ -48,7 +48,7 @@ RSpec.describe Google::ParseService, type: :service do
       end
 
       it 'retrieves the bottom ads', vcr: 'google/programming_courses_3_top_1_bottom' do
-        html = Google::SearchService.new('programming courses').search!
+        html = Google::SearchService.new.search! 'programming courses'
 
         bottom_ads = described_class.new(html).call.search_entries.count { |e| e.kind == :ads && e.position == :bottom }
 
@@ -56,7 +56,7 @@ RSpec.describe Google::ParseService, type: :service do
       end
 
       it 'retrieves all the ads', vcr: 'google/programming_courses_3_top_1_bottom' do
-        html = Google::SearchService.new('programming courses').search!
+        html = Google::SearchService.new.search! 'programming courses'
 
         ads = described_class.new(html).call.search_entries.count { |e| e.kind == :ads }
 
@@ -64,7 +64,7 @@ RSpec.describe Google::ParseService, type: :service do
       end
 
       it 'extracts the ad entry URLs', vcr: 'google/iphone_store' do
-        html = Google::SearchService.new('iphone store').search!
+        html = Google::SearchService.new.search! 'iphone store'
 
         entry = described_class.new(html).call.search_entries.find do |e|
           e.kind == :ads && e.urls.any? { |u| u.include?('www.apple.com') }
@@ -76,7 +76,7 @@ RSpec.describe Google::ParseService, type: :service do
 
     context 'given a page WITHOUT any ads' do
       it 'counts 0 ads', vcr: 'google/google_no_ads' do
-        html = Google::SearchService.new('google').search!
+        html = Google::SearchService.new.search! 'google'
 
         ads = described_class.new(html).call.search_entries.count { |e| e.kind == :ads }
 
