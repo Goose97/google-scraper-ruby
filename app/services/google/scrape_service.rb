@@ -14,8 +14,8 @@ module Google
 
       begin
         html = search_service.search! keyword.content
-      rescue GoogleScraperRuby::Errors::SearchServiceError => e
-        raise_unexpected_error e
+      rescue GoogleScraperRuby::Errors::SearchServiceError => error
+        raise_unexpected_error error
       end
 
       result = Google::ParseService.new(html).call

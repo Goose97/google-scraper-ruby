@@ -53,3 +53,6 @@ RSpec/MultipleExpectations:
 
 RSpec/ExampleLength:
   Max: 10
+
+Naming/RescuedExceptionsVariableName:
+  PreferredName: 'error'

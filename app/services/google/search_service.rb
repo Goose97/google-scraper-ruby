@@ -38,8 +38,8 @@ module Google
       end
 
       response.body
-    rescue Faraday::ConnectionFailed, Faraday::ServerError, Faraday::ClientError => e
-      raise GoogleScraperRuby::Errors::SearchServiceError.new url: uri, error: e
+    rescue Faraday::ConnectionFailed, Faraday::ServerError, Faraday::ClientError => error
+      raise GoogleScraperRuby::Errors::SearchServiceError.new url: uri, error: error
     end
     # rubocop:enable Metrics/MethodLength
 
