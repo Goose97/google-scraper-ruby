@@ -2,9 +2,10 @@
 
 module Google
   class ScrapeService
-    def initialize(keyword_id:, search_service: Google::SearchService.new)
+    def initialize(keyword_id:, search_service: Google::SearchService.new, parse_service: Google::ParseService.new)
       @keyword_id = keyword_id
       @search_service = search_service
+      @parse_service = parse_service
     end
 
     def call!
@@ -18,14 +19,14 @@ module Google
         raise_unexpected_error error
       end
 
-      result = Google::ParseService.new(html).call
+      result = parse_service.call(html)
 
       save_scrape_result keyword, result
     end
 
     private
 
-    attr_reader :keyword_id, :keyword, :search_service
+    attr_reader :keyword_id, :keyword, :search_service, :parse_service
 
     def raise_keyword_not_found
       Rails.logger.error <<~ERROR

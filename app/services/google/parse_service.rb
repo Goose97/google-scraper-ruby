@@ -5,12 +5,10 @@ module Google
     ResultStruct = Struct.new(:search_entries, :links_count, :result_page_html)
     SearchEntryStruct = Struct.new(:kind, :urls, :position)
 
-    def initialize(html)
+    def call(html)
       @html = html
       @doc = Nokogiri::HTML(html)
-    end
 
-    def call
       ResultStruct.new(
         search_entries: [*top_ads, *bottom_ads, *non_ads_normal, *non_ads_video],
         links_count: doc.css(GENERAL_LINKS_SELECTOR).count,
