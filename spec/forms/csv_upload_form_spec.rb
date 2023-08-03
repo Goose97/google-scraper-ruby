@@ -5,7 +5,7 @@ require 'support/file_upload_helpers'
 
 RSpec.describe CsvUploadForm, type: :form do
   describe '#save' do
-    context 'given a VALID csv file' do
+    context 'given a VALID CSV file' do
       it 'returns true' do
         form = described_class.new
         file = FileUploadHelpers.upload_file fixture: 'valid_7_keywords.csv'
@@ -45,7 +45,7 @@ RSpec.describe CsvUploadForm, type: :form do
       end
     end
 
-    context 'given an INVALID csv file' do
+    context 'given an INVALID CSV file' do
       it 'returns false' do
         form = described_class.new
         file = FileUploadHelpers.upload_file fixture: 'too_many_keywords.csv'
