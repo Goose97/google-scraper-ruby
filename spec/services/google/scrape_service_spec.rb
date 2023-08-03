@@ -12,7 +12,7 @@ RSpec.describe Google::ScrapeService, type: :service do
           described_class.new(keyword_id: keyword.id).call!
           updated_keyword = keyword.reload
 
-          expect(updated_keyword.result_page_html).to be_a String
+          expect(updated_keyword.result_page_html).not_to be_empty
         end
 
         it 'saves the links count', vcr: 'google/google_no_ads' do
@@ -21,7 +21,7 @@ RSpec.describe Google::ScrapeService, type: :service do
           described_class.new(keyword_id: keyword.id).call!
           updated_keyword = keyword.reload
 
-          expect(updated_keyword.links_count).to be_a Integer
+          expect(updated_keyword.links_count).to be_positive
         end
 
         it 'saves all search entries', vcr: 'google/google_no_ads' do
