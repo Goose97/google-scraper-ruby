@@ -32,6 +32,15 @@ RSpec.describe Google::ScrapeService, type: :service do
 
           expect(updated_keyword.keyword_search_entries).not_to be_empty
         end
+
+        it 'updates keyword status to succeeded', vcr: 'google/google_no_ads' do
+          keyword = Fabricate :keyword
+
+          described_class.new(keyword_id: keyword.id).call!
+          updated_keyword = keyword.reload
+
+          expect(updated_keyword.status).to eq('succeeded')
+        end
       end
 
       context 'given errors' do
