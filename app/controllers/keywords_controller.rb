@@ -5,7 +5,7 @@ class KeywordsController < ApplicationController
     form = CsvUploadForm.new
 
     if form.save create_params[:file]
-      flash[:notice] = I18n.t('csv.upload_success')
+      flash[:notice] = I18n.t 'csv.upload_success'
     else
       flash[:alert] = form.errors.full_messages
     end
