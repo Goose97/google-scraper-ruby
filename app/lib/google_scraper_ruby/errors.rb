@@ -2,7 +2,7 @@
 
 module GoogleScraperRuby
   module Errors
-    class SearchServiceError < StandardError
+    class SearchError < StandardError
       def initialize(url:, error: nil)
         @original_error = error
         @url = url
@@ -21,7 +21,7 @@ module GoogleScraperRuby
       attr_reader :original_error, :url
     end
 
-    class ScrapeServiceError < StandardError
+    class ScrapeError < StandardError
       def initialize(keyword_id:, kind:, error: nil)
         @keyword_id = keyword_id
         @kind = kind

@@ -16,7 +16,7 @@ module Google
 
       begin
         html = search_service.search! keyword.content
-      rescue GoogleScraperRuby::Errors::SearchServiceError => error
+      rescue GoogleScraperRuby::Errors::SearchError => error
         raise_unexpected_error error
       end
 
@@ -35,7 +35,7 @@ module Google
         - keyword_id: #{keyword_id}
       ERROR
 
-      raise GoogleScraperRuby::Errors::ScrapeServiceError.new(
+      raise GoogleScraperRuby::Errors::ScrapeError.new(
         keyword_id: keyword_id,
         kind: :invalid_keyword
       )
@@ -48,7 +48,7 @@ module Google
         - error: #{error}
       ERROR
 
-      raise GoogleScraperRuby::Errors::ScrapeServiceError.new(
+      raise GoogleScraperRuby::Errors::ScrapeError.new(
         keyword_id: keyword_id,
         kind: :unexpected_error,
         error: error

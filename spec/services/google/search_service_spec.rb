@@ -20,7 +20,7 @@ RSpec.describe Google::SearchService, type: :service do
     end
 
     context 'given a 4xx response' do
-      it 'raises GoogleScraperRuby::Errors::SearchServiceError' do
+      it 'raises GoogleScraperRuby::Errors::SearchError' do
         service = described_class.new
 
         HttpClientHelpers.stub_http_adapter do |adapter, connection|
@@ -30,12 +30,12 @@ RSpec.describe Google::SearchService, type: :service do
 
         expect do
           service.search!('hello world')
-        end.to raise_error(GoogleScraperRuby::Errors::SearchServiceError)
+        end.to raise_error(GoogleScraperRuby::Errors::SearchError)
       end
     end
 
     context 'given a 5xx response' do
-      it 'raises GoogleScraperRuby::Errors::SearchServiceError' do
+      it 'raises GoogleScraperRuby::Errors::SearchError' do
         service = described_class.new
 
         HttpClientHelpers.stub_http_adapter do |adapter, connection|
@@ -45,12 +45,12 @@ RSpec.describe Google::SearchService, type: :service do
 
         expect do
           service.search!('hello world')
-        end.to raise_error(GoogleScraperRuby::Errors::SearchServiceError)
+        end.to raise_error(GoogleScraperRuby::Errors::SearchError)
       end
     end
 
     context 'given a connection fail issue' do
-      it 'raises GoogleScraperRuby::Errors::SearchServiceError' do
+      it 'raises GoogleScraperRuby::Errors::SearchError' do
         service = described_class.new
 
         HttpClientHelpers.stub_http_adapter do |adapter, connection|
@@ -60,7 +60,7 @@ RSpec.describe Google::SearchService, type: :service do
 
         expect do
           service.search!('hello world')
-        end.to raise_error(GoogleScraperRuby::Errors::SearchServiceError)
+        end.to raise_error(GoogleScraperRuby::Errors::SearchError)
       end
     end
   end

@@ -32,7 +32,7 @@ module Google
       response = client.get uri, {}
 
       unless response.success?
-        raise GoogleScraperRuby::Errors::SearchServiceError.new(
+        raise GoogleScraperRuby::Errors::SearchError.new(
           url: uri,
           error: "Response with status code #{response.status}"
         )
@@ -40,7 +40,7 @@ module Google
 
       response.body
     rescue Faraday::ConnectionFailed, Faraday::ServerError, Faraday::ClientError => error
-      raise GoogleScraperRuby::Errors::SearchServiceError.new url: uri, error: error
+      raise GoogleScraperRuby::Errors::SearchError.new url: uri, error: error
     end
     # rubocop:enable Metrics/MethodLength
 

@@ -46,7 +46,7 @@ RSpec.describe Google::ScrapeService, type: :service do
       context 'given errors' do
         it 'raises an error' do
           search_service = Google::SearchService.new
-          allow(search_service).to receive(:search!).and_raise(GoogleScraperRuby::Errors::SearchServiceError.new(url: ''))
+          allow(search_service).to receive(:search!).and_raise(GoogleScraperRuby::Errors::SearchError.new(url: ''))
           allow(Rails.logger).to receive(:error)
 
           expect do
@@ -54,13 +54,13 @@ RSpec.describe Google::ScrapeService, type: :service do
               keyword_id: Fabricate(:keyword).id,
               search_service: search_service
             ).call!
-          end.to raise_error GoogleScraperRuby::Errors::ScrapeServiceError
+          end.to raise_error GoogleScraperRuby::Errors::ScrapeError
         end
 
         # rubocop:disable Rspec/ExampleLength
         it 'logs an error' do
           search_service = Google::SearchService.new
-          allow(search_service).to receive(:search!).and_raise(GoogleScraperRuby::Errors::SearchServiceError.new(url: ''))
+          allow(search_service).to receive(:search!).and_raise(GoogleScraperRuby::Errors::SearchError.new(url: ''))
           allow(Rails.logger).to receive(:error)
 
           begin
@@ -68,7 +68,7 @@ RSpec.describe Google::ScrapeService, type: :service do
               keyword_id: Fabricate(:keyword).id,
               search_service: search_service
             ).call!
-          rescue GoogleScraperRuby::Errors::ScrapeServiceError
+          rescue GoogleScraperRuby::Errors::ScrapeError
             expect(Rails.logger).to have_received(:error).with(/unexpected error while processing request/)
           end
         end
@@ -82,7 +82,7 @@ RSpec.describe Google::ScrapeService, type: :service do
 
         expect do
           described_class.new(keyword_id: 42).call!
-        end.to raise_error(GoogleScraperRuby::Errors::ScrapeServiceError)
+        end.to raise_error(GoogleScraperRuby::Errors::ScrapeError)
       end
 
       it 'logs an error' do
@@ -90,7 +90,7 @@ RSpec.describe Google::ScrapeService, type: :service do
 
         begin
           described_class.new(keyword_id: 42).call!
-        rescue GoogleScraperRuby::Errors::ScrapeServiceError
+        rescue GoogleScraperRuby::Errors::ScrapeError
           expect(Rails.logger).to have_received(:error).with(/keyword doesn't exist/)
         end
       end
