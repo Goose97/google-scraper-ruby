@@ -35,7 +35,7 @@ RSpec.describe Google::ParseService, type: :service do
 
       result_page = described_class.new.call(html).result_page_html
 
-      expect(result_page).to be_a String
+      expect(result_page).not_to be_empty
     end
 
     context 'given a page with top and bottom ads' do
