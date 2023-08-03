@@ -31,12 +31,7 @@ class CsvUploadForm
   def parsed_keywords
     CSV.read(file).filter_map do |record|
       content = record.join ','
-      unless content.strip.empty?
-        {
-          content: content,
-          status: :processing
-        }
-      end
+      { content: content } unless content.strip.empty?
     end
   end
 end
