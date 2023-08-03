@@ -76,7 +76,7 @@ RSpec.describe CsvUploadForm, type: :form do
           form.save file
 
           expect(form.errors.messages).to include(
-            file: include(I18n.t('csv.errors.invalid_keyword_count'))
+            file: include(I18n.t('csv.errors.invalid_file_type'))
           )
         end
       end
@@ -110,7 +110,7 @@ RSpec.describe CsvUploadForm, type: :form do
       context 'given some blank keywords' do
         it 'skips those keywords' do
           form = described_class.new
-          file = FileUploadHelpers.upload_file fixture: 'blank_keywords.csv'
+          file = FileUploadHelpers.upload_file fixture: '6_keywords_and_blank_keywords.csv'
 
           expect do
             form.save file
