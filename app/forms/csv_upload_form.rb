@@ -7,7 +7,7 @@ class CsvUploadForm
 
   attr_reader :keyword_ids
 
-  validates :file, presence: true, valid_keyword_file: true
+  validates :file, presence: true, csv_keyword_file: true
 
   def save(file)
     @file = file
