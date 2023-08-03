@@ -24,7 +24,7 @@ RSpec.describe Google::ScrapeService, type: :service do
           expect(updated_keyword.links_count).to be_a Integer
         end
 
-        it 'saves all search entires', vcr: 'google/google_no_ads' do
+        it 'saves all search entries', vcr: 'google/google_no_ads' do
           keyword = Fabricate :keyword
 
           described_class.new(keyword_id: keyword.id).call!
