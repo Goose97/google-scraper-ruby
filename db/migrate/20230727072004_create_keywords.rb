@@ -17,7 +17,7 @@ class CreateKeywords < ActiveRecord::Migration[7.0]
     create_table :keyword_search_entries, id: :serial do |t|
       t.enum :kind, enum_type: 'search_entry_kind', null: false
       t.string :urls, array: true, default: []
-      t.enum :position, enum_type: 'search_entry_position'
+      t.enum :position, enum_type: 'search_entry_position', null: false
       t.timestamps
 
       t.references :keyword, foreign_key: { on_delete: :cascade }, null: false
