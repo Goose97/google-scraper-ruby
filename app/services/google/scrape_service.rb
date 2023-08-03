@@ -56,17 +56,12 @@ module Google
     end
 
     def save_scrape_result(keyword, parse_result)
-      Keyword.transaction do
-        keyword.update!(
-          links_count: parse_result.links_count,
-          result_page_html: parse_result.result_page_html,
-          status: :succeeded
-        )
-
-        # rubocop:disable Rails/SkipsModelValidations
-        keyword.keyword_search_entries.insert_all(parse_result.search_entries.map(&:to_h))
-        # rubocop:enable Rails/SkipsModelValidations
-      end
+      keyword.update!(
+        links_count: parse_result.links_count,
+        result_page_html: parse_result.result_page_html,
+        status: :succeeded,
+        keyword_search_entries: parse_result.search_entries
+      )
     end
   end
 end
