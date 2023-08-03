@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_02_035328) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_03_022448) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   # Custom types defined in this database.
   # Note that some types may not work with other database engines. Be careful if changing database.
-  create_enum "keyword_status", ["processing", "succeeded", "failed"]
+  create_enum "keyword_status", ["processing", "succeeded", "failed", "pending"]
   create_enum "search_entry_kind", ["ads", "non_ads"]
   create_enum "search_entry_position", ["top", "bottom", "main_search"]
 
@@ -32,7 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_02_035328) do
 
   create_table "keywords", id: :serial, force: :cascade do |t|
     t.string "content", limit: 255, null: false
-    t.enum "status", default: "processing", null: false, enum_type: "keyword_status"
+    t.enum "status", default: "pending", null: false, enum_type: "keyword_status"
     t.text "result_page_html"
     t.integer "links_count"
     t.datetime "created_at", null: false
