@@ -30,7 +30,7 @@ RSpec.describe Google::ParseService, type: :service do
       expect(count).to eq(50)
     end
 
-    it 'includes the html of such page', vcr: 'google/monitor_50_links' do
+    it 'includes the html of the page', vcr: 'google/monitor_50_links' do
       html = Google::SearchService.new.search! 'monitor'
 
       result_page = described_class.new(html).call.result_page_html
