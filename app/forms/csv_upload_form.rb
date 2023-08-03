@@ -3,7 +3,7 @@
 require 'csv'
 
 class CsvUploadForm
-  include ActiveModel::Validations
+  include ActiveModel::Model
 
   attr_reader :keyword_ids
 
