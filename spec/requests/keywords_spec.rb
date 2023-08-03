@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'support/file_upload_helpers'
 
-RSpec.describe KeywordsController do
+RSpec.describe 'Keywords' do
   describe 'POST #create' do
     it 'returns a 302 status code' do
       file = FileUploadHelpers.upload_file fixture: 'valid_7_keywords.csv'
