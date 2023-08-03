@@ -12,11 +12,11 @@ class CreateKeywords < ActiveRecord::Migration[7.0]
 
     create_enum  :search_entry_kind, %w[ads non_ads]
 
-    create_enum  :search_entry_position, %w[top bottom]
+    create_enum  :search_entry_position, %w[top bottom main_search]
 
     create_table :keyword_search_entries, id: :serial do |t|
       t.enum :kind, enum_type: 'search_entry_kind', null: false
-      t.string :urls, array: true, default: []
+      t.string :urls, array: true, default: [], null: false
       t.enum :position, enum_type: 'search_entry_position', null: false
       t.timestamps
 
