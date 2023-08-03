@@ -9,6 +9,7 @@ module Google
     end
 
     def call!
+      # TODO(Goose97): update failed status once we integrate with background job
       keyword = Keyword.find_by id: keyword_id
       raise_keyword_not_found unless keyword
       @keyword = keyword
