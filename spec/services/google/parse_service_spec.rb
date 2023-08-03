@@ -25,7 +25,7 @@ RSpec.describe Google::ParseService, type: :service do
     it 'counts the number of links', vcr: 'google/monitor_50_links' do
       html = Google::SearchService.new.search! 'monitor'
 
-      count = described_class.new(html).call.links_count
+      links_count = described_class.new(html).call.links_count
 
       expect(count).to eq(50)
     end
