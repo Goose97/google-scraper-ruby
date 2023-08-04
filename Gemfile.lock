@@ -458,6 +458,7 @@ DEPENDENCIES
   database_cleaner
   discard
   fabrication
+  faraday
   ffaker
   figjam
   foreman
@@ -467,6 +468,7 @@ DEPENDENCIES
   letter_opener
   listen
   mini_magick
+  nokogiri
   pagy
   parser (= 3.2.2.3)
   pg

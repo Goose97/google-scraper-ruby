@@ -50,3 +50,9 @@ RSpec/NestedGroups:
 
 RSpec/MultipleExpectations:
   Max: 10
+
+RSpec/ExampleLength:
+  Max: 10
+
+Naming/RescuedExceptionsVariableName:
+  PreferredName: 'error'
