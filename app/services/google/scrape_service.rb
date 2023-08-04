@@ -15,7 +15,7 @@ module Google
       @keyword = keyword
 
       result = parse_service.call search
-      save_scrape_result keyword, result
+      save_scrape_result! keyword, result
     end
 
     private
@@ -54,7 +54,7 @@ module Google
       )
     end
 
-    def save_scrape_result(keyword, parse_result)
+    def save_scrape_result!(keyword, parse_result)
       keyword.update!(
         links_count: parse_result.links_count,
         result_page_html: parse_result.result_page_html,
