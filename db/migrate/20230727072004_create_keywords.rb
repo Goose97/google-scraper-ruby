@@ -1,10 +1,10 @@
 class CreateKeywords < ActiveRecord::Migration[7.0]
   def change
-    create_enum  :keyword_status, %w[processing succeeded failed]
+    create_enum  :keyword_status, %w[pending processing succeeded failed]
 
     create_table :keywords, id: :serial do |t|
       t.string :content, limit: 255, null: false
-      t.enum :status, enum_type: 'keyword_status', default: 'processing', null: false
+      t.enum :status, enum_type: 'keyword_status', default: 'pending', null: false
       t.text :result_page_html
       t.integer :links_count
       t.timestamps
