@@ -16,7 +16,7 @@ module Google
         raise_keyword_not_found
       end
 
-      result = parse_service.call search
+      result = parse_service.call result_page!
       save_scrape_result! keyword, result
     end
 
@@ -24,7 +24,7 @@ module Google
 
     attr_reader :keyword_id, :keyword, :search_service, :parse_service
 
-    def search
+    def result_page!
       search_service.search! keyword.content
     rescue GoogleScraperRuby::Errors::SearchError => error
       raise_unexpected_error error
