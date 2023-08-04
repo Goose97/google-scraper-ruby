@@ -15,7 +15,7 @@ RSpec.describe CsvUploadForm, type: :form do
         expect(success).to be(true)
       end
 
-      it 'save all keywords' do
+      it 'saves all keywords' do
         form = described_class.new
         file = FileUploadHelpers.upload_file fixture: 'valid_7_keywords.csv'
 
