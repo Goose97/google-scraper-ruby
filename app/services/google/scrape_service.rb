@@ -14,20 +14,19 @@ module Google
       raise_keyword_not_found unless keyword
       @keyword = keyword
 
-      begin
-        html = search_service.search! keyword.content
-      rescue GoogleScraperRuby::Errors::SearchError => error
-        raise_unexpected_error error
-      end
-
-      result = parse_service.call(html)
-
+      result = parse_service.call search
       save_scrape_result keyword, result
     end
 
     private
 
     attr_reader :keyword_id, :keyword, :search_service, :parse_service
+
+    def search
+      search_service.search! keyword.content
+    rescue GoogleScraperRuby::Errors::SearchError => error
+      raise_unexpected_error error
+    end
 
     def raise_keyword_not_found
       Rails.logger.error <<~ERROR
