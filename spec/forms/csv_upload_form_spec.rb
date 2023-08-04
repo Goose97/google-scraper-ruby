@@ -63,7 +63,7 @@ RSpec.describe CsvUploadForm, type: :form do
           form.save file
 
           expect(form.errors.messages).to include(
-            file: include(I18n.t('csv.errors.invalid_keyword_count'))
+            file: include(I18n.t('activemodel.csv.errors.invalid_keyword_count'))
           )
         end
       end
@@ -76,7 +76,7 @@ RSpec.describe CsvUploadForm, type: :form do
           form.save file
 
           expect(form.errors.messages).to include(
-            file: include(I18n.t('csv.errors.invalid_file_type'))
+            file: include(I18n.t('activemodel.csv.errors.invalid_file_type'))
           )
         end
       end
@@ -89,7 +89,7 @@ RSpec.describe CsvUploadForm, type: :form do
           form.save file
 
           expect(form.errors.messages).to include(
-            file: include(I18n.t('csv.errors.invalid_keyword_count'))
+            file: include(I18n.t('activemodel.csv.errors.invalid_keyword_count'))
           )
         end
       end
@@ -102,7 +102,7 @@ RSpec.describe CsvUploadForm, type: :form do
           form.save file
 
           expect(form.errors.messages).to include(
-            file: include(I18n.t('csv.errors.invalid_keyword_length'))
+            file: include(I18n.t('activemodel.csv.errors.invalid_keyword_length'))
           )
         end
       end

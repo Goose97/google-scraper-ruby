@@ -17,7 +17,7 @@ class CsvUploadForm
       @keyword_ids = Keyword.create(parsed_keywords).pluck('id')
       true
     rescue ActiveRecord::ValueTooLong
-      errors.add(:file, I18n.t('csv.errors.invalid_keyword_length'))
+      errors.add(:file, I18n.t('activemodel.csv.errors.invalid_keyword_length'))
       false
     end
   end

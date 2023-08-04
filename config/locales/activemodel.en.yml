@@ -30,9 +30,10 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  csv:
-    upload_success: "Your file has been uploaded"
-    errors:
-      invalid_keyword_count: "file must contains between 1 to 1000 keywords"
-      invalid_file_type: "file must have content type of text/csv"
-      invalid_keyword_length: "keyword must have the maximum length of 255 characters"
+  activemodel:
+    csv:
+      upload_success: "Your file has been uploaded"
+      errors:
+        invalid_keyword_count: "file must contains between 1 to 1000 keywords"
+        invalid_file_type: "file must have content type of text/csv"
+        invalid_keyword_length: "keyword must have the maximum length of 255 characters"
