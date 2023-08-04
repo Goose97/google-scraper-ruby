@@ -14,9 +14,7 @@ class CsvUploadForm
     return false unless valid?
 
     begin
-      # rubocop:disable Rails/SkipsModelValidations
-      @keyword_ids = Keyword.insert_all(parsed_keywords).pluck('id')
-      # rubocop:enable Rails/SkipsModelValidations
+      @keyword_ids = Keyword.create(parsed_keywords).pluck('id')
       true
     rescue ActiveRecord::ValueTooLong
       errors.add(:file, I18n.t('csv.errors.invalid_keyword_length'))
