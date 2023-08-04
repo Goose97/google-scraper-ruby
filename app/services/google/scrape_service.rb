@@ -10,9 +10,11 @@ module Google
 
     def call!
       # TODO(Goose97): update failed status once we integrate with background job
-      keyword = Keyword.find_by id: keyword_id
-      raise_keyword_not_found unless keyword
-      @keyword = keyword
+      begin
+        @keyword = Keyword.find keyword_id
+      rescue ActiveRecord::RecordNotFound
+        raise_keyword_not_found
+      end
 
       result = parse_service.call search
       save_scrape_result! keyword, result
