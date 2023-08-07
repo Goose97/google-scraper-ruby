@@ -6,6 +6,7 @@ class CsvUploadForm
   include ActiveModel::Model
 
   attr_reader :keyword_ids
+  attr_accessor :keywords
 
   validates :file, presence: true, csv_keyword_file: true
 
@@ -14,7 +15,8 @@ class CsvUploadForm
     return false unless valid?
 
     begin
-      @keyword_ids = Keyword.create(parsed_keywords).pluck('id')
+      entries = keywords.map { |keyword| { content: keyword } }
+      @keyword_ids = Keyword.create(entries).pluck('id')
       true
     rescue ActiveRecord::ValueTooLong
       errors.add(:file, I18n.t('activemodel.csv.errors.invalid_keyword_length'))
@@ -25,11 +27,4 @@ class CsvUploadForm
   private
 
   attr_reader :file
-
-  def parsed_keywords
-    CSV.read(file).filter_map do |record|
-      content = record.join ','
-      { content: content } unless content.strip.empty?
-    end
-  end
 end
