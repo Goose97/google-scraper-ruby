@@ -11,4 +11,10 @@ class Keyword < ApplicationRecord
             presence: true,
             numericality: { greater_than_or_equal_to: 0 },
             if: :succeeded?
+
+  after_create_commit :enqueue_scrape_job
+
+  def enqueue_scrape_job
+    ScrapeKeywordJob.perform_later keyword_id: id
+  end
 end
