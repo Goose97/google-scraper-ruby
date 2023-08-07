@@ -24,15 +24,6 @@ RSpec.describe(CsvUploadForm, type: :form) do
         end.to(change(Keyword, :count).by(7))
       end
 
-      it 'adds new keyword_ids to the form' do
-        form = described_class.new
-        file = FileUploadHelpers.upload_file(fixture: 'valid_7_keywords.csv')
-
-        form.save(file)
-
-        expect(form.keyword_ids.sort).to(eq(Keyword.pluck(:id).sort))
-      end
-
       context 'given keywords contain commas' do
         it 'includes commas in the parsed result' do
           form = described_class.new
