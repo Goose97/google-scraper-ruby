@@ -14,14 +14,9 @@ class CsvUploadForm
     @file = file
     return false unless valid?
 
-    begin
-      entries = keywords.map { |keyword| { content: keyword } }
-      @keyword_ids = Keyword.create(entries).pluck('id')
-      true
-    rescue ActiveRecord::ValueTooLong
-      errors.add(:file, I18n.t('activemodel.csv.errors.invalid_keyword_length'))
-      false
-    end
+    entries = keywords.map { |keyword| { content: keyword } }
+    @keyword_ids = Keyword.create(entries).pluck('id')
+    true
   end
 
   private
