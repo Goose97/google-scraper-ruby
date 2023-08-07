@@ -5,10 +5,11 @@ require 'csv'
 class CsvKeywordFileValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     @file = value
+    record.errors.add(attribute, I18n.t('activemodel.csv.errors.invalid_file_type')) unless valid_content_type?
+
     @keywords = parsed_keywords
     record.keywords = @keywords
 
-    record.errors.add(attribute, I18n.t('activemodel.csv.errors.invalid_file_type')) unless valid_content_type?
     record.errors.add(attribute, I18n.t('activemodel.csv.errors.invalid_keyword_count')) unless valid_record_count?
     record.errors.add(attribute, I18n.t('activemodel.csv.errors.invalid_keyword_length')) unless valid_keyword_length?
   end
