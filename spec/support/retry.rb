@@ -9,7 +9,7 @@ RSpec.configure do |config|
   config.display_try_failure_messages = true
 
   # run retry only on system tests
-  config.around :each, type: :system do |example|
-    example.run_with_retry retry: ENV.fetch('TEST_RETRY').to_i
+  config.around(:each, type: :system) do |example|
+    example.run_with_retry(retry: ENV.fetch('TEST_RETRY').to_i)
   end
 end

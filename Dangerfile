@@ -23,7 +23,7 @@ stylelint.lint
 # https://github.com/marcelofabri/danger-simplecov_json/blob/master/lib/simplecov_json/plugin.rb#L31
 # rubocop:disable Style/GuardClause, Style/SignalException
 coverage_path = 'coverage/coverage.json'
-if File.exist? coverage_path
+if File.exist?(coverage_path)
   coverage_json = JSON.parse(File.read(coverage_path), symbolize_names: true)
   metrics = coverage_json[:metrics]
   percentage = metrics[:covered_percent]

@@ -56,3 +56,6 @@ RSpec/ExampleLength:
 
 Naming/RescuedExceptionsVariableName:
   PreferredName: 'error'
+
+Style/MethodCallWithArgsParentheses:
+  Enabled: true
