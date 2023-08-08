@@ -96,6 +96,15 @@ RSpec.describe(CsvUploadForm, type: :form) do
                                             file: include(I18n.t('activemodel.csv.errors.invalid_keyword_length'))
                                           ))
         end
+
+        it 'adds NO keywords' do
+          form = described_class.new
+          file = FileUploadHelpers.upload_file(fixture: 'too_long_keywords.csv')
+
+          expect do
+            form.save(file)
+          end.not_to(change(Keyword, :count))
+        end
       end
 
       context 'given some blank keywords' do
