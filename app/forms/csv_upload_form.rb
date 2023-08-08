@@ -14,7 +14,7 @@ class CsvUploadForm
     return false unless valid?
 
     entries = keywords.map { |keyword| { content: keyword } }
-    Keyword.create(entries).pluck('id')
+    Keyword.create(entries)
     true
   end
 
