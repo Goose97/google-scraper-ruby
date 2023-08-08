@@ -13,8 +13,12 @@ class CsvUploadForm
     @file = file
     return false unless valid?
 
-    entries = keywords.map { |keyword| { content: keyword } }
-    Keyword.create(entries)
+    ActiveRecord::Base.transaction do
+      keywords.each do |keyword|
+        Keyword.create(content: keyword)
+      end
+    end
+
     true
   end
 
