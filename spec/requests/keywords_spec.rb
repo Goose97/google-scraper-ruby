@@ -37,7 +37,7 @@ RSpec.describe('Keywords') do
 
         post keywords_path, params: { csv_upload_form: { file: file } }
 
-        expect(flash[:alert]).not_to(be_nil)
+        expect(flash[:alert]).to(eq(I18n.t('activemodel.csv.errors.invalid_keyword_count')))
       end
     end
   end
