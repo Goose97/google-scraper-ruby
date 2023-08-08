@@ -27,7 +27,7 @@ module Google
     def result_page!
       search_service.search!(keyword.content)
     rescue GoogleScraperRuby::Errors::SearchError => error
-      raise_unexpected_error(error)
+      raise_scrape_error(error)
     end
 
     def raise_keyword_not_found
@@ -45,7 +45,7 @@ module Google
     end
 
     # rubocop:disable Metrics/MethodLength
-    def raise_unexpected_error(error)
+    def raise_scrape_error(error)
       Rails.logger.error(
         <<~ERROR
           [#{self.class.name}]: unexpected error while processing request
@@ -56,7 +56,7 @@ module Google
 
       raise(GoogleScraperRuby::Errors::ScrapeError.new(
               keyword_id: keyword_id,
-              kind: :unexpected_error,
+              kind: :search_error,
               error: error
             ))
     end
