@@ -53,9 +53,8 @@ RSpec.describe(CsvUploadForm, type: :form) do
 
           form.save(file)
 
-          expect(form.errors.messages).to(include(
-                                            file: include(I18n.t('activemodel.csv.errors.invalid_keyword_count'))
-                                          ))
+          error_message = I18n.t('activemodel.csv.errors.invalid_keyword_count')
+          expect(form.errors.messages_for(:keywords)).to(include(error_message))
         end
       end
 
@@ -66,9 +65,8 @@ RSpec.describe(CsvUploadForm, type: :form) do
 
           form.save(file)
 
-          expect(form.errors.messages).to(include(
-                                            file: include(I18n.t('activemodel.csv.errors.invalid_file_type'))
-                                          ))
+          error_message = include(I18n.t('activemodel.csv.errors.invalid_file_type'))
+          expect(form.errors.messages_for(:file)).to(include(error_message))
         end
       end
 
@@ -79,9 +77,8 @@ RSpec.describe(CsvUploadForm, type: :form) do
 
           form.save(file)
 
-          expect(form.errors.messages).to(include(
-                                            file: include(I18n.t('activemodel.csv.errors.invalid_keyword_count'))
-                                          ))
+          error_message = include(I18n.t('activemodel.csv.errors.invalid_keyword_count'))
+          expect(form.errors.messages_for(:keywords)).to(include(error_message))
         end
       end
 
@@ -92,9 +89,8 @@ RSpec.describe(CsvUploadForm, type: :form) do
 
           form.save(file)
 
-          expect(form.errors.messages).to(include(
-                                            file: include(I18n.t('activemodel.csv.errors.invalid_keyword_length'))
-                                          ))
+          error_message = include(I18n.t('activemodel.csv.errors.invalid_keyword_length'))
+          expect(form.errors.messages_for(:keywords)).to(include(error_message))
         end
 
         it 'adds NO keywords' do
