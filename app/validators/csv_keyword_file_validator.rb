@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'csv'
-
 class CsvKeywordFileValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
     @file = value
