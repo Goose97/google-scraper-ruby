@@ -15,8 +15,8 @@ class Keyword < ApplicationRecord
   after_create_commit :enqueue_scrape_job
 
   private
-  
+
   def enqueue_scrape_job
-    ScrapeKeywordJob.perform_later keyword_id: id
+    ScrapeKeywordJob.perform_later(keyword_id: id)
   end
 end

@@ -16,6 +16,6 @@ class ScrapeKeywordJob < ApplicationJob
   def perform(keyword_id:)
     Google::ScrapeService.new(keyword_id: keyword_id).call!
   rescue GoogleScraperRuby::Errors::ScrapeError => error
-    raise error unless error.kind == :invalid_keyword
+    raise(error) unless error.kind == :invalid_keyword
   end
 end

@@ -19,13 +19,13 @@ describe ScrapeKeywordJob do
 
       context 'when an unexpected error occurs' do
         it 'retries at most 3 times' do
-          keyword = Fabricate :keyword
+          keyword = Fabricate(:keyword)
 
           stub = Google::ScrapeService.new(keyword_id: keyword.id)
-          allow(stub).to receive(:call!).and_raise(
-            GoogleScraperRuby::Errors::ScrapeError.new(keyword_id: keyword.id, kind: :unexpected_error)
-          )
-          allow(Google::ScrapeService).to receive(:new).and_return(stub)
+          allow(stub).to(receive(:call!).and_raise(
+                           GoogleScraperRuby::Errors::ScrapeError.new(keyword_id: keyword.id, kind: :unexpected_error)
+                         ))
+          allow(Google::ScrapeService).to(receive(:new).and_return(stub))
 
           perform_enqueued_jobs { described_class.perform_later(keyword_id: keyword.id) }
 
@@ -34,18 +34,18 @@ describe ScrapeKeywordJob do
 
         context 'when the maximum retry times is exceeded' do
           it 'sets the keyword status as :failed' do
-            keyword = Fabricate :keyword
+            keyword = Fabricate(:keyword)
 
             stub = Google::ScrapeService.new(keyword_id: keyword.id)
-            allow(stub).to receive(:call!).and_raise(
-              GoogleScraperRuby::Errors::ScrapeError.new(keyword_id: keyword.id, kind: :unexpected_error)
-            )
-            allow(Google::ScrapeService).to receive(:new).and_return(stub)
+            allow(stub).to(receive(:call!).and_raise(
+                             GoogleScraperRuby::Errors::ScrapeError.new(keyword_id: keyword.id, kind: :unexpected_error)
+                           ))
+            allow(Google::ScrapeService).to(receive(:new).and_return(stub))
 
             perform_enqueued_jobs { described_class.perform_later(keyword_id: keyword.id) }
             keyword.reload
 
-            expect(keyword).to be_failed
+            expect(keyword).to(be_failed)
           end
         end
       end
