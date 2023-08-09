@@ -3,7 +3,7 @@
 require 'rails_helper'
 require 'support/http_client_helpers'
 
-RSpec.describe Google::SearchService, type: :service do
+RSpec.describe(Google::SearchService, type: :service) do
   describe '#search!' do
     context 'given a 2xx response' do
       it 'returns the result page html when the request succeeds' do
@@ -11,11 +11,11 @@ RSpec.describe Google::SearchService, type: :service do
         service = described_class.new
 
         HttpClientHelpers.stub_http_adapter do |adapter, connection|
-          allow(service).to receive(:http_client).and_return(connection)
+          allow(service).to(receive(:http_client).and_return(connection))
           adapter.get('/search') { [200, { 'Content-Type': 'text/html' }, html] }
         end
 
-        expect(service.search!('hello world')).to eq(html)
+        expect(service.search!('hello world')).to(eq(html))
       end
     end
 
@@ -24,13 +24,13 @@ RSpec.describe Google::SearchService, type: :service do
         service = described_class.new
 
         HttpClientHelpers.stub_http_adapter do |adapter, connection|
-          allow(service).to receive(:http_client).and_return(connection)
+          allow(service).to(receive(:http_client).and_return(connection))
           adapter.get('/search') { [429, {}, 'Too Many Requests'] }
         end
 
         expect do
           service.search!('hello world')
-        end.to raise_error(GoogleScraperRuby::Errors::SearchError)
+        end.to(raise_error(GoogleScraperRuby::Errors::SearchError))
       end
     end
 
@@ -39,13 +39,13 @@ RSpec.describe Google::SearchService, type: :service do
         service = described_class.new
 
         HttpClientHelpers.stub_http_adapter do |adapter, connection|
-          allow(service).to receive(:http_client).and_return(connection)
+          allow(service).to(receive(:http_client).and_return(connection))
           adapter.get('/search') { [500, {}, 'Internal Server Error'] }
         end
 
         expect do
           service.search!('hello world')
-        end.to raise_error(GoogleScraperRuby::Errors::SearchError)
+        end.to(raise_error(GoogleScraperRuby::Errors::SearchError))
       end
     end
 
@@ -54,13 +54,13 @@ RSpec.describe Google::SearchService, type: :service do
         service = described_class.new
 
         HttpClientHelpers.stub_http_adapter do |adapter, connection|
-          allow(service).to receive(:http_client).and_return(connection)
+          allow(service).to(receive(:http_client).and_return(connection))
           adapter.get('/search') { raise Faraday::ConnectionFailed }
         end
 
         expect do
           service.search!('hello world')
-        end.to raise_error(GoogleScraperRuby::Errors::SearchError)
+        end.to(raise_error(GoogleScraperRuby::Errors::SearchError))
       end
     end
   end
