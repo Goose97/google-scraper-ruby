@@ -1,7 +1,7 @@
 <div class="container mt-2">
   <div>
     <% if flash[:errors] %>
-      <div class="alert alert-danger">
+      <div class="alert alert-danger" data-testid="alert-error">
         <% flash[:errors].each do |error| %>
           <p class="mb-0"><%= error %></p>
         <% end %>
@@ -9,7 +9,7 @@
     <% end %>
 
     <% if flash[:success] %>
-      <p class="alert alert-success"><%= flash[:success] %></p>
+      <p class="alert alert-success" data-testid="alert-success"><%= flash[:success] %></p>
     <% end %>
   </div>
 </div>
