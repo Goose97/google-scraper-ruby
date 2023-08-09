@@ -1,0 +1,15 @@
+<div class="container mt-2">
+  <div>
+    <% if flash[:errors] %>
+      <div class="alert alert-danger">
+        <% flash[:errors].each do |error| %>
+          <p class="mb-0"><%= error %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <% if flash[:success] %>
+      <p class="alert alert-success"><%= flash[:success] %></p>
+    <% end %>
+  </div>
+</div>
