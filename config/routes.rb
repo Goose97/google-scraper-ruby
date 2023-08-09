@@ -4,5 +4,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
 
-  resources :keywords, only: %i[create]
+  root 'keywords#index'
+
+  resources :keywords, only: %i[index create]
 end
