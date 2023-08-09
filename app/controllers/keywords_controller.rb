@@ -15,7 +15,7 @@ class KeywordsController < ApplicationController
     if form.save(create_params[:file])
       flash[:notice] = I18n.t('activemodel.csv.upload_success')
     else
-      flash[:alert] = form.errors.full_messages
+      flash[:errors] = form.errors.full_messages
     end
 
     redirect_to(keywords_path)
