@@ -1,6 +1,6 @@
 // JavaScript entry file
-import "./vendor/";
-import "./translations/translations";
+import './vendor/';
+import './translations/translations';
 
-import "./initializers/";
-import "./screens/";
+import './initializers/';
+import './screens/';
