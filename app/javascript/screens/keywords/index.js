@@ -1,7 +1,7 @@
 import CsvUploadForm from '../../components/csv_upload_form';
 
 const SELECTOR = {
-  screen: '.screen-keyword',
+  screen: '.keywords.index',
   uploadForm: '.form-csv-upload',
 };
 
