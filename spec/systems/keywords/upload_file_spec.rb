@@ -9,8 +9,8 @@ describe 'Upload CSV files', type: :system do
 
       expect(page).to(have_current_path(keywords_path))
 
-      error_message = I18n.t('activemodel.csv.upload_success')
-      expect(find('[data-testid="alert-success"]')).to(have_content(error_message))
+      success_message = I18n.t('activemodel.csv.upload_success')
+      expect(find('[data-testid="alert-notice"]')).to(have_content(success_message))
     end
   end
 
