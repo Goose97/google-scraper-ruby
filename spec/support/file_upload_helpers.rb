@@ -9,10 +9,10 @@ module FileUploadHelpers
   end
 
   module System
-    def upload_file(fixture)
+    def upload_file(fixture:, file_input_field:)
       visit(root_path)
       path = Rails.root.join('spec', 'fixtures', 'files', fixture)
-      page.attach_file('csv_upload_form[file]', path, visible: false)
+      page.attach_file(file_input_field, path, visible: false)
     end
   end
 end
