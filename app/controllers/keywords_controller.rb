@@ -2,10 +2,11 @@
 
 class KeywordsController < ApplicationController
   def index
-    pagy, = pagy(KeywordsQuery.new.call)
+    pagy, keywords = pagy(KeywordsQuery.new.call)
 
     render(locals: {
-             pagy: pagy
+             pagy: pagy,
+             presenters: keywords.map { |keyword| KeywordPresenter.new(keyword: keyword) }
            })
   end
 
