@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require 'support/keyword_helpers'
 
 RSpec.describe(KeywordsQuery) do
   describe '#call' do

@@ -1,7 +1,14 @@
 # frozen_string_literal: true
 
 class KeywordsController < ApplicationController
-  def index; end
+  def index
+    pagy, keywords = pagy(KeywordsQuery.new.call)
+
+    render(locals: {
+             pagy: pagy,
+             presenters: keywords.map { |keyword| KeywordPresenter.new(keyword: keyword) }
+           })
+  end
 
   def create
     form = CsvUploadForm.new
