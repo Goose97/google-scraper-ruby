@@ -21,4 +21,6 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.include(Rails.application.routes.url_helpers)
+
+  config.include(FileUploadHelpers::System, type: :system)
 end

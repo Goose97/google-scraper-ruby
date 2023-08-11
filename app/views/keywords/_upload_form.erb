@@ -1,0 +1,14 @@
+<%= form_for(:csv_upload_form,
+             as: CsvUploadForm,
+             url: keywords_path,
+             method: :post,
+             class: 'form-csv-upload py-4 d-flex justify-content-center'
+            ) do |f| %>
+  <%= f.label(:file, class: 'py-2 px-3') do %>
+    <span class='btn btn-success' role='button'>
+      <%= I18n.t('keywords.upload') %>
+    </span>
+  <% end %>
+
+  <%= f.file_field(:file, class: 'form-csv-upload__file-input d-none', accept: 'text/csv') %>
+<% end %>

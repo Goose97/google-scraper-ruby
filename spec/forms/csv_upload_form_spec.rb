@@ -82,7 +82,7 @@ RSpec.describe(CsvUploadForm, type: :form) do
         end
       end
 
-      context 'given the keyword that has more than 255 characters' do
+      context 'given a keyword that has more than 255 characters' do
         it 'adds an error' do
           form = described_class.new
           file = FileUploadHelpers::Form.upload_file(fixture: 'too_long_keywords.csv')
