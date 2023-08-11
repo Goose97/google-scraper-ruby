@@ -1,4 +1,5 @@
 .keywords-table {
+  @extend .border;
   max-height: 75vh;
   overflow: auto;
 
@@ -12,3 +13,4 @@
     margin-top: 1rem;
   }
 }
+/* stylelint-enable selector-max-id */
