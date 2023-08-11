@@ -21,7 +21,7 @@
             </span>
           </td>
           <td><%= presenter.keyword.created_at.strftime("%H:%M, %-d %B") %></td>
-          <td><%= link_to("See details", keyword_path(presenter.keyword)) %></td>
+          <td><%= link_to(I18n.t("keywords.see_details"), keyword_path(presenter.keyword)) %></td>
         </tr>
       <% end %>
     </tbody>
