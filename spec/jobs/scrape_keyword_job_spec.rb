@@ -13,7 +13,7 @@ describe ScrapeKeywordJob do
             described_class.perform_later(keyword_id: 42)
           end
 
-          assert_performed_jobs 1
+          assert_performed_jobs(1)
         end
       end
 
@@ -29,7 +29,7 @@ describe ScrapeKeywordJob do
 
           perform_enqueued_jobs { described_class.perform_later(keyword_id: keyword.id) }
 
-          assert_performed_jobs 3
+          assert_performed_jobs(3)
         end
 
         context 'when the maximum retry times is exceeded' do
