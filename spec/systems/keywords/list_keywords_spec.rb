@@ -15,10 +15,17 @@ describe 'View keywords list', type: :system do
   end
 
   context 'given SOME keywords' do
-    it 'displays the pagination nav' do
+    it 'displays a link to keywords#show for each keyword and displays the pagination nav' do
       Fabricate.times(FFaker::Random.rand(1..100), :keyword)
 
       visit(root_path)
+
+      within('tbody') do |tbody|
+        tbody.all('tr').each do |row|
+          keyword_id = row['data-keyword-id']
+          expect(row).to(have_link('', href: keyword_path(keyword_id)))
+        end
+      end
 
       expect(page).to(have_selector('nav#keywords-table__pagination'))
     end

@@ -12,7 +12,7 @@
 
     <tbody class="keywords-table__body">
       <% presenters.map do |presenter| %>
-        <tr>
+        <tr data-keyword-id="<%= presenter.keyword.id %>">
           <td><%= presenter.keyword.id %></td>
           <td><%= presenter.keyword.content %></td>
           <td>
