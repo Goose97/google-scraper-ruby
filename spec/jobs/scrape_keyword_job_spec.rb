@@ -21,11 +21,11 @@ describe ScrapeKeywordJob do
         it 'retries at most 3 times' do
           keyword = Fabricate(:keyword)
 
-          stub = Google::ScrapeService.new(keyword_id: keyword.id)
-          allow(stub).to(receive(:call!).and_raise(
-                           GoogleScraperRuby::Errors::ScrapeError.new(keyword_id: keyword.id, kind: :unexpected_error)
-                         ))
-          allow(Google::ScrapeService).to(receive(:new).and_return(stub))
+          scrape_service = instance_double(Google::ScrapeService)
+          allow(scrape_service).to(receive(:call!).and_raise(
+                                     GoogleScraperRuby::Errors::ScrapeError.new(keyword_id: keyword.id, kind: :unexpected_error)
+                                   ))
+          allow(Google::ScrapeService).to(receive(:new).and_return(scrape_service))
 
           perform_enqueued_jobs { described_class.perform_later(keyword_id: keyword.id) }
 
