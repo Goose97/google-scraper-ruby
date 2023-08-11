@@ -1,15 +1,17 @@
 .keywords-table {
+  @extend .border;
   max-height: 75vh;
   overflow: auto;
-  @extend .border;
 
-  .keywords-table__body {
+  &__body {
     font-variant-numeric: tabular-nums;
   }
 }
 
+/* stylelint-disable selector-max-id */
 #keywords-table__pagination {
-  margin-top: 1rem;
   display: flex;
   justify-content: center;
+  margin-top: 1rem;
 }
+/* stylelint-enable selector-max-id */
