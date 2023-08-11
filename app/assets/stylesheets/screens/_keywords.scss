@@ -1,0 +1,15 @@
+.keywords-table {
+  max-height: 75vh;
+  overflow: auto;
+  @extend .border;
+
+  .keywords-table__body {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+#keywords-table__pagination {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+}

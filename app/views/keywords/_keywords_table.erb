@@ -1,0 +1,29 @@
+<div class="keywords-table">
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Keyword</th>
+        <th scope="col">Status</th>
+        <th scope="col">Uploaded at</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+
+    <tbody class="keywords-table__body">
+      <% presenters.map do |presenter| %>
+        <tr>
+          <td><%= presenter.keyword.id %></td>
+          <td><%= presenter.keyword.content %></td>
+          <td>
+            <span class="<%= presenter.status_badge %>">
+              <%= presenter.keyword.status.capitalize %>
+            </span>
+          </td>
+          <td><%= presenter.keyword.created_at.strftime("%H:%M, %-d %B") %></td>
+          <td><%= link_to("See details", keyword_path(presenter.keyword)) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
