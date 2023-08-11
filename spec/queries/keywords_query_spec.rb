@@ -6,8 +6,6 @@ RSpec.describe(KeywordsQuery) do
   describe '#call' do
     context 'given NO keywords' do
       it 'returns an empty list' do
-        Keyword.delete_all
-
         keywords = described_class.new.call
 
         expect(keywords).to(be_empty)
@@ -16,7 +14,6 @@ RSpec.describe(KeywordsQuery) do
 
     context 'given 5 keywords' do
       it 'returns 5 keywords' do
-        Keyword.delete_all
         Fabricate.times(5, :keyword)
 
         keywords = described_class.new.call
@@ -25,7 +22,6 @@ RSpec.describe(KeywordsQuery) do
       end
 
       it 'returns keywords sorted by content in descending order' do
-        Keyword.delete_all
         Fabricate.times(5, :keyword)
 
         keywords = described_class.new.call
