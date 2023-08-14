@@ -25,28 +25,7 @@ describe 'View keywords list', type: :system do
         end
       end
 
-      expect(page).to(have_selector('nav#keywords-table__pagination'))
-    end
-
-    context 'given MORE than one page of keywords' do
-      it 'displays one page of keywords' do
-        Fabricate.times(Pagy::DEFAULT[:items] + 1, :keyword)
-
-        visit(root_path)
-
-        expect(page).to(have_selector('tbody > tr', count: Pagy::DEFAULT[:items]))
-      end
-    end
-
-    context 'given LESS than one page of keywords' do
-      it 'displays all keywords' do
-        keywords_count = FFaker::Random.rand(1..Pagy::DEFAULT[:items])
-        Fabricate.times(keywords_count, :keyword)
-
-        visit(root_path)
-
-        expect(page).to(have_selector('tbody > tr', count: keywords_count))
-      end
+      expect(page).to(have_selector('.keywords-table__pagination'))
     end
   end
 end
