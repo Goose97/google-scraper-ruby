@@ -3,6 +3,8 @@
 module GoogleScraperRuby
   module Errors
     class ScrapeError < StandardError
+      attr_reader :kind
+
       def initialize(keyword_id:, kind:, error: nil)
         @keyword_id = keyword_id
         @kind = kind
@@ -21,7 +23,7 @@ module GoogleScraperRuby
 
       private
 
-      attr_reader :keyword_id, :kind, :original_error
+      attr_reader :keyword_id, :original_error
     end
   end
 end

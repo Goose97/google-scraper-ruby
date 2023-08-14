@@ -24,6 +24,17 @@ RSpec.describe(CsvUploadForm, type: :form) do
         end.to(change(Keyword, :count).by(7))
       end
 
+      it 'enqueues a ScrapeKeywordJob for each keyword' do
+        ActiveJob::Base.queue_adapter = :test
+        form = described_class.new
+        file = FileUploadHelpers::Form.upload_file(fixture: 'valid_7_keywords.csv')
+
+        form.save(file)
+
+        # It would be better if we can assert that keyword_id also matches
+        expect(ScrapeKeywordJob).to(have_been_enqueued.exactly(7))
+      end
+
       context 'given keywords contain commas' do
         it 'includes commas in the parsed result' do
           form = described_class.new

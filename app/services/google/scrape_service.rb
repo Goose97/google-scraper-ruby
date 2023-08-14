@@ -9,9 +9,9 @@ module Google
     end
 
     def call!
-      # TODO(Goose97): update failed status once we integrate with background job
       begin
         @keyword = Keyword.find(keyword_id)
+        keyword.update(status: :processing)
       rescue ActiveRecord::RecordNotFound
         raise_keyword_not_found
       end
