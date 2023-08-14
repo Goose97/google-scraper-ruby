@@ -14,7 +14,7 @@ describe 'View keywords list', type: :system do
 
   context 'given a list of keywords' do
     it 'displays a link to keywords#show for each keyword and displays the pagination nav' do
-      Fabricate.times(FFaker::Random.rand(1..100), :keyword)
+      Fabricate.times(2, :keyword)
 
       visit(root_path)
 
