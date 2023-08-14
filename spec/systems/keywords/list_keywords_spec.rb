@@ -5,8 +5,6 @@ require 'rails_helper'
 describe 'View keywords list', type: :system do
   context 'given NO keyword' do
     it 'displays a no-keyword notice and DO NOT displays the pagination nav' do
-      Keyword.delete_all
-
       visit(root_path)
 
       expect(page).to(have_selector('[data-testid="no-keyword-notice"]'))
