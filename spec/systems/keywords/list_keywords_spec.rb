@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 describe 'View keywords list', type: :system do
+  include ActiveJob::TestHelper
+
   context 'given NO keyword' do
     it 'displays a no-keyword notice and DO NOT displays the pagination nav' do
       visit(root_path)
@@ -26,6 +28,19 @@ describe 'View keywords list', type: :system do
       end
 
       expect(page).to(have_selector('.keywords-table__pagination'))
+    end
+
+    it 'updates the UI after the keyword finish processing', vcr: 'google/google_no_ads' do
+      keyword = Fabricate(:keyword)
+
+      visit(root_path)
+      perform_enqueued_jobs do
+        ScrapeKeywordJob.perform_later(keyword_id: keyword.id)
+      end
+
+      within("tbody > tr[data-keyword-id=\"#{keyword.id}\"]") do |tr|
+        expect(tr.find('td[data-testid="status"]')).to(have_content('Succeeded'))
+      end
     end
   end
 end
