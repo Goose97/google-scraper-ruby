@@ -17,4 +17,8 @@ class KeywordPresenter
   def status_badge
     "badge #{STATUS_BADGE[keyword.status]}"
   end
+
+  def upload_time
+    keyword.created_at.strftime('%H:%M, %-d %B')
+  end
 end

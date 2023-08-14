@@ -20,7 +20,7 @@
               <%= presenter.keyword.status.capitalize %>
             </span>
           </td>
-          <td><%= presenter.keyword.created_at.strftime("%H:%M, %-d %B") %></td>
+          <td><%= presenter.upload_time %></td>
           <td><%= link_to(I18n.t("keywords.see_details"), keyword_path(presenter.keyword)) %></td>
         </tr>
       <% end %>
