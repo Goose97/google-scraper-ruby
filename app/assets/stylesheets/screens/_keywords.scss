@@ -6,12 +6,10 @@
   &__body {
     font-variant-numeric: tabular-nums;
   }
-}
 
-/* stylelint-disable selector-max-id */
-#keywords-table__pagination {
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
+  &__pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+  }
 }
-/* stylelint-enable selector-max-id */

@@ -5,6 +5,9 @@
       <%= I18n.t('keywords.no_keyword') %>
     </div>
   <% else %>
-    <%== pagy_bootstrap_nav(pagy, pagy_id: "keywords-table__pagination", link_extra: 'data-remote="true" class="my-class"') %>
+    <%= render 'keywords_table', keyword_presenter: keyword_presenter, pagy: pagy %>
+    <div class="keywords-table__pagination">
+      <%== pagy_bootstrap_nav(pagy) %>
+    </div>
   <% end %>
 </div>
