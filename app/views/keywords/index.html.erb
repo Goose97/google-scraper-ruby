@@ -1,11 +1,10 @@
 <div>
   <%= render 'upload_form' %>
-  <% if presenters.empty? %>
+  <% if keyword_presenter.empty? %>
     <div class="d-flex justify-content-center" data-testid="no-keyword-notice">
       <%= I18n.t('keywords.no_keyword') %>
     </div>
   <% else %>
-    <%= render 'keywords_table', presenters: presenters, pagy: pagy %>
     <%== pagy_bootstrap_nav(pagy, pagy_id: "keywords-table__pagination", link_extra: 'data-remote="true" class="my-class"') %>
   <% end %>
 </div>
