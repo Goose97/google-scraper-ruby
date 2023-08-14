@@ -14,15 +14,15 @@ RSpec.describe(KeywordsQuery) do
 
     context 'given a list of keywords' do
       it 'returns all keywords' do
-        Fabricate.times(5, :keyword)
+        Fabricate.times(2, :keyword)
 
         keywords = described_class.new.call
 
-        expect(keywords.length).to(eq(5))
+        expect(keywords.length).to(eq(2))
       end
 
       it 'returns keywords sorted by content in descending order' do
-        Fabricate.times(5, :keyword)
+        Fabricate.times(2, :keyword)
 
         keywords = described_class.new.call
 
