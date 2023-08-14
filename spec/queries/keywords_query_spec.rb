@@ -12,8 +12,8 @@ RSpec.describe(KeywordsQuery) do
       end
     end
 
-    context 'given 5 keywords' do
-      it 'returns 5 keywords' do
+    context 'given a list of keywords' do
+      it 'returns all keywords' do
         Fabricate.times(5, :keyword)
 
         keywords = described_class.new.call
