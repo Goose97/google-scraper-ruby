@@ -12,7 +12,7 @@ describe 'View keywords list', type: :system do
     end
   end
 
-  context 'given SOME keywords' do
+  context 'given a list of keywords' do
     it 'displays a link to keywords#show for each keyword and displays the pagination nav' do
       Fabricate.times(FFaker::Random.rand(1..100), :keyword)
 
