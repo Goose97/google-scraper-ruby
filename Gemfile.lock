@@ -300,6 +300,8 @@ GEM
     rb-inotify (0.10.1)
       ffi (~> 1.0)
     rchardet (1.8.0)
+    redis (5.0.7)
+      redis-client (>= 0.9.0)
     redis-client (0.14.1)
       connection_pool
     reek (6.1.4)
@@ -408,6 +410,10 @@ GEM
     thor (1.2.2)
     timecop (0.9.6)
     timeout (0.4.0)
+    turbo-rails (1.4.0)
+      actionpack (>= 6.0.0)
+      activejob (>= 6.0.0)
+      railties (>= 6.0.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     undercover (0.4.6)
@@ -479,6 +485,7 @@ DEPENDENCIES
   rack-timeout
   rails (= 7.0.6)
   rails-controller-testing
+  redis
   roadie-rails
   rspec-rails (~> 6.0)
   rspec-retry
@@ -497,6 +504,7 @@ DEPENDENCIES
   spring-watcher-listen (= 2.1.0)
   sprockets-rails
   timecop
+  turbo-rails
   tzinfo-data
   undercover
   vcr
