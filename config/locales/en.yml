@@ -1,3 +1,5 @@
 en:
   keywords:
     upload: "Upload"
+    no_keyword: "You don't have any keywords. Please upload some."
+    view_detail_link: "See details"

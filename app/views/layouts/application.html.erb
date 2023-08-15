@@ -10,7 +10,7 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body class="<%= "#{controller_name.dasherize} #{action_name.dasherize}" %>">
+  <body class="<%= "#{controller_name.dasherize} #{action_name.dasherize}" %> px-4 py-2">
     <%= render "shared/alert" %>
     <%= yield %>
   </body>
