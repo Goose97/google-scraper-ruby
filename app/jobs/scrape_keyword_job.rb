@@ -10,7 +10,8 @@ class ScrapeKeywordJob < ApplicationJob
     # TODO(Goose97): better handle database failure
     # If the below update crashes, the system ends up in an inconsistent state: the job still
     # has :processing status but already moved to Sidekiq dead queue
-    Keyword.update(keyword_id, status: :failed)
+    keyword = Keyword.update(keyword_id, status: :failed)
+    Google::ScrapeService.broadcast_status_update(keyword)
   end
 
   def perform(keyword_id:)

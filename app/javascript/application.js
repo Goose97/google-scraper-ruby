@@ -4,3 +4,4 @@ import './translations/translations';
 
 import './initializers/';
 import './screens/';
+import "@hotwired/turbo-rails"
