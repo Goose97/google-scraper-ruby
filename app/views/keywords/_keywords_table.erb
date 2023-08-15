@@ -13,9 +13,11 @@
     </thead>
 
     <tbody class="keywords-table__body">
-      <% keyword_presenter.map do |presenter| %>
-        <%= render("keywords_table_row", presenter: presenter) %>
-      <% end %>
+      <%= render(
+        partial: "keywords_table_row",
+        collection: keyword_collection_presenter.keywords,
+        as: :presenter
+      ) %>
     </tbody>
   </table>
 </div>
