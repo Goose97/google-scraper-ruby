@@ -7,5 +7,9 @@
     </span>
   </td>
   <td><%= presenter.upload_time %></td>
-  <td><%= link_to(I18n.t("keywords.view_detail_link"), keyword_path(presenter.keyword)) %></td>
+  <td>
+    <% if presenter.show_detail_link? %>
+      <%= link_to(I18n.t("keywords.view_detail_link"), keyword_path(presenter.keyword)) %>
+    <% end %>
+  </td>
 </tr>

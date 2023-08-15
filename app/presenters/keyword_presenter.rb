@@ -25,4 +25,8 @@ class KeywordPresenter
   def upload_time
     keyword.created_at.strftime('%H:%M, %-d %B')
   end
+
+  def show_detail_link?
+    keyword.status == 'succeeded'
+  end
 end
