@@ -2,4 +2,5 @@
 
 class ApplicationController < ActionController::Base
   include Localization
+  include Pagy::Backend
 end
