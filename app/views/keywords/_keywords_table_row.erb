@@ -3,9 +3,9 @@
   <td><%= presenter.keyword.content %></td>
   <td data-testid="status">
     <span class="<%= presenter.status_badge %>">
-      <%= presenter.keyword.status.capitalize %>
+      <%= presenter.status %>
     </span>
   </td>
-  <td><%= presenter.keyword.created_at.strftime("%H:%M, %-d %B") %></td>
+  <td><%= presenter.upload_time %></td>
   <td><%= link_to(I18n.t("keywords.view_detail_link"), keyword_path(presenter.keyword)) %></td>
 </tr>

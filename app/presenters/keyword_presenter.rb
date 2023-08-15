@@ -14,6 +14,10 @@ class KeywordPresenter
     @keyword = keyword
   end
 
+  def status
+    keyword.status.capitalize
+  end
+
   def status_badge
     "badge #{STATUS_BADGE[keyword.status]}"
   end
