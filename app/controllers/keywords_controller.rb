@@ -6,7 +6,7 @@ class KeywordsController < ApplicationController
 
     render(locals: {
              pagy: pagy,
-             keyword_presenter: keywords.map { |keyword| KeywordPresenter.new(keyword: keyword) }
+             keyword_collection_presenter: KeywordCollectionPresenter.new(keywords: keywords)
            })
   end
 

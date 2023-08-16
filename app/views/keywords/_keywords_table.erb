@@ -1,3 +1,5 @@
+<%= turbo_stream_from("keywords") %>
+
 <div class="keywords-table border">
   <table class="table">
     <thead class="thead-light">
@@ -11,19 +13,11 @@
     </thead>
 
     <tbody class="keywords-table__body">
-      <% keyword_presenter.map do |presenter| %>
-        <tr data-keyword-id="<%= presenter.keyword.id %>">
-          <td><%= presenter.keyword.id %></td>
-          <td><%= presenter.keyword.content %></td>
-          <td>
-            <span class="<%= presenter.status_badge %>">
-              <%= presenter.keyword.status.capitalize %>
-            </span>
-          </td>
-          <td><%= presenter.upload_time %></td>
-          <td><%= link_to(I18n.t("keywords.view_detail_link"), keyword_path(presenter.keyword)) %></td>
-        </tr>
-      <% end %>
+      <%= render(
+        partial: "keywords_table_row",
+        collection: keyword_collection_presenter.keywords,
+        as: :presenter
+      ) %>
     </tbody>
   </table>
 </div>

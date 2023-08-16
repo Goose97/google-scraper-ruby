@@ -13,8 +13,9 @@ gem 'bootsnap', require: false # Reduces boot times through caching; required in
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby] # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'faraday' # HTTP client library, with support for multiple backends
 gem 'nokogiri' # Work with XML and HTML from Ruby
+gem 'turbo-rails' # Provide SPA-like feature without writing Javascript
 # gem 'jbuilder' # Build JSON APIs with ease
-# gem 'redis' # Use Redis adapter to run Action Cable in production
+gem 'redis' # Use Redis adapter to run Action Cable in production
 # gem 'kredis' # Use Kredis to get higher-level data types in Redis
 # gem 'bcrypt' # Use Active Model has_secure_password
 
@@ -83,7 +84,6 @@ group :test do
   gem 'rspec-retry' # Retry randomly failing rspec example.
   gem 'capybara' # Integration testing
   gem 'selenium-webdriver' # Ruby bindings for Selenium/WebDriver
-  gem 'webdrivers' # Run Selenium tests more easily with automatic installation and updates for all supported webdrivers
   gem 'database_cleaner' # Use Database Cleaner
   gem 'shoulda-matchers' # Tests common Rails functionalities
   gem 'json_matchers' # Validate the JSON returned by your Rails JSON APIs

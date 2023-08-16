@@ -1,0 +1,15 @@
+<tr data-keyword-id="<%= presenter.keyword.id %>" id="<%= "keyword_#{presenter.keyword.id}" %>">
+  <td><%= presenter.keyword.id %></td>
+  <td><%= presenter.keyword.content %></td>
+  <td data-testid="status">
+    <span class="<%= presenter.status_badge %>">
+      <%= presenter.status %>
+    </span>
+  </td>
+  <td><%= presenter.upload_time %></td>
+  <td>
+    <% if presenter.show_detail_link? %>
+      <%= link_to(I18n.t("keywords.view_detail_link"), keyword_path(presenter.keyword)) %>
+    <% end %>
+  </td>
+</tr>

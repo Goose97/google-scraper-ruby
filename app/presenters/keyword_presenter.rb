@@ -14,11 +14,19 @@ class KeywordPresenter
     @keyword = keyword
   end
 
+  def status
+    I18n.t("keywords.status.#{keyword.status}")
+  end
+
   def status_badge
     "badge #{STATUS_BADGE[keyword.status]}"
   end
 
   def upload_time
     keyword.created_at.strftime('%H:%M, %-d %B')
+  end
+
+  def show_detail_link?
+    keyword.status == 'succeeded'
   end
 end
