@@ -41,7 +41,7 @@ describe 'View keywords list', type: :system do
       end
 
       within("tbody > tr[data-keyword-id=\"#{keyword.id}\"]") do |tr|
-        expect(tr.find('td[data-testid="status"]')).to(have_content('Succeeded'))
+        expect(tr.find('td[data-testid="status"]')).to(have_content(I18n.t('keywords.status.succeeded')))
       end
     end
   end

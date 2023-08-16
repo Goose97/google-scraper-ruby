@@ -15,7 +15,7 @@ class KeywordPresenter
   end
 
   def status
-    keyword.status.capitalize
+    I18n.t("keywords.status.#{keyword.status}")
   end
 
   def status_badge
