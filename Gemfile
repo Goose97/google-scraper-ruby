@@ -84,7 +84,6 @@ group :test do
   gem 'rspec-retry' # Retry randomly failing rspec example.
   gem 'capybara' # Integration testing
   gem 'selenium-webdriver' # Ruby bindings for Selenium/WebDriver
-  gem 'webdrivers' # Run Selenium tests more easily with automatic installation and updates for all supported webdrivers
   gem 'database_cleaner' # Use Database Cleaner
   gem 'shoulda-matchers' # Tests common Rails functionalities
   gem 'json_matchers' # Validate the JSON returned by your Rails JSON APIs
