@@ -35,6 +35,14 @@ RSpec.describe(Api::V1::KeywordsController) do
 
         expect(response).to(have_http_status(:success))
       end
+
+      it 'returns a list of keywords' do
+        Fabricate.times(2, :keyword)
+
+        get(api_v1_keywords_path, params: { page: 1 })
+
+        expect(response.parsed_body).to(match_json_schema('v1/keywords/list'))
+      end
     end
 
     context 'given INVALID page params' do
