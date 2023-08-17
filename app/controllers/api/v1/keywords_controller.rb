@@ -8,7 +8,7 @@ module Api
       def index
         _, keywords = pagy(KeywordsQuery.new.call)
 
-        render(json: KeywordSerializer.new(keywords))
+        render(json: ::V1::KeywordSerializer.new(keywords))
       rescue Pagy::OverflowError => error
         render_error(
           status: :unprocessable_entity,
