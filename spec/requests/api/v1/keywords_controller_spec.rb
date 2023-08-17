@@ -37,7 +37,7 @@ RSpec.describe(Api::V1::KeywordsController) do
       end
     end
 
-    context 'given a INVALID page params' do
+    context 'given INVALID page params' do
       it 'returns a 422 status code' do
         page_size = Pagy::DEFAULT[:items]
         Fabricate.times(page_size, :keyword)
