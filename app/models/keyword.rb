@@ -5,6 +5,8 @@ class Keyword < ApplicationRecord
 
   has_many :keyword_search_entries, dependent: :destroy
 
+  delegate :top_ads_urls, :non_ads_urls, to: :keyword_decorator
+
   validates :content, :status, presence: true
   validates :result_page_html, presence: true, if: :succeeded?
   validates :links_count,
@@ -15,6 +17,10 @@ class Keyword < ApplicationRecord
   after_create_commit :enqueue_scrape_job
 
   private
+
+  def keyword_decorator
+    @keyword_decorator ||= KeywordDecorator.new(self)
+  end
 
   def enqueue_scrape_job
     ScrapeKeywordJob.perform_later(keyword_id: id)
