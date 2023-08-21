@@ -5,7 +5,6 @@ module Api
     class ApplicationController < ActionController::API
       include(Localization)
       include(Pagy::Backend)
-      include(Api::V1::ErrorHandlerConcern)
 
       rescue_from(Pagy::OverflowError) do |error|
         render_error(
@@ -14,6 +13,18 @@ module Api
           detail: I18n.t('pagy.errors.overflow', max_page: error.pagy.last),
           source: error.class.name
         )
+      end
+
+      private
+
+      def render_error(status:, code:, detail: nil, source: nil)
+        error = {
+          source: source,
+          detail: detail,
+          code: code
+        }.compact_blank
+
+        render(json: { errors: [error] }, status: status)
       end
     end
   end
