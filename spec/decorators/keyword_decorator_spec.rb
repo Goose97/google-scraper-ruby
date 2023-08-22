@@ -21,14 +21,16 @@ RSpec.describe(KeywordDecorator) do
           :keyword_search_entry,
           kind: :ads,
           position: :top,
-          keyword_id: keyword.id, urls: ['https://google.com', 'https://bing.com']
+          keyword_id: keyword.id,
+          urls: ['https://google.com', 'https://bing.com']
         )
 
         Fabricate(
           :keyword_search_entry,
           kind: :ads,
           position: :top,
-          keyword_id: keyword.id, urls: ['https://www.ruby-lang.org/en/']
+          keyword_id: keyword.id,
+          urls: ['https://www.ruby-lang.org/en/']
         )
 
         expect(keyword.top_ads_urls).to(contain_exactly('https://google.com', 'https://bing.com', 'https://www.ruby-lang.org/en/'))
@@ -54,13 +56,15 @@ RSpec.describe(KeywordDecorator) do
         Fabricate(
           :keyword_search_entry,
           kind: :non_ads,
-          keyword_id: keyword.id, urls: ['https://google.com', 'https://bing.com']
+          keyword_id: keyword.id,
+          urls: ['https://google.com', 'https://bing.com']
         )
 
         Fabricate(
           :keyword_search_entry,
           kind: :non_ads,
-          keyword_id: keyword.id, urls: ['https://www.ruby-lang.org/en/']
+          keyword_id: keyword.id,
+          urls: ['https://www.ruby-lang.org/en/']
         )
 
         expect(keyword.non_ads_urls).to(contain_exactly('https://google.com', 'https://bing.com', 'https://www.ruby-lang.org/en/'))
