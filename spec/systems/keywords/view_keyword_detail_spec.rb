@@ -5,6 +5,7 @@ require 'rails_helper'
 describe 'View keyword details', type: :system do
   include ActiveJob::TestHelper
 
+  # rubocop:disable RSpec/ExampleLength
   it 'displays a link to keywords#show for succeeded keyword and displays the pagination nav' do
     keyword = Fabricate(:parsed_keyword)
 
@@ -18,5 +19,8 @@ describe 'View keyword details', type: :system do
     expect(page).to(have_selector('p[data-testid="keyword_details_ads_urls"]'))
     expect(page).to(have_selector('p[data-testid="keyword_details_non_ads_urls"]'))
     expect(page).to(have_selector('div[data-testid="keyword_details_page_view"]'))
+
+    expect(page).to(have_link(I18n.t('keywords.to_home_page_link'), href: keywords_path))
   end
+  # rubocop:enable RSpec/ExampleLength
 end

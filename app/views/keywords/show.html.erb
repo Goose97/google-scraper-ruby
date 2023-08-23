@@ -1,4 +1,8 @@
-<div class="d-flex flex-column justify-content-center">
+<a href="<%= keywords_path %>">
+  <%= I18n.t('keywords.to_home_page_link') %>
+</a>
+
+<div class="d-flex flex-column justify-content-center mt-4">
   <p data-testid="keyword_details_content">Keyword: <%= keyword.content %></p>
   <p data-testid="keyword_details_links_count">Total links: <%= keyword.links_count %></p>
   <p data-testid="keyword_details_top_ads_count">Top ads count: <%= top_ads_count %></p>
