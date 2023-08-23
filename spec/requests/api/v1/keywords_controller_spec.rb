@@ -4,26 +4,13 @@ require 'rails_helper'
 
 RSpec.describe(Api::V1::KeywordsController) do
   describe 'GET #index' do
-    context 'given one page of keywords' do
-      it 'returns all keywords' do
-        page_size = Pagy::DEFAULT[:items]
-        Fabricate.times(page_size, :keyword)
+    it 'returns the first page of keywords' do
+      page_size = Pagy::DEFAULT[:items]
+      Fabricate.times(page_size + 1, :keyword)
 
-        get(api_v1_keywords_path)
+      get(api_v1_keywords_path)
 
-        expect(json_response[:data].count).to(eq(page_size))
-      end
-    end
-
-    context 'given more than one page of keywords' do
-      it 'returns the first page of keywords' do
-        page_size = Pagy::DEFAULT[:items]
-        Fabricate.times(page_size + 1, :keyword)
-
-        get(api_v1_keywords_path)
-
-        expect(json_response[:data].count).to(eq(page_size))
-      end
+      expect(json_response[:data].count).to(eq(page_size))
     end
 
     context 'given a VALID page params' do
