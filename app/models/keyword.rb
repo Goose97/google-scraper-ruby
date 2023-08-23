@@ -7,7 +7,7 @@ class Keyword < ApplicationRecord
   has_one :keyword_stats, dependent: :nullify
 
   delegate :top_ads_urls, :non_ads_urls, to: :keyword_decorator
-  delegate :top_ads_count, :total_ads_count, :non_ads_count, to: :keyword_stats, allow_nil: true
+  delegate :top_ads_count, :total_ads_count, :non_ads_count, to: :keyword_search_entries_query
 
   validates :content, :status, presence: true
   validates :result_page_html, presence: true, if: :succeeded?
@@ -22,6 +22,10 @@ class Keyword < ApplicationRecord
 
   def keyword_decorator
     @keyword_decorator ||= KeywordDecorator.new(self)
+  end
+
+  def keyword_search_entries_query
+    @keyword_search_entries_query ||= KeywordSearchEntriesQuery.new.with_keyword(id)
   end
 
   def enqueue_scrape_job
