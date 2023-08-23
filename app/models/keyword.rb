@@ -4,7 +4,6 @@ class Keyword < ApplicationRecord
   enum status: { pending: 'pending', processing: 'processing', succeeded: 'succeeded', failed: 'failed' }
 
   has_many :keyword_search_entries, dependent: :destroy
-  has_one :keyword_stats, dependent: :nullify
 
   delegate :top_ads_count, :total_ads_count, :non_ads_count, :top_ads_urls, :non_ads_urls, to: :keyword_search_entries_query
 
