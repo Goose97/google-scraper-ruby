@@ -26,6 +26,14 @@ class KeywordSearchEntriesQuery
     urls_of(non_ads)
   end
 
+  def top_ads_urls
+    urls_of(relation.where(kind: :ads, position: :top))
+  end
+
+  def non_ads_urls
+    urls_of(relation.where(kind: :non_ads))
+  end
+
   private
 
   attr_reader :relation
