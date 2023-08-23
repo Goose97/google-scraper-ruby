@@ -1,0 +1,15 @@
+<div>
+  <p data-testid="keyword_details_content">Keyword: <%= keyword.content %></p>
+  <p data-testid="keyword_details_links_count">Total links: <%= keyword.links_count %></p>
+  <p data-testid="keyword_details_top_ads_count">Top ads count: <%= top_ads_count %></p>
+  <p data-testid="keyword_details_total_ads_count">Ads count: <%= total_ads_count %></p>
+  <p data-testid="keyword_details_non_ads_count">Non-ads count: <%= non_ads_count %></p>
+
+  <p data-testid="keyword_details_ads_urls">
+    <%= render('url_list', urls: top_ads_urls, title: "Top ads URLs") %>
+  </p>
+
+  <p data-testid="keyword_details_non_ads_urls">
+    <%= render('url_list', urls: non_ads_urls, title: "Non ads URLs") %>
+  </p>
+</div>
