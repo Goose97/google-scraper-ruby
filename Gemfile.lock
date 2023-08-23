@@ -190,6 +190,8 @@ GEM
     json_matchers (0.11.1)
       json_schema
     json_schema (0.21.0)
+    jsonapi-serializer (2.2.0)
+      activesupport (>= 4.2)
     kramdown (2.4.0)
       rexml
     kramdown-parser-gfm (1.1.0)
@@ -467,6 +469,7 @@ DEPENDENCIES
   i18n-js (= 3.9.0)
   jsbundling-rails
   json_matchers
+  jsonapi-serializer
   letter_opener
   listen
   mini_magick

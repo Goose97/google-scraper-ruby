@@ -8,3 +8,6 @@ en:
       processing: "Processing"
       succeeded: "Succeeded"
       failed: "Failed"
+  pagy:
+    errors:
+      overflow: "Invalid page number, max pages is %{max_page}"
