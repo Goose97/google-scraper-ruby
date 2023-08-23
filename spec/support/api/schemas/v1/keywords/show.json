@@ -1,0 +1,54 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "data": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "attributes": {
+          "type": "object",
+          "properties": {
+            "content": {
+              "type": "string"
+            },
+            "status": {
+              "type": "string",
+              "enum": ["pending", "processing", "succeeded", "failed"]
+            },
+            "created_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "updated_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "result_page_html": {
+              "type": "string"
+            },
+            "links_count": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "content",
+            "status",
+            "created_at",
+            "updated_at",
+            "result_page_html",
+            "links_count",
+            "search_entries_info"
+          ]
+        }
+      },
+      "required": ["id", "type", "attributes"]
+    }
+  },
+  "required": ["data"]
+}

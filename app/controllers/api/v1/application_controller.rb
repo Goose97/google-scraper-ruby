@@ -15,6 +15,14 @@ module Api
         )
       end
 
+      rescue_from(ActiveRecord::RecordNotFound) do |error|
+        render_error(
+          status: :not_found,
+          code: :record_not_found,
+          source: error.class.name
+        )
+      end
+
       private
 
       def render_error(status:, code:, detail: nil, source: nil)
