@@ -17,5 +17,6 @@ describe 'View keyword details', type: :system do
     expect(page).to(have_selector('p[data-testid="keyword_details_non_ads_count"]'))
     expect(page).to(have_selector('p[data-testid="keyword_details_ads_urls"]'))
     expect(page).to(have_selector('p[data-testid="keyword_details_non_ads_urls"]'))
+    expect(page).to(have_selector('div[data-testid="keyword_details_page_view"]'))
   end
 end

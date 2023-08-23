@@ -1,4 +1,4 @@
-<div>
+<div class="d-flex flex-column justify-content-center">
   <p data-testid="keyword_details_content">Keyword: <%= keyword.content %></p>
   <p data-testid="keyword_details_links_count">Total links: <%= keyword.links_count %></p>
   <p data-testid="keyword_details_top_ads_count">Top ads count: <%= top_ads_count %></p>
@@ -12,4 +12,9 @@
   <p data-testid="keyword_details_non_ads_urls">
     <%= render('url_list', urls: non_ads_urls, title: "Non ads URLs") %>
   </p>
+
+  <div data-testid="keyword_details_page_view">
+    <p>Page view:</p>
+    <iframe srcdoc="<%= keyword.result_page_html %>" class="keyword-details__page-view"></iframe>
+  </div>
 </div>
