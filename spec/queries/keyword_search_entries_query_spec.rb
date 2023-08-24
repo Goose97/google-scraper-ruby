@@ -66,11 +66,11 @@ describe(KeywordSearchEntriesQuery) do
     context 'given a keyword with NO non-ads entries' do
       it 'returns 0' do
         keyword = Fabricate(:parsed_keyword) { keyword_search_entries(count: 0) }
-        Fabricate.times(2, :keyword_search_entry, kind: :ads, keyword_id: keyword.id)
+        Fabricate.times(2, :keyword_search_entry, kind: :non_ads, keyword_id: keyword.id)
 
         query = described_class.new(keyword_id: keyword.id)
 
-        expect(query.non_ads_count).to(eq(0))
+        expect(query.total_ads_count).to(eq(0))
       end
     end
   end
@@ -151,19 +151,20 @@ describe(KeywordSearchEntriesQuery) do
         expect(query.non_ads_urls).to(be_empty)
       end
     end
-  end
 
-  describe '#top_ads_urls' do
-    context 'given NO top ads search entries' do
-      it 'returns an empty array' do
+    context 'given a keyword with NO non-ads entries' do
+      it 'returns 0' do
         keyword = Fabricate(:parsed_keyword) { keyword_search_entries(count: 0) }
+        Fabricate.times(2, :keyword_search_entry, kind: :ads, keyword_id: keyword.id)
 
         query = described_class.new(keyword_id: keyword.id)
 
-        expect(query.top_ads_urls).to(be_empty)
+        expect(query.non_ads_count).to(eq(0))
       end
     end
+  end
 
+  describe '#top_ads_urls' do
     context 'given a list of top ads search entries' do
       # rubocop:disable RSpec/ExampleLength
       it 'returns all top ads URLs' do
@@ -191,19 +192,19 @@ describe(KeywordSearchEntriesQuery) do
       end
       # rubocop:enable RSpec/ExampleLength
     end
-  end
 
-  describe '#non_ads_urls' do
-    context 'given NO non ads search entries' do
+    context 'given NO top ads search entries' do
       it 'returns an empty array' do
         keyword = Fabricate(:parsed_keyword) { keyword_search_entries(count: 0) }
 
         query = described_class.new(keyword_id: keyword.id)
 
-        expect(query.non_ads_urls).to(be_empty)
+        expect(query.top_ads_urls).to(be_empty)
       end
     end
+  end
 
+  describe '#non_ads_urls' do
     context 'given a list of non ads search entries' do
       # rubocop:disable RSpec/ExampleLength
       it 'returns all non ads URLs' do
@@ -228,6 +229,16 @@ describe(KeywordSearchEntriesQuery) do
         expect(query.non_ads_urls).to(contain_exactly('https://google.com', 'https://bing.com', 'https://www.ruby-lang.org/en/'))
       end
       # rubocop:enable RSpec/ExampleLength
+    end
+
+    context 'given NO non ads search entries' do
+      it 'returns an empty array' do
+        keyword = Fabricate(:parsed_keyword) { keyword_search_entries(count: 0) }
+
+        query = described_class.new(keyword_id: keyword.id)
+
+        expect(query.non_ads_urls).to(be_empty)
+      end
     end
   end
 end
