@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class KeywordSearchEntriesQuery
-  def initialize(relation: KeywordSearchEntry, keyword_id: nil)
-    relation = relation.where(keyword_id: keyword_id) if keyword_id
+  def initialize(keyword_id:, relation: KeywordSearchEntry)
+    relation = relation.where(keyword_id: keyword_id)
     @relation = relation
   end
 
