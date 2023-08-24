@@ -3,8 +3,6 @@
 require 'rails_helper'
 
 describe 'View keyword details', type: :system do
-  include ActiveJob::TestHelper
-
   # rubocop:disable RSpec/ExampleLength
   it 'displays a link to keywords#show for succeeded keyword and displays the pagination nav' do
     keyword = Fabricate(:parsed_keyword)
