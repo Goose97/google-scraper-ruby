@@ -158,7 +158,7 @@ describe(KeywordSearchEntriesQuery) do
       it 'returns an empty array' do
         keyword = Fabricate(:parsed_keyword) { keyword_search_entries(count: 0) }
 
-        query = described_class.new.with_keyword(keyword.id)
+        query = described_class.new(keyword_id: keyword.id)
 
         expect(query.top_ads_urls).to(be_empty)
       end
@@ -185,7 +185,7 @@ describe(KeywordSearchEntriesQuery) do
           urls: ['https://www.ruby-lang.org/en/']
         )
 
-        query = described_class.new.with_keyword(keyword.id)
+        query = described_class.new(keyword_id: keyword.id)
 
         expect(query.top_ads_urls).to(contain_exactly('https://google.com', 'https://bing.com', 'https://www.ruby-lang.org/en/'))
       end
@@ -198,7 +198,7 @@ describe(KeywordSearchEntriesQuery) do
       it 'returns an empty array' do
         keyword = Fabricate(:parsed_keyword) { keyword_search_entries(count: 0) }
 
-        query = described_class.new.with_keyword(keyword.id)
+        query = described_class.new(keyword_id: keyword.id)
 
         expect(query.non_ads_urls).to(be_empty)
       end
@@ -223,7 +223,7 @@ describe(KeywordSearchEntriesQuery) do
           urls: ['https://www.ruby-lang.org/en/']
         )
 
-        query = described_class.new.with_keyword(keyword.id)
+        query = described_class.new(keyword_id: keyword.id)
 
         expect(query.non_ads_urls).to(contain_exactly('https://google.com', 'https://bing.com', 'https://www.ruby-lang.org/en/'))
       end
