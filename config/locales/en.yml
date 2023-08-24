@@ -8,6 +8,16 @@ en:
       processing: "Processing"
       succeeded: "Succeeded"
       failed: "Failed"
+    to_home_page_link: "Back to home page"
+    details:
+      keyword: Keyword
+      links_count: Total links
+      top_ads_count: Top ads count
+      total_ads_count: Total ads count
+      non_ads_count: Non ads count
+      top_ads_urls: Top ads URLs
+      non_ads_urls: Non ads URLs
+      page_view: Page view
   pagy:
     errors:
       overflow: "Invalid page number, max pages is %{max_page}"
