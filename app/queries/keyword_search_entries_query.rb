@@ -1,14 +1,9 @@
 # frozen_string_literal: true
 
 class KeywordSearchEntriesQuery
-  def initialize(relation = KeywordSearchEntry)
+  def initialize(relation: KeywordSearchEntry, keyword_id: nil)
+    relation = relation.where(keyword_id: keyword_id) if keyword_id
     @relation = relation
-  end
-
-  def with_keyword(keyword_id)
-    @relation = relation.where(keyword_id: keyword_id)
-
-    self
   end
 
   def top_ads_count
