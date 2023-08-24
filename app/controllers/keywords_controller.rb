@@ -11,7 +11,7 @@ class KeywordsController < ApplicationController
   end
 
   def show
-    keyword = Keyword.find(params['id'])
+    keyword = Keyword.find(params[:id])
 
     search_entries_query = KeywordSearchEntriesQuery.new.with_keyword(keyword.id)
 
