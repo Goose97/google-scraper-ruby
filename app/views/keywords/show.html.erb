@@ -9,13 +9,13 @@
   <p data-testid="keyword_details_total_ads_count"><%= I18n.t('keywords.details.total_ads_count') %>: <%= total_ads_count %></p>
   <p data-testid="keyword_details_non_ads_count"><%= I18n.t('keywords.details.non_ads_count') %>: <%= non_ads_count %></p>
 
-  <p data-testid="keyword_details_ads_urls">
+  <div data-testid="keyword_details_top_ads_urls">
     <%= render('url_list', urls: top_ads_urls, title:  I18n.t('keywords.details.top_ads_urls')) %>
-  </p>
+  </div>
 
-  <p data-testid="keyword_details_non_ads_urls">
+  <div data-testid="keyword_details_non_ads_urls">
     <%= render('url_list', urls: non_ads_urls, title: I18n.t('keywords.details.non_ads_urls')) %>
-  </p>
+  </div>
 
   <div data-testid="keyword_details_page_view">
     <p><%= I18n.t('keywords.details.page_view') %>:</p>
