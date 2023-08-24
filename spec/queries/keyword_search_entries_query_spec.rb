@@ -78,7 +78,7 @@ describe(KeywordSearchEntriesQuery) do
   describe '#top_ads_urls' do
     context 'given a list of top ads search entries' do
       # rubocop:disable RSpec/ExampleLength
-      it 'returns all top ads URLs' do
+      it 'returns all unique top ads URLs' do
         keyword = Fabricate(:parsed_keyword) { keyword_search_entries(count: 0) }
 
         Fabricate(
@@ -94,7 +94,7 @@ describe(KeywordSearchEntriesQuery) do
           kind: :ads,
           position: :top,
           keyword_id: keyword.id,
-          urls: ['https://www.ruby-lang.org/en/']
+          urls: ['https://www.ruby-lang.org/en/', 'https://google.com']
         )
 
         query = described_class.new(keyword_id: keyword.id)
@@ -118,7 +118,7 @@ describe(KeywordSearchEntriesQuery) do
   describe '#non_ads_urls' do
     context 'given a list of non ads search entries' do
       # rubocop:disable RSpec/ExampleLength
-      it 'returns all non ads URLs' do
+      it 'returns all unique non ads URLs' do
         keyword = Fabricate(:parsed_keyword) { keyword_search_entries(count: 0) }
 
         Fabricate(
@@ -132,7 +132,7 @@ describe(KeywordSearchEntriesQuery) do
           :keyword_search_entry,
           kind: :non_ads,
           keyword_id: keyword.id,
-          urls: ['https://www.ruby-lang.org/en/']
+          urls: ['https://www.ruby-lang.org/en/', 'https://google.com']
         )
 
         query = described_class.new(keyword_id: keyword.id)
