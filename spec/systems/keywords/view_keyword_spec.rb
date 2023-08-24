@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'View keyword details', type: :system do
+describe 'View keyword', type: :system do
   # rubocop:disable RSpec/ExampleLength
   it 'displays the scraped content information' do
     mocked_html = '<div>Hello world</div>'
