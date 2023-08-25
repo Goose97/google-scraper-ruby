@@ -10,7 +10,7 @@ module Api
       end
 
       def show
-        keyword = Keyword.find(params['id'])
+        keyword = Keyword.find(params[:id])
         search_entries_query = KeywordSearchEntriesQuery.new(keyword_id: keyword.id)
 
         render(json: ::V1::KeywordSerializer.new(keyword, params: {
