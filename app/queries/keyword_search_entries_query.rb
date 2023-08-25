@@ -7,7 +7,7 @@ class KeywordSearchEntriesQuery
   end
 
   def top_ads_count
-    relation.where(kind: :ads, position: :top).size
+    top_ads.size
   end
 
   def total_ads_count
@@ -15,15 +15,15 @@ class KeywordSearchEntriesQuery
   end
 
   def non_ads_count
-    relation.where(kind: :non_ads).size
+    non_ads.size
   end
 
   def top_ads_urls
-    urls_of(relation.where(kind: :ads, position: :top))
+    urls_of(top_ads)
   end
 
   def non_ads_urls
-    urls_of(relation.where(kind: :non_ads))
+    urls_of(non_ads)
   end
 
   private
@@ -32,5 +32,13 @@ class KeywordSearchEntriesQuery
 
   def urls_of(query)
     query.pluck(:urls).flatten.uniq
+  end
+
+  def top_ads
+    @top_ads ||= relation.where(kind: :ads, position: :top)
+  end
+
+  def non_ads
+    @non_ads ||= relation.where(kind: :non_ads)
   end
 end
