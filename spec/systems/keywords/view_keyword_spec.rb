@@ -40,7 +40,7 @@ describe 'View keyword', type: :system do
       expect(iframe['srcdoc']).to(eq(mocked_html))
     end
 
-    expect(page).to(have_link(I18n.t('keywords.shared.link.back_to_home'), href: keywords_path))
+    expect(page).to(have_link(I18n.t('shared.link.back_to_home'), href: keywords_path))
   end
   # rubocop:enable RSpec/ExampleLength
 end

@@ -1,4 +1,7 @@
 en:
+  shared:
+    link:
+      back_to_home: "Back to home page"
   keywords:
     upload: "Upload"
     no_keyword: "You don't have any keywords. Please upload some."
@@ -8,9 +11,6 @@ en:
       processing: "Processing"
       succeeded: "Succeeded"
       failed: "Failed"
-    shared:
-      link:
-        back_to_home: "Back to home page"
     details:
       keyword: Keyword
       links_count: Total links
