@@ -13,15 +13,11 @@ class KeywordsController < ApplicationController
   def show
     keyword = Keyword.find(params[:id])
 
-    search_entries_query = KeywordSearchEntriesQuery.new.with_keyword(keyword.id)
+    search_entries_query = KeywordSearchEntriesQuery.new(keyword_id: keyword.id)
 
     render(locals: {
              keyword: keyword,
-             top_ads_count: search_entries_query.top_ads_count,
-             total_ads_count: search_entries_query.total_ads_count,
-             non_ads_count: search_entries_query.non_ads_count,
-             top_ads_urls: search_entries_query.top_ads_urls,
-             non_ads_urls: search_entries_query.non_ads_urls
+             search_entries_query: search_entries_query
            })
   end
 
