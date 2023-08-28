@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'View keywords list', type: :system do
+describe 'View keyword list', type: :system do
   include ActiveJob::TestHelper
 
   context 'given NO keyword' do

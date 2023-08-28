@@ -66,11 +66,11 @@ describe(KeywordSearchEntriesQuery) do
     context 'given a keyword with NO non-ads entries' do
       it 'returns 0' do
         keyword = Fabricate(:parsed_keyword) { keyword_search_entries(count: 0) }
-        Fabricate.times(2, :keyword_search_entry, kind: :ads, keyword_id: keyword.id)
+        Fabricate.times(2, :keyword_search_entry, kind: :non_ads, keyword_id: keyword.id)
 
         query = described_class.new(keyword_id: keyword.id)
 
-        expect(query.non_ads_count).to(eq(0))
+        expect(query.total_ads_count).to(eq(0))
       end
     end
   end
@@ -149,6 +149,17 @@ describe(KeywordSearchEntriesQuery) do
         query = described_class.new(keyword_id: keyword.id)
 
         expect(query.non_ads_urls).to(be_empty)
+      end
+    end
+
+    context 'given a keyword with NO non-ads entries' do
+      it 'returns 0' do
+        keyword = Fabricate(:parsed_keyword) { keyword_search_entries(count: 0) }
+        Fabricate.times(2, :keyword_search_entry, kind: :ads, keyword_id: keyword.id)
+
+        query = described_class.new(keyword_id: keyword.id)
+
+        expect(query.non_ads_count).to(eq(0))
       end
     end
   end

@@ -10,6 +10,17 @@ class KeywordsController < ApplicationController
            })
   end
 
+  def show
+    keyword = Keyword.find(params[:id])
+
+    search_entries_query = KeywordSearchEntriesQuery.new(keyword_id: keyword.id)
+
+    render(locals: {
+             keyword: keyword,
+             search_entries_query: search_entries_query
+           })
+  end
+
   def create
     form = CsvUploadForm.new
 
