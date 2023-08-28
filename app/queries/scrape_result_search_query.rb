@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class ScrapeResultSearchService
+class ScrapeResultSearchQuery
   def initialize(pattern:, query_type:)
     @pattern = pattern
     @query_type = query_type

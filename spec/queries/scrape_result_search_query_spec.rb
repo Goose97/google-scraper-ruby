@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe(ScrapeResultSearchService) do
+RSpec.describe(ScrapeResultSearchQuery) do
   describe '#call' do
     context 'given :exact query type' do
       it 'returns all URLs satisfy the query pattern and their corresponding keyword_id' do
