@@ -6,3 +6,9 @@ en:
         invalid_keyword_count: "file must contains between 1 to 1000 keywords"
         invalid_file_type: "file must have content type of text/csv"
         invalid_keyword_length: "keyword must have the maximum length of 255 characters"
+    errors:
+      models:
+        scrape_result_search_params:
+          attributes:
+            query_type:
+              inclusion: "is not valid query_type. Expect either :exact, :partial or :pattern"

@@ -2,8 +2,11 @@
 
 class ScrapeResultSearchQuery
   def initialize(pattern:, query_type:)
-    @pattern = pattern
-    @query_type = query_type
+    params = ScrapeResultSearchParams.new(pattern: pattern, query_type: query_type)
+    params.validate!
+
+    @pattern = params.pattern
+    @query_type = params.query_type
   end
 
   def call
