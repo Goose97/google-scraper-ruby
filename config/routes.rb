@@ -6,7 +6,9 @@ Rails.application.routes.draw do
 
   root 'keywords#index'
 
-  resources :keywords, only: %i[index create show]
+  resources :keywords, only: %i[index create show] do
+    get 'search', on: :collection
+  end
 
   namespace :api do
     namespace :v1 do
