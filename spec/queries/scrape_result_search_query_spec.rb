@@ -3,6 +3,37 @@
 require 'rails_helper'
 
 RSpec.describe(ScrapeResultSearchQuery) do
+  describe '#new' do
+    context 'given valid params' do
+      it 'does NOT raise errors' do
+        expect { described_class.new(query_type: :pattern, pattern: 'abc') }
+          .not_to(raise_error)
+      end
+    end
+
+    context 'given INVALID params' do
+      context 'given EMPTY pattern' do
+        it 'raises ActiveModel::ValidationError' do
+          expect { described_class.new(query_type: :pattern, pattern: '') }
+            .to(raise_error do |error|
+              expect(error).to(be_a(ActiveModel::ValidationError))
+              expect(error.model.errors).to(include(:pattern))
+            end)
+        end
+      end
+
+      context 'given INVALID query_type' do
+        it 'raises ActiveModel::ValidationError' do
+          expect { described_class.new(query_type: :invalid, pattern: 'abc') }
+            .to(raise_error do |error|
+              expect(error).to(be_a(ActiveModel::ValidationError))
+              expect(error.model.errors).to(include(:query_type))
+            end)
+        end
+      end
+    end
+  end
+
   describe '#call' do
     context 'given :exact query type' do
       it 'returns all URLs satisfy the query pattern grouped by their keyword_id' do
@@ -44,26 +75,6 @@ RSpec.describe(ScrapeResultSearchQuery) do
         result = described_class.new(query_type: :pattern, pattern: 'go{2}\w+\.com$').call
 
         expect(result).to(contain_exactly({ keyword_id: keyword.id, urls: [url_a, url_b] }))
-      end
-    end
-
-    context 'given EMPTY pattern' do
-      it 'raises ActiveModel::ValidationError' do
-        expect { described_class.new(query_type: :pattern, pattern: '').call }
-          .to(raise_error do |error|
-            expect(error).to(be_a(ActiveModel::ValidationError))
-            expect(error.model.errors).to(include(:pattern))
-          end)
-      end
-    end
-
-    context 'given INVALID query_type' do
-      it 'raises ActiveModel::ValidationError' do
-        expect { described_class.new(query_type: :invalid, pattern: 'abc').call }
-          .to(raise_error do |error|
-            expect(error).to(be_a(ActiveModel::ValidationError))
-            expect(error.model.errors).to(include(:query_type))
-          end)
       end
     end
   end
