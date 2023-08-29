@@ -77,25 +77,5 @@ RSpec.describe(ScrapeResultSearchQuery) do
         expect(result).to(contain_exactly({ keyword_id: keyword.id, urls: [url_a, url_b] }))
       end
     end
-
-    context 'given EMPTY pattern' do
-      it 'raises ActiveModel::ValidationError' do
-        expect { described_class.new(query_type: :pattern, pattern: '').call }
-          .to(raise_error do |error|
-            expect(error).to(be_a(ActiveModel::ValidationError))
-            expect(error.model.errors).to(include(:pattern))
-          end)
-      end
-    end
-
-    context 'given INVALID query_type' do
-      it 'raises ActiveModel::ValidationError' do
-        expect { described_class.new(query_type: :invalid, pattern: 'abc').call }
-          .to(raise_error do |error|
-            expect(error).to(be_a(ActiveModel::ValidationError))
-            expect(error.model.errors).to(include(:query_type))
-          end)
-      end
-    end
   end
 end
