@@ -1,6 +1,15 @@
 # frozen_string_literal: true
 
 class ScrapeResultSearchQuery
+  URL_PREDICATE = {
+    exact: 'url = ?',
+    partial: "url LIKE '%' || ? || '%' ",
+    # TODO(Goose97): allowing users to execute abitrary regexes is quite dangerous
+    # A carefully crafted regex can cause catastrophic backtracking (https://www.regular-expressions.info/catastrophic.html)
+    # We should try to restrict it
+    pattern: 'url ~ ?'
+  }.freeze
+
   def initialize(pattern:, query_type:)
     params = ScrapeResultSearchParams.new(pattern: pattern, query_type: query_type)
     params.validate!
@@ -10,33 +19,16 @@ class ScrapeResultSearchQuery
   end
 
   def call
-    all_search_entries
-      .group_by(&:keyword_id)
-      .filter_map do |keyword_id, search_entries|
-        matched_urls = search_entries.flat_map(&:urls).filter { |url| url_match?(url) }
-        { keyword_id: keyword_id, urls: matched_urls } unless matched_urls.empty?
-      end
+    sub_query = KeywordSearchEntry.select(:keyword_id, 'unnest(urls) url').to_sql
+
+    KeywordSearchEntry.select(:keyword_id, 'array_agg(url) urls')
+                      .from("(#{sub_query}) as unnest")
+                      .where([URL_PREDICATE[query_type], pattern])
+                      .group(:keyword_id)
+                      .map { |item| item.slice(:keyword_id, :urls) }
   end
 
   private
 
   attr_reader :query_type, :pattern
-
-  def all_search_entries
-    @all_search_entries ||= KeywordSearchEntry.all
-  end
-
-  def url_match?(url)
-    case query_type
-    when :exact
-      url == pattern
-    when :partial
-      url.include?(pattern)
-    # TODO(Goose97): allowing users to execute abitrary regexes is quite dangerous
-    # A carefully crafted regex can cause catastrophic backtracking (https://www.regular-expressions.info/catastrophic.html)
-    # We should try to restrict it
-    when :pattern
-      url =~ Regexp.new(pattern)
-    end
-  end
 end
