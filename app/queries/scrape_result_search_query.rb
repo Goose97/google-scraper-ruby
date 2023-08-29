@@ -12,9 +12,9 @@ class ScrapeResultSearchQuery
   def call
     all_search_entries
       .group_by(&:keyword_id)
-      .map do |keyword_id, search_entries|
+      .filter_map do |keyword_id, search_entries|
         matched_urls = search_entries.flat_map(&:urls).filter { |url| url_match?(url) }
-        { keyword_id: keyword_id, urls: matched_urls }
+        { keyword_id: keyword_id, urls: matched_urls } unless matched_urls.empty?
       end
   end
 
