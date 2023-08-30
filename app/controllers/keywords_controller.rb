@@ -33,17 +33,22 @@ class KeywordsController < ApplicationController
     redirect_to(keywords_path)
   end
 
+  # rubocop:disable Metrics/MethodLength
   def search
     result = ScrapeResultSearchQuery.new(
       pattern: search_params[:search],
       query_type: search_params[:query_type]
     ).call
 
-    render(locals: { search_result_presenter: SearchResultPresenter.new(search_result: result) })
+    render(locals: {
+             search_result_presenter: SearchResultPresenter.new(search_result: result),
+             search_params: search_params
+           })
   rescue ActiveModel::ValidationError => error
     flash[:alert] = error.model.errors.full_messages
     redirect_to(keywords_path)
   end
+  # rubocop:enable Metrics/MethodLength
 
   private
 

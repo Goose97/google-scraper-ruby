@@ -1,5 +1,11 @@
 <div>
-  <span data-testid="search_result_total_matched_urls">Total matched URLs: <%= search_result_presenter.total_urls %></span>
+  <div class="mb-2">
+    <p data-testid="search_result_search_term">Search term: <%= search_params[:search] %></p>
+    <p data-testid="search_result_query_type">Query type: <%= search_params[:query_type] %></p>
+  </div>
+
+  <p data-testid="search_result_total_matched_urls">Total matched URLs: <%= search_result_presenter.total_urls %></p>
+
   <% search_result_presenter.search_result.each do |item| %>
     <div data-keyword-id="<%= item[:keyword_id] %>">
       <span data-testid="search_result_keyword_content">

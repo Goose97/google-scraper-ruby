@@ -10,6 +10,8 @@ describe 'Search scrape result', type: :system do
 
       visit(search_keywords_path({ search: 'ruby', query_type: 'partial' }))
 
+      expect(find("[data-testid='search_result_search_term']")).to(have_content('ruby'))
+      expect(find("[data-testid='search_result_query_type']")).to(have_content('partial'))
       expect(find("[data-testid='search_result_total_matched_urls']")).to(have_content(2))
       expect(find("[data-testid='search_result_keyword_content']")).to(have_content(keyword.content))
 
