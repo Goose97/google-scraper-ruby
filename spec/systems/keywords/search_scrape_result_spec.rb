@@ -11,6 +11,7 @@ describe 'Search scrape result', type: :system do
       visit(search_keywords_path({ search: 'ruby', query_type: 'partial' }))
 
       expect(find("[data-testid='search_result_total_matched_urls']")).to(have_content(2))
+      expect(find("[data-testid='search_result_keyword_content']")).to(have_content(keyword.content))
 
       within("div[data-keyword-id='#{keyword.id}']") do |item|
         item.assert_selector("ul[data-testid='search_result_url_list'] > li", count: 2)

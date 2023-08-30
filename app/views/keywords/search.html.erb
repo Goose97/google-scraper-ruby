@@ -2,7 +2,9 @@
   <span data-testid="search_result_total_matched_urls">Total matched URLs: <%= search_result_presenter.total_urls %></span>
   <% search_result_presenter.search_result.each do |item| %>
     <div data-keyword-id="<%= item[:keyword_id] %>">
-      <span>Keyword ID: <%= item[:keyword_id] %></span>
+      <span data-testid="search_result_keyword_content">
+        Keyword content: <%= item[:keyword_content] %>
+      </span>
       <ul data-testid="search_result_url_list">
         <% item[:urls].each do |item| %>
           <li><%= item %></li>
