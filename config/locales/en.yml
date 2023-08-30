@@ -2,7 +2,8 @@ en:
   shared:
     link:
       back_to_home: "Back to home page"
-    submit_search: 'Search'
+    button:
+      search: 'Search'
   keywords:
     upload: "Upload"
     no_keyword: "You don't have any keywords. Please upload some."

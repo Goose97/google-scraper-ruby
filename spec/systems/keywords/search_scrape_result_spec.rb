@@ -14,7 +14,7 @@ describe 'Search scrape result', type: :system do
         fill_in('search', with: 'ruby')
         select(I18n.t('keywords.query_type.partial'), from: 'query_type')
 
-        click_button I18n.t('shared.submit_search')
+        click_button I18n.t('shared.button.search')
       end
 
       page.assert_selector("[data-testid='search_result_search_term']", text: 'ruby', count: 1)
