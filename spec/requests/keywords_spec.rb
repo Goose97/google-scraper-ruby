@@ -42,4 +42,31 @@ RSpec.describe('Keywords') do
       end
     end
   end
+
+  describe 'GET #search' do
+    context 'given VALID params' do
+      it 'returns a 200 status code' do
+        get(search_keywords_path, params: { search: 'abc', query_type: 'exact' })
+
+        expect(response).to(have_http_status(:success))
+      end
+    end
+
+    context 'given INVALID params' do
+      context 'given an INVALID query_type' do
+        it 'redirects to keywords#index path' do
+          get(search_keywords_path, params: { search: 'abc', query_type: 'invalid_query_type' })
+
+          expect(response).to(redirect_to(keywords_path))
+        end
+
+        it 'includes a flash message in the response' do
+          get(search_keywords_path, params: { search: 'abc', query_type: 'invalid_query_type' })
+
+          error_message = include(I18n.t('activemodel.errors.models.scrape_result_search_params.attributes.query_type.inclusion'))
+          expect(flash[:alert]).to(include(error_message))
+        end
+      end
+    end
+  end
 end
