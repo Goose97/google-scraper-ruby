@@ -1,0 +1,19 @@
+<%= form_tag(search_keywords_path, method: 'get', class: 'scrape-result-search-form') do %>
+  <%= select_tag(
+    :query_type,
+    options_for_select([
+      [I18n.t('keywords.query_type_select_placeholder'), nil],
+      [I18n.t('keywords.query_type.exact'), :exact],
+      [I18n.t('keywords.query_type.partial'), :partial],
+      [I18n.t('keywords.query_type.pattern'), :pattern]
+    ]),
+    class: 'p-2'
+  ) %>
+  <%= text_field_tag(
+    :search,
+    '',
+    class: 'scrape-result-search-form__input',
+    placeholder: I18n.t('keywords.search_input_placeholder')
+  ) %>
+  <%= submit_tag(I18n.t('keywords.submit_search'), name: '') %>
+<% end %>

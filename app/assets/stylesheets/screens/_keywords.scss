@@ -15,6 +15,16 @@ body.keywords {
         margin-top: 1rem;
       }
     }
+
+    .scrape-result-search-form {
+      display: flex;
+      justify-content: end;
+      margin-bottom: 1rem;
+
+      &__input {
+        width: 300px;
+      }
+    }
   }
 
   &.show {

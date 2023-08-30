@@ -2,6 +2,7 @@ en:
   shared:
     link:
       back_to_home: "Back to home page"
+    submit_search: 'Search'
   keywords:
     upload: "Upload"
     no_keyword: "You don't have any keywords. Please upload some."
@@ -19,6 +20,12 @@ en:
     top_ads_urls: Top ads URLs
     non_ads_urls: Non ads URLs
     page_view: Page view
+    search_input_placeholder: "Type your search term here"
+    query_type_select_placeholder: "Select query type"
+    query_type:
+      exact: 'Exact'
+      partial: 'Partial'
+      pattern: 'Pattern'
   pagy:
     errors:
       overflow: "Invalid page number, max pages is %{max_page}"
