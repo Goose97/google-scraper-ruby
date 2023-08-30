@@ -1,4 +1,9 @@
-<%= form_tag(search_keywords_path, method: 'get', class: 'scrape-result-search-form') do %>
+<%= form_tag(
+  search_keywords_path,
+  method: 'get',
+  class: 'scrape-result-search-form',
+  data: {"testid" => "scrape-result-search-form"}
+) do %>
   <%= select_tag(
     :query_type,
     options_for_select([
