@@ -12,11 +12,13 @@
       [I18n.t('keywords.query_types.partial'), :partial],
       [I18n.t('keywords.query_types.pattern'), :pattern]
     ]),
+    required: true,
     class: 'p-2'
   ) %>
   <%= text_field_tag(
     :search,
     '',
+    required: true,
     class: 'scrape-result-search-form__input',
     placeholder: I18n.t('keywords.search_input_placeholder')
   ) %>
