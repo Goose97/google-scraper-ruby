@@ -23,10 +23,14 @@ en:
     page_view: Page view
     search_input_placeholder: "Type your search term here"
     query_type_select_placeholder: "Select query type"
-    query_type:
+    query_types:
       exact: 'Exact'
       partial: 'Partial'
       pattern: 'Pattern'
+    search_term: 'Search term'
+    query_type: 'Query type'
+    total_matched_urls: 'Total matched URLs'
+    keyword_content: 'Keyword content'
   pagy:
     errors:
       overflow: "Invalid page number, max pages is %{max_page}"

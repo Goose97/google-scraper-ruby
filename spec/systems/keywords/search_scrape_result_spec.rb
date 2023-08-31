@@ -14,7 +14,7 @@ describe 'Search scrape result', type: :system do
       visit(root_path)
       within('form[data-testid="scrape-result-search-form"]') do
         fill_in('search', with: 'ruby')
-        select(I18n.t('keywords.query_type.partial'), from: 'query_type')
+        select(I18n.t('keywords.query_types.partial'), from: 'query_type')
 
         click_button I18n.t('shared.button.search')
       end

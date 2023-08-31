@@ -1,15 +1,17 @@
 <div>
   <div class="mb-2">
-    <p data-testid="search_result_search_term">Search term: <%= search_params[:search] %></p>
-    <p data-testid="search_result_query_type">Query type: <%= search_params[:query_type] %></p>
+    <p data-testid="search_result_search_term"><%= I18n.t('keywords.search_term') %>: <%= search_params[:search] %></p>
+    <p data-testid="search_result_query_type"><%= I18n.t('keywords.query_type') %>: <%= search_params[:query_type] %></p>
   </div>
 
-  <p data-testid="search_result_total_matched_urls">Total matched URLs: <%= search_result_presenter.total_urls %></p>
+  <p data-testid="search_result_total_matched_urls">
+    <%= I18n.t('keywords.total_matched_urls') %>: <%= search_result_presenter.total_urls %>
+  </p>
 
   <% search_result_presenter.search_result.each do |item| %>
     <div data-keyword-id="<%= item[:keyword_id] %>">
       <span data-testid="search_result_keyword_content">
-        Keyword content: <%= item[:keyword_content] %>
+        <%= I18n.t('keywords.keyword_content') %>: <%= item[:keyword_content] %>
       </span>
       <ul data-testid="search_result_url_list">
         <% item[:urls].each do |item| %>
