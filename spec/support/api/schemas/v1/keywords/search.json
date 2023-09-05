@@ -26,14 +26,32 @@
                 }
               }
             },
-            "required": [
-              "keyword_id",
-              "urls"
-            ]
+            "required": ["keyword_id", "urls"]
+          },
+          "relationships": {
+            "type": "object",
+            "properties": {
+              "keyword": {
+                "type": "object",
+                "properties": {
+                  "links": {
+                    "type": "object",
+                    "properties": {
+                      "related": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["related"]
+                  }
+                },
+                "required": ["links"]
+              }
+            },
+            "required": ["keyword"]
           }
-        }
-      },
-      "required": ["id", "type", "attributes"]
+        },
+        "required": ["id", "type", "attributes", "relationships"]
+      }
     }
   },
   "required": ["data"]

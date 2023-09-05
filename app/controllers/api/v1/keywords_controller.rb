@@ -24,6 +24,11 @@ module Api
           query_type: search_params[:query_type]
         ).call
 
+        result.each do |record|
+          keyword_url = request.base_url + keyword_path(record[:keyword_id])
+          record[:keyword_url] = keyword_url
+        end
+
         render(json: ::V1::SearchResultSimpleSerializer.new(result, is_collection: true))
       end
 
