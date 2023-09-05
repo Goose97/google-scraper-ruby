@@ -27,20 +27,20 @@ module Google
     def search!(keyword)
       @keyword = keyword
 
-      uri = URI::HTTPS.build host: HOST, path: '/search', query: { q: keyword }.to_query
-      client = http_client uri
-      response = client.get uri, {}
+      uri = URI::HTTPS.build(host: HOST, path: '/search', query: { q: keyword }.to_query)
+      client = http_client(uri)
+      response = client.get(uri, {})
 
       unless response.success?
-        raise GoogleScraperRuby::Errors::SearchError.new(
-          url: uri,
-          error: "Response with status code #{response.status}"
-        )
+        raise(GoogleScraperRuby::Errors::SearchError.new(
+                url: uri,
+                error: "Response with status code #{response.status}"
+              ))
       end
 
       response.body
     rescue Faraday::ConnectionFailed, Faraday::ServerError, Faraday::ClientError => error
-      raise GoogleScraperRuby::Errors::SearchError.new url: uri, error: error
+      raise(GoogleScraperRuby::Errors::SearchError.new(url: uri, error: error))
     end
     # rubocop:enable Metrics/MethodLength
 

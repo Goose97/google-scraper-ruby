@@ -22,3 +22,5 @@ if defined?(WebMock)
   ]
   WebMock.disable_net_connect!(allow_localhost: true, allow: allowed_sites)
 end
+
+Webdrivers::Chromedriver.required_version = '114.0.5735.90'

@@ -8,9 +8,10 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-</head>
+  </head>
 
-  <body>
+  <body class="<%= "#{controller_name.dasherize} #{action_name.dasherize}" %>">
+    <%= render "shared/alert" %>
     <%= yield %>
   </body>
 </html>

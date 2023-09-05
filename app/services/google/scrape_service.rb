@@ -9,15 +9,15 @@ module Google
     end
 
     def call!
-      # TODO(Goose97): update failed status once we integrate with background job
       begin
-        @keyword = Keyword.find keyword_id
+        @keyword = Keyword.find(keyword_id)
+        keyword.update(status: :processing)
       rescue ActiveRecord::RecordNotFound
         raise_keyword_not_found
       end
 
-      result = parse_service.call result_page!
-      save_scrape_result! keyword, result
+      result = parse_service.call(result_page!)
+      save_scrape_result!(keyword, result)
     end
 
     private
@@ -25,36 +25,42 @@ module Google
     attr_reader :keyword_id, :keyword, :search_service, :parse_service
 
     def result_page!
-      search_service.search! keyword.content
+      search_service.search!(keyword.content)
     rescue GoogleScraperRuby::Errors::SearchError => error
-      raise_unexpected_error error
+      raise_scrape_error(error)
     end
 
     def raise_keyword_not_found
-      Rails.logger.error <<~ERROR
-        [#{self.class.name}]: keyword doesn't exist
-        - keyword_id: #{keyword_id}
-      ERROR
-
-      raise GoogleScraperRuby::Errors::ScrapeError.new(
-        keyword_id: keyword_id,
-        kind: :invalid_keyword
+      Rails.logger.error(
+        <<~ERROR
+          [#{self.class.name}]: keyword doesn't exist
+          - keyword_id: #{keyword_id}
+        ERROR
       )
+
+      raise(GoogleScraperRuby::Errors::ScrapeError.new(
+              keyword_id: keyword_id,
+              kind: :invalid_keyword
+            ))
     end
 
-    def raise_unexpected_error(error)
-      Rails.logger.error <<~ERROR
-        [#{self.class.name}]: unexpected error while processing request
-        - keyword: #{keyword.content}
-        - error: #{error}
-      ERROR
-
-      raise GoogleScraperRuby::Errors::ScrapeError.new(
-        keyword_id: keyword_id,
-        kind: :unexpected_error,
-        error: error
+    # rubocop:disable Metrics/MethodLength
+    def raise_scrape_error(error)
+      Rails.logger.error(
+        <<~ERROR
+          [#{self.class.name}]: unexpected error while processing request
+          - keyword: #{keyword.content}
+          - error: #{error}
+        ERROR
       )
+
+      raise(GoogleScraperRuby::Errors::ScrapeError.new(
+              keyword_id: keyword_id,
+              kind: :search_error,
+              error: error
+            ))
     end
+    # rubocop:enable Metrics/MethodLength
 
     def save_scrape_result!(keyword, parse_result)
       keyword.update!(

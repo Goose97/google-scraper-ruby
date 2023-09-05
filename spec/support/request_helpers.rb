@@ -9,5 +9,5 @@ module Request
 end
 
 RSpec.configure do |config|
-  config.include Request::JsonHelpers, type: :request
+  config.include(Request::JsonHelpers, type: :request)
 end

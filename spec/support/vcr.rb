@@ -5,7 +5,7 @@ require 'vcr'
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/fixtures/vcr'
   c.allow_http_connections_when_no_cassette = false
-  c.hook_into :webmock
+  c.hook_into(:webmock)
   c.ignore_localhost = true
   c.ignore_request do |request|
     URI(request.uri).port == 9200
@@ -32,7 +32,7 @@ RSpec.configure do |config|
       next
     end
 
-    if vcr.is_a? Hash
+    if vcr.is_a?(Hash)
       configure_vcr_with_options(example, vcr)
     else
       Array(vcr).each { |cassette| VCR.use_cassette(cassette, {}, &example) }

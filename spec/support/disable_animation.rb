@@ -16,7 +16,7 @@ module Rack
 
       response = Rack::Response.new([], @status, @headers)
 
-      @body.each { |fragment| response.write inject(fragment) }
+      @body.each { |fragment| response.write(inject(fragment)) }
       @body.close if @body.respond_to?(:close)
 
       response.finish
