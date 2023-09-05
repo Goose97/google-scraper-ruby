@@ -4,7 +4,7 @@ require 'rails_helper'
 
 describe 'Search scrape result', type: :system do
   context 'given VALID params' do
-    # rubocop:disable RSpec/NoExpectationExample, RSpec/ExampleLength
+    # rubocop:disable RSpec/ExampleLength
     it 'displays search result' do
       keyword_a = Fabricate(:parsed_keyword) { keyword_search_entries(count: 0) }
       keyword_b = Fabricate(:parsed_keyword) { keyword_search_entries(count: 0) }
@@ -26,13 +26,15 @@ describe 'Search scrape result', type: :system do
       within("div[data-keyword-id='#{keyword_a.id}']") do |item|
         item.assert_selector("[data-testid='search_result_keyword_content']", text: keyword_a.content, count: 1)
         item.assert_selector("ul[data-testid='search_result_url_list'] > li", count: 2)
+        expect(item).to(have_link(href: keyword_path(keyword_a.id)))
       end
 
       within("div[data-keyword-id='#{keyword_b.id}']") do |item|
         item.assert_selector("[data-testid='search_result_keyword_content']", text: keyword_b.content, count: 1)
         item.assert_selector("ul[data-testid='search_result_url_list'] > li", count: 1)
+        expect(item).to(have_link(href: keyword_path(keyword_b.id)))
       end
     end
-    # rubocop:enable RSpec/NoExpectationExample, RSpec/ExampleLength
+    # rubocop:enable RSpec/ExampleLength
   end
 end
