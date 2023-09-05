@@ -23,6 +23,14 @@ module Api
         )
       end
 
+      rescue_from(ActiveModel::ValidationError) do |error|
+        render_error(
+          status: :unprocessable_entity,
+          code: :invalid_parameters,
+          source: error.class.name
+        )
+      end
+
       private
 
       def render_error(status:, code:, detail: nil, source: nil)
