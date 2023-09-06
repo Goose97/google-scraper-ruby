@@ -85,7 +85,7 @@ RSpec.describe(Api::V1::KeywordsController) do
         expect(response).to(have_http_status(:success))
       end
 
-      it 'returns the search result' do
+      it 'returns a list of search results' do
         url = 'https://google.com'
         keyword = Fabricate(:parsed_keyword) { keyword_search_entries(count: 0) }
         Fabricate.times(2, :keyword_search_entry, urls: [url], keyword_id: keyword.id)
