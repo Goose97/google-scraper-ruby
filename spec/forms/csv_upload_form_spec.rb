@@ -24,6 +24,19 @@ RSpec.describe(CsvUploadForm, type: :form) do
         end.to(change(Keyword, :count).by(7))
       end
 
+      it 'includes the created keywords in the form object' do
+        form = described_class.new
+        file = FileUploadHelpers::Form.upload_file(fixture: 'valid_7_keywords.csv')
+
+        form.save(file)
+
+        expect(form.keywords).to(all(be_a(Keyword)))
+        expect(form.keywords.map(&:content)).to(contain_exactly('ruby', 'database',
+                                                                'oolong tea', 'com tam suon bi cha',
+                                                                'marriage story', 'iphone store',
+                                                                'ruby, ruby on rails'))
+      end
+
       it 'enqueues a ScrapeKeywordJob for each keyword' do
         ActiveJob::Base.queue_adapter = :test
         form = described_class.new
