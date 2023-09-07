@@ -2,6 +2,8 @@ en:
   shared:
     link:
       back_to_home: "Back to home page"
+    button:
+      search: 'Search'
   keywords:
     upload: "Upload"
     no_keyword: "You don't have any keywords. Please upload some."
@@ -19,6 +21,16 @@ en:
     top_ads_urls: Top ads URLs
     non_ads_urls: Non ads URLs
     page_view: Page view
+    search_input_placeholder: "Type your search term here"
+    query_type_select_placeholder: "Select query type"
+    query_types:
+      exact: 'Exact'
+      partial: 'Partial'
+      pattern: 'Pattern'
+    search_term: 'Search term: %{term}'
+    query_type: 'Query type: %{type}'
+    total_matched_urls: 'Total matched URLs: %{total_urls}'
+    keyword_content: 'Keyword content: %{content}'
   pagy:
     errors:
       overflow: "Invalid page number, max pages is %{max_page}"

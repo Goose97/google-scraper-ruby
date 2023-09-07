@@ -1,0 +1,26 @@
+<%= form_tag(
+  search_keywords_path,
+  method: 'get',
+  class: 'scrape-result-search-form',
+  data: {"testid" => "scrape-result-search-form"}
+) do %>
+  <%= select_tag(
+    :query_type,
+    options_for_select([
+      [I18n.t('keywords.query_type_select_placeholder'), nil],
+      [I18n.t('keywords.query_types.exact'), :exact],
+      [I18n.t('keywords.query_types.partial'), :partial],
+      [I18n.t('keywords.query_types.pattern'), :pattern]
+    ]),
+    required: true,
+    class: 'p-2'
+  ) %>
+  <%= text_field_tag(
+    :search,
+    '',
+    required: true,
+    class: 'scrape-result-search-form__input',
+    placeholder: I18n.t('keywords.search_input_placeholder')
+  ) %>
+  <%= submit_tag(I18n.t('shared.button.search'), name: '') %>
+<% end %>

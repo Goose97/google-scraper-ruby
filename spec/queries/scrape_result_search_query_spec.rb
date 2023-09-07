@@ -44,11 +44,16 @@ RSpec.describe(ScrapeResultSearchQuery) do
 
         result = described_class.new(query_type: :exact, pattern: url).call
 
-        expect(result).to(contain_exactly({ keyword_id: keyword.id, urls: [url, url] }))
+        expect(result).to(contain_exactly({
+                                            keyword_id: keyword.id,
+                                            keyword_content: keyword.content,
+                                            urls: [url, url]
+                                          }))
       end
     end
 
     context 'given :partial query type' do
+      # rubocop:disable RSpec/ExampleLength
       it 'returns all URLs satisfy the query pattern grouped by their keyword_id' do
         url_a = 'https://google.com'
         url_b = 'https://www.google.com'
@@ -59,11 +64,17 @@ RSpec.describe(ScrapeResultSearchQuery) do
 
         result = described_class.new(query_type: :partial, pattern: 'google').call
 
-        expect(result).to(contain_exactly({ keyword_id: keyword.id, urls: [url_a, url_b] }))
+        expect(result).to(contain_exactly({
+                                            keyword_id: keyword.id,
+                                            keyword_content: keyword.content,
+                                            urls: [url_a, url_b]
+                                          }))
       end
+      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'given :pattern query type' do
+      # rubocop:disable RSpec/ExampleLength
       it 'returns all URLs satisfy the query pattern grouped by their keyword_id' do
         url_a = 'https://google.com'
         url_b = 'https://www.google.com'
@@ -74,8 +85,13 @@ RSpec.describe(ScrapeResultSearchQuery) do
 
         result = described_class.new(query_type: :pattern, pattern: 'go{2}\w+\.com$').call
 
-        expect(result).to(contain_exactly({ keyword_id: keyword.id, urls: [url_a, url_b] }))
+        expect(result).to(contain_exactly({
+                                            keyword_id: keyword.id,
+                                            keyword_content: keyword.content,
+                                            urls: [url_a, url_b]
+                                          }))
       end
+      # rubocop:enable RSpec/ExampleLength
     end
   end
 end

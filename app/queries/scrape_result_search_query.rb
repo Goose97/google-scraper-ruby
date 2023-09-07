@@ -19,16 +19,27 @@ class ScrapeResultSearchQuery
   end
 
   def call
-    sub_query = KeywordSearchEntry.select(:keyword_id, 'unnest(urls) url').to_sql
-
-    KeywordSearchEntry.select(:keyword_id, 'array_agg(url) urls')
-                      .from("(#{sub_query}) as unnest")
-                      .where([URL_PREDICATE[query_type], pattern])
-                      .group(:keyword_id)
-                      .map { |item| item.slice(:keyword_id, :urls) }
+    search_entries_filtered_by_url
+      .group(:keyword_id)
+      .includes(:keyword)
+      .map do |item|
+      {
+        keyword_id: item.keyword_id,
+        keyword_content: item.keyword.content,
+        urls: item.urls
+      }
+    end
   end
 
   private
 
   attr_reader :query_type, :pattern
+
+  def search_entries_filtered_by_url
+    sub_query = KeywordSearchEntry.select(:keyword_id, 'unnest(urls) url').to_sql
+
+    KeywordSearchEntry.select(:keyword_id, 'array_agg(url) urls')
+                      .from("(#{sub_query}) as unnest")
+                      .where([URL_PREDICATE[query_type], pattern])
+  end
 end

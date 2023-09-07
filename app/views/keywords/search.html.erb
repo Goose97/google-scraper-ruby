@@ -1,0 +1,24 @@
+<div>
+  <div class="mb-2">
+    <p data-testid="search_result_search_term"><%= I18n.t('keywords.search_term', term: search_params[:search]) %></p>
+    <p data-testid="search_result_query_type"><%= I18n.t('keywords.query_type', type: search_params[:query_type]) %></p>
+  </div>
+
+  <p data-testid="search_result_total_matched_urls">
+    <%= I18n.t('keywords.total_matched_urls', total_urls: search_result_presenter.total_urls) %>
+  </p>
+
+  <% search_result_presenter.search_result.each do |item| %>
+    <div data-keyword-id="<%= item[:keyword_id] %>">
+      <span data-testid="search_result_keyword_content">
+        <%= I18n.t('keywords.keyword_content', content: item[:keyword_content]) %>
+        (<a href="<%= keyword_path(item[:keyword_id]) %>"><%= I18n.t('keywords.view_detail_link').downcase %></a>)
+      </span>
+      <ul data-testid="search_result_url_list">
+        <% item[:urls].each do |item| %>
+          <li><%= item %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+</div>

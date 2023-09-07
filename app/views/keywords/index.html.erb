@@ -1,5 +1,6 @@
 <div>
   <%= render('upload_form') %>
+  <%= render('scrape_result_search_form') %>
   <% if keyword_collection_presenter.empty? %>
     <div class="d-flex justify-content-center" data-testid="no-keyword-notice">
       <%= I18n.t('keywords.no_keyword') %>
