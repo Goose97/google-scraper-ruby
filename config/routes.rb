@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   root 'keywords#index'
 
-  devise_for :users
+  devise_for :users, only: [:registrations, :sessions]
 
   resources :keywords, only: %i[index create show] do
     get 'search', on: :collection
