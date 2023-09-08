@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :keywords, only: %i[index show] do
+      resources :keywords, only: %i[index create show] do
         get 'search', on: :collection
       end
     end

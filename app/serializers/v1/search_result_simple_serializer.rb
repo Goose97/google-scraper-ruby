@@ -7,11 +7,11 @@ module V1
     end
 
     attributes :keyword_id do |record|
-      record['keyword_id']
+      record[:keyword_id]
     end
 
     attributes :urls do |record|
-      record['urls']
+      record[:urls]
     end
 
     belongs_to :keyword, lazy_load_data: true, links: {

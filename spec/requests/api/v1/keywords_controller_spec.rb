@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require 'support/file_upload_helpers'
 
 RSpec.describe(Api::V1::KeywordsController) do
   describe 'GET #index' do
@@ -104,6 +105,36 @@ RSpec.describe(Api::V1::KeywordsController) do
 
           expect(response).to(have_http_status(:unprocessable_entity))
         end
+      end
+    end
+  end
+
+  describe 'POST #create' do
+    context 'given a VALID file' do
+      it 'returns a 201 status code' do
+        file = FileUploadHelpers::Form.upload_file(fixture: 'valid_7_keywords.csv')
+
+        post(api_v1_keywords_path, params: { file: file })
+
+        expect(response).to(have_http_status(:created))
+      end
+
+      it 'returns the created keywords' do
+        file = FileUploadHelpers::Form.upload_file(fixture: 'valid_7_keywords.csv')
+
+        post(api_v1_keywords_path, params: { file: file })
+
+        expect(response).to(match_json_schema('v1/keywords/list'))
+      end
+    end
+
+    context 'given an INVALID file' do
+      it 'returns a 422 status code' do
+        file = FileUploadHelpers::Form.upload_file(fixture: 'too_long_keywords.csv')
+
+        post(api_v1_keywords_path, params: { file: file })
+
+        expect(response).to(have_http_status(:unprocessable_entity))
       end
     end
   end

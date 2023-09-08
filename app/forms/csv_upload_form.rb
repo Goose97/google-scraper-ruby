@@ -7,6 +7,8 @@ class CsvUploadForm
 
   validates :file, presence: true, csv_keyword_file: true
 
+  attr_reader :keywords
+
   def save(file)
     @file = file
     return false unless valid?
@@ -14,8 +16,8 @@ class CsvUploadForm
     @keywords = parsed_keywords
     return false unless keywords_valid?
 
-    ActiveRecord::Base.transaction do
-      keywords.each do |keyword|
+    @keywords = ActiveRecord::Base.transaction do
+      keywords.map do |keyword|
         Keyword.create(content: keyword)
       end
     end
@@ -25,7 +27,7 @@ class CsvUploadForm
 
   private
 
-  attr_reader :file, :keywords
+  attr_reader :file
 
   def parsed_keywords
     CSV.read(file).filter_map do |csv_record|
