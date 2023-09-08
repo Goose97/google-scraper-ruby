@@ -2,7 +2,7 @@
   <div>
     <% if flash[:alert] %>
       <div class="alert alert-danger" data-testid="alert-error">
-        <% flash[:alert].each do |error| %>
+        <% flash_alert.each do |error| %>
           <p class="mb-0"><%= error %></p>
         <% end %>
       </div>

@@ -4,6 +4,11 @@ en:
       back_to_home: "Back to home page"
     button:
       search: 'Search'
+  auth:
+    email: 'Email'
+    password: 'Password'
+    password_confirmation: 'Password confirmation'
+    sign_up: 'Sign up'
   keywords:
     upload: "Upload"
     no_keyword: "You don't have any keywords. Please upload some."
