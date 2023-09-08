@@ -2,6 +2,17 @@
 
 module Google
   class ScrapeService
+    def self.broadcast_status_update(keyword)
+      presenter = KeywordPresenter.new(keyword: keyword)
+
+      Turbo::StreamsChannel.broadcast_replace_to(
+        'keywords',
+        partial: 'keywords/keywords_table_row',
+        locals: { presenter: presenter },
+        target: keyword
+      )
+    end
+
     def initialize(keyword_id:, search_service: Google::SearchService.new, parse_service: Google::ParseService.new)
       @keyword_id = keyword_id
       @search_service = search_service
@@ -12,6 +23,7 @@ module Google
       begin
         @keyword = Keyword.find(keyword_id)
         keyword.update(status: :processing)
+        self.class.broadcast_status_update(keyword)
       rescue ActiveRecord::RecordNotFound
         raise_keyword_not_found
       end
@@ -69,6 +81,8 @@ module Google
         status: :succeeded,
         keyword_search_entries: parse_result.search_entries
       )
+
+      self.class.broadcast_status_update(keyword)
     end
   end
 end

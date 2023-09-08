@@ -1,3 +1,13 @@
 en:
   keywords:
     upload: "Upload"
+    no_keyword: "You don't have any keywords. Please upload some."
+    view_detail_link: "See details"
+    status:
+      pending: "Pending"
+      processing: "Processing"
+      succeeded: "Succeeded"
+      failed: "Failed"
+  pagy:
+    errors:
+      overflow: "Invalid page number, max pages is %{max_page}"

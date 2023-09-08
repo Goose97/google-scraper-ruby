@@ -1,0 +1,23 @@
+<%= turbo_stream_from("keywords") %>
+
+<div class="keywords-table border">
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Keyword</th>
+        <th scope="col">Status</th>
+        <th scope="col">Uploaded at</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+
+    <tbody class="keywords-table__body">
+      <%= render(
+        partial: "keywords_table_row",
+        collection: keyword_collection_presenter.keywords,
+        as: :presenter
+      ) %>
+    </tbody>
+  </table>
+</div>

@@ -2,7 +2,9 @@
   "name": "google_scraper_ruby",
   "private": "true",
   "dependencies": {
+    "@hotwired/turbo-rails": "7.3.0",
     "@popperjs/core": "2.11.8",
+    "@rails/actioncable": "7.0.7",
     "autoprefixer": "10.4.14",
     "bootstrap": "5.3.0",
     "esbuild": "0.18.16",
