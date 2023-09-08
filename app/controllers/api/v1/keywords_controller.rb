@@ -32,11 +32,30 @@ module Api
         render(json: ::V1::SearchResultSimpleSerializer.new(result, is_collection: true))
       end
 
+      def create
+        form = CsvUploadForm.new
+
+        if form.save(create_params[:file])
+          render(
+            json: ::V1::KeywordSimpleSerializer.new(form.keywords, is_collection: true),
+            status: :created
+          )
+        else
+          render_error(status: :unprocessable_entity, code: :invalid_csv_file)
+        end
+      end
+
+      private
+
       def search_params
         {
           search: params.require(:search),
           query_type: params.require(:query_type).to_sym
         }
+      end
+
+      def create_params
+        { file: params.require(:file) }
       end
     end
   end
