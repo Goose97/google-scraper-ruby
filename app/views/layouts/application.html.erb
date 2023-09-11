@@ -11,6 +11,10 @@
   </head>
 
   <body class="<%= "#{controller_name.dasherize} #{action_name.dasherize}" %> px-4 py-2">
+    <% if current_user %>
+      <%= render "shared/app_header" %>
+    <% end %>
+
     <%= render "shared/alert" %>
     <%= yield %>
   </body>
