@@ -1,14 +1,29 @@
-.keywords-table {
-  max-height: 75vh;
-  overflow: auto;
+/* stylelint-disable selector-no-qualifying-type */
+body.keywords {
+  &.index {
+    .keywords-table {
+      max-height: 75vh;
+      overflow: auto;
 
-  &__body {
-    font-variant-numeric: tabular-nums;
+      &__body {
+        font-variant-numeric: tabular-nums;
+      }
+
+      &__pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 1rem;
+      }
+    }
   }
 
-  &__pagination {
-    display: flex;
-    justify-content: center;
-    margin-top: 1rem;
+  &.show {
+    .keyword-details {
+      &__page-view {
+        width: 100%;
+        height: 70vh;
+      }
+    }
   }
 }
+/* stylelint-enable selector-no-qualifying-type */

@@ -1,4 +1,7 @@
 en:
+  shared:
+    link:
+      back_to_home: "Back to home page"
   keywords:
     upload: "Upload"
     no_keyword: "You don't have any keywords. Please upload some."
@@ -8,6 +11,14 @@ en:
       processing: "Processing"
       succeeded: "Succeeded"
       failed: "Failed"
+    keyword: Keyword
+    links_count: Total links
+    top_ads_count: Top ads count
+    total_ads_count: Total ads count
+    non_ads_count: Non ads count
+    top_ads_urls: Top ads URLs
+    non_ads_urls: Non ads URLs
+    page_view: Page view
   pagy:
     errors:
       overflow: "Invalid page number, max pages is %{max_page}"

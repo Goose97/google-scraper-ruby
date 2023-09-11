@@ -6,7 +6,16 @@ module Api
       def index
         _, keywords = pagy(KeywordsQuery.new.call)
 
-        render(json: ::V1::KeywordSerializer.new(keywords))
+        render(json: ::V1::KeywordSimpleSerializer.new(keywords, is_collection: true))
+      end
+
+      def show
+        keyword = Keyword.find(params[:id])
+        search_entries_query = KeywordSearchEntriesQuery.new(keyword_id: keyword.id)
+
+        render(json: ::V1::KeywordSerializer.new(keyword, params: {
+                                                   search_entries_query: search_entries_query
+                                                 }))
       end
     end
   end
