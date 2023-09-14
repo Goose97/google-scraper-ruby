@@ -10,6 +10,7 @@ en:
     password_confirmation: 'Password confirmation'
     sign_up: 'Sign up'
     sign_in: 'Sign in'
+    sign_out: 'Sign out'
   keywords:
     upload: "Upload"
     no_keyword: "You don't have any keywords. Please upload some."

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang='<%= I18n.locale %>'>
+<html lang='<%= I18n.locale %>' class="layout-default">
   <head>
     <title>GoogleScraperRuby</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -11,6 +11,10 @@
   </head>
 
   <body class="<%= "#{controller_name.dasherize} #{action_name.dasherize}" %> px-4 py-2">
+    <% if current_user %>
+      <%= render "shared/app_header" %>
+    <% end %>
+
     <%= render "shared/alert" %>
     <%= yield %>
   </body>
