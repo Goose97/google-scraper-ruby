@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 describe 'View sign in page', type: :system do
-  context 'given an unathenticated user' do
+  context 'given an unauthenticated user' do
     it 'displays the email and password fields' do
       visit(new_user_session_path)
 
