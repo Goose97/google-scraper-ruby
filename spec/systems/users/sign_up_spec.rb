@@ -12,6 +12,7 @@ describe 'Sign up', type: :system do
       click_button(I18n.t('auth.sign_up'))
 
       expect(page).to(have_current_path(root_path))
+      page.assert_selector('[data-testid="alert-notice"]', text: I18n.t('devise.registrations.signed_up'))
     end
   end
 end
