@@ -22,7 +22,7 @@ class KeywordsController < ApplicationController
   end
 
   def create
-    form = CsvUploadForm.new
+    form = CsvUploadForm.new(user: current_user)
 
     if form.save(create_params[:file])
       flash[:notice] = I18n.t('activemodel.csv.upload_success')

@@ -9,6 +9,10 @@ class CsvUploadForm
 
   attr_reader :keywords
 
+  def initialize(user:)
+    @user = user
+  end
+
   def save(file)
     @file = file
     return false unless valid?
@@ -18,7 +22,7 @@ class CsvUploadForm
 
     @keywords = ActiveRecord::Base.transaction do
       keywords.map do |keyword|
-        Keyword.create(content: keyword)
+        user.keywords.create(content: keyword)
       end
     end
 
@@ -27,7 +31,7 @@ class CsvUploadForm
 
   private
 
-  attr_reader :file
+  attr_reader :file, :user
 
   def parsed_keywords
     CSV.read(file).filter_map do |csv_record|
