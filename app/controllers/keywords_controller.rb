@@ -2,7 +2,8 @@
 
 class KeywordsController < ApplicationController
   def index
-    pagy, keywords = pagy(KeywordsQuery.new.call)
+    query = KeywordsQuery.new(scope: current_user.keywords)
+    pagy, keywords = pagy(query.call)
 
     render(locals: {
              pagy: pagy,
