@@ -22,6 +22,7 @@ gem 'redis' # Use Redis adapter to run Action Cable in production
 
 # Authentications & Authorizations
 gem 'pundit' # Minimal authorization through OO design and pure Ruby classes
+gem 'devise' # Flexible authentication solution for Rails based on Warden
 
 # Assets
 gem 'sprockets-rails' # The original asset pipeline for Rails

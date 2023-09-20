@@ -10,6 +10,7 @@ default: &default
   AVAILABLE_LOCALES: "en"
   DEFAULT_LOCALE: "en"
   FALLBACK_LOCALES: "en"
+  DEVISE_SECRET_KEY: "6a8b67c33f0cd9be1a41ab9989bcceeb1cc46916dc494b105092513efb8c7d2e3c5fc04bd88b6fc0163c0dcbc141a5e65effbfe78fc65090a5cf4fcaf06179b9"
 
 development:
   <<: *default
