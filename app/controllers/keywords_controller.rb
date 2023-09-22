@@ -12,7 +12,7 @@ class KeywordsController < ApplicationController
   end
 
   def show
-    keyword = Keyword.find(params[:id])
+    keyword = current_user.keywords.find(params[:id])
 
     search_entries_query = KeywordSearchEntriesQuery.new(keyword_id: keyword.id)
 
