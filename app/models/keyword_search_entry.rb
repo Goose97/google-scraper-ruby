@@ -7,4 +7,6 @@ class KeywordSearchEntry < ApplicationRecord
   belongs_to :keyword
 
   validates :kind, :position, :urls, presence: true
+
+  scope :belongs_to_user, ->(user_id) { joins(:keyword).where(keywords: { user_id: user_id }) }
 end

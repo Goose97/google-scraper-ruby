@@ -10,10 +10,11 @@ class ScrapeResultSearchQuery
     pattern: 'url ~ ?'
   }.freeze
 
-  def initialize(pattern:, query_type:)
+  def initialize(pattern:, query_type:, scope: KeywordSearchEntry)
     params = ScrapeResultSearchParams.new(pattern: pattern, query_type: query_type)
     params.validate!
 
+    @scope = scope
     @pattern = params.pattern
     @query_type = params.query_type
   end
@@ -33,10 +34,10 @@ class ScrapeResultSearchQuery
 
   private
 
-  attr_reader :query_type, :pattern
+  attr_reader :scope, :query_type, :pattern
 
   def search_entries_filtered_by_url
-    sub_query = KeywordSearchEntry.select(:keyword_id, 'unnest(urls) url').to_sql
+    sub_query = scope.select(:keyword_id, 'unnest(urls) url').to_sql
 
     KeywordSearchEntry.select(:keyword_id, 'array_agg(url) urls')
                       .from("(#{sub_query}) as unnest")

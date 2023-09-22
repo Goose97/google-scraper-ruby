@@ -34,11 +34,12 @@ class KeywordsController < ApplicationController
     redirect_to(keywords_path)
   end
 
-  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def search
     result = ScrapeResultSearchQuery.new(
       pattern: search_params[:search],
-      query_type: search_params[:query_type]
+      query_type: search_params[:query_type],
+      scope: KeywordSearchEntry.belongs_to_user(current_user.id)
     ).call
 
     render(locals: {
@@ -49,7 +50,7 @@ class KeywordsController < ApplicationController
     flash[:alert] = error.model.errors.full_messages
     redirect_to(keywords_path)
   end
-  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   private
 
