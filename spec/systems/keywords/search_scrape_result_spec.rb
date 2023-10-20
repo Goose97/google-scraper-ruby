@@ -6,11 +6,13 @@ describe 'Search scrape result', type: :system do
   context 'given VALID params' do
     # rubocop:disable RSpec/ExampleLength
     it 'displays search result' do
-      keyword_a = Fabricate(:parsed_keyword) { keyword_search_entries(count: 0) }
-      keyword_b = Fabricate(:parsed_keyword) { keyword_search_entries(count: 0) }
+      user = Fabricate(:user)
+      keyword_a = Fabricate(:parsed_keyword, user: user) { keyword_search_entries(count: 0) }
+      keyword_b = Fabricate(:parsed_keyword, user: user) { keyword_search_entries(count: 0) }
       Fabricate(:keyword_search_entry, urls: ['https://ruby-lang.org', 'https://ruby-doc.org'], keyword_id: keyword_a.id)
       Fabricate(:keyword_search_entry, urls: ['https://rubyapi.org'], keyword_id: keyword_b.id)
 
+      sign_in(user)
       visit(root_path)
       within('form[data-testid="scrape-result-search-form"]') do
         fill_in('search', with: 'ruby')

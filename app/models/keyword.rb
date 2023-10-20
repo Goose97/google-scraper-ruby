@@ -3,6 +3,7 @@
 class Keyword < ApplicationRecord
   enum status: { pending: 'pending', processing: 'processing', succeeded: 'succeeded', failed: 'failed' }
 
+  belongs_to :user, inverse_of: :keywords
   has_many :keyword_search_entries, dependent: :destroy
 
   validates :content, :status, presence: true

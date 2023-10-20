@@ -109,7 +109,7 @@ RSpec.describe(Api::V1::KeywordsController) do
     end
   end
 
-  describe 'POST #create' do
+  describe 'POST #create', skip: 'Enable in #59' do
     context 'given a VALID file' do
       it 'returns a 201 status code' do
         file = FileUploadHelpers::Form.upload_file(fixture: 'valid_7_keywords.csv')

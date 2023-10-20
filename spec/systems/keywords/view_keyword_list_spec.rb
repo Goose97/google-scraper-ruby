@@ -7,6 +7,8 @@ describe 'View keyword list', type: :system do
 
   context 'given NO keyword' do
     it 'displays a no-keyword notice and DO NOT displays the pagination nav' do
+      user = Fabricate(:user)
+      sign_in(user)
       visit(root_path)
 
       expect(page).to(have_selector('[data-testid="no-keyword-notice"]'))
@@ -15,10 +17,13 @@ describe 'View keyword list', type: :system do
   end
 
   context 'given a list of keywords' do
+    # rubocop:disable RSpec/ExampleLength
     it 'displays a link to keywords#show for succeeded keyword and displays the pagination nav' do
-      pending_keyword = Fabricate(:keyword)
-      succeeded_keyword = Fabricate(:parsed_keyword)
+      user = Fabricate(:user)
+      pending_keyword = Fabricate(:keyword, user: user)
+      succeeded_keyword = Fabricate(:parsed_keyword, user: user)
 
+      sign_in(user)
       visit(root_path)
 
       within('tbody') do |tbody|
@@ -31,10 +36,13 @@ describe 'View keyword list', type: :system do
 
       expect(page).to(have_selector('.keywords-table__pagination'))
     end
+    # rubocop:enable RSpec/ExampleLength
 
     it 'updates the UI after the keyword finish processing', vcr: 'google/google_no_ads' do
-      keyword = Fabricate(:keyword)
+      user = Fabricate(:user)
+      keyword = Fabricate(:keyword, user: user)
 
+      sign_in(user)
       visit(root_path)
       perform_enqueued_jobs do
         ScrapeKeywordJob.perform_later(keyword_id: keyword.id)

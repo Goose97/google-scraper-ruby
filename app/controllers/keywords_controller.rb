@@ -2,7 +2,8 @@
 
 class KeywordsController < ApplicationController
   def index
-    pagy, keywords = pagy(KeywordsQuery.new.call)
+    query = KeywordsQuery.new(scope: current_user.keywords)
+    pagy, keywords = pagy(query.call)
 
     render(locals: {
              pagy: pagy,
@@ -11,7 +12,7 @@ class KeywordsController < ApplicationController
   end
 
   def show
-    keyword = Keyword.find(params[:id])
+    keyword = current_user.keywords.find(params[:id])
 
     search_entries_query = KeywordSearchEntriesQuery.new(keyword_id: keyword.id)
 
@@ -22,7 +23,7 @@ class KeywordsController < ApplicationController
   end
 
   def create
-    form = CsvUploadForm.new
+    form = CsvUploadForm.new(user: current_user)
 
     if form.save(create_params[:file])
       flash[:notice] = I18n.t('activemodel.csv.upload_success')
@@ -33,11 +34,12 @@ class KeywordsController < ApplicationController
     redirect_to(keywords_path)
   end
 
-  # rubocop:disable Metrics/MethodLength
+  # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
   def search
     result = ScrapeResultSearchQuery.new(
       pattern: search_params[:search],
-      query_type: search_params[:query_type]
+      query_type: search_params[:query_type],
+      scope: KeywordSearchEntry.belongs_to_user(current_user.id)
     ).call
 
     render(locals: {
@@ -48,7 +50,7 @@ class KeywordsController < ApplicationController
     flash[:alert] = error.model.errors.full_messages
     redirect_to(keywords_path)
   end
-  # rubocop:enable Metrics/MethodLength
+  # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
   private
 
