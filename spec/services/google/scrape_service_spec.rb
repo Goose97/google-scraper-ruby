@@ -57,7 +57,6 @@ RSpec.describe(Google::ScrapeService, type: :service) do
           end.to(raise_error(GoogleScraperRuby::Errors::ScrapeError))
         end
 
-        # rubocop:disable Rspec/ExampleLength
         it 'logs an error' do
           search_service = Google::SearchService.new
           allow(search_service).to(receive(:search!).and_raise(GoogleScraperRuby::Errors::SearchError.new(url: '')))
@@ -72,7 +71,6 @@ RSpec.describe(Google::ScrapeService, type: :service) do
             expect(Rails.logger).to(have_received(:error).with(/unexpected error while processing request/))
           end
         end
-        # rubocop:enable Rspec/ExampleLength
       end
     end
 
