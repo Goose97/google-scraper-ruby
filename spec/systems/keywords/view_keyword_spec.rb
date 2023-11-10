@@ -5,6 +5,7 @@ require 'rails_helper'
 describe 'View keyword', type: :system do
   # rubocop:disable RSpec/ExampleLength
   it 'displays the scraped content information' do
+    user = Fabricate(:user)
     mocked_html = '<div>Hello world</div>'
     keyword = Fabricate(:parsed_keyword) do
       links_count(12)
@@ -20,6 +21,7 @@ describe 'View keyword', type: :system do
       urls([FFaker::Internet.uri('https')])
     end
 
+    sign_in(user)
     visit(keyword_path(keyword))
 
     page.assert_selector('p[data-testid="keyword_details_content"]', count: 1, text: keyword.content)

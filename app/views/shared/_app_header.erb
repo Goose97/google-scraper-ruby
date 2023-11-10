@@ -1,0 +1,8 @@
+<header class="app-header">
+  <%= button_to(
+    I18n.t('auth.sign_out'),
+    destroy_user_session_path,
+    method: :delete,
+    class: "app-header__sign-out btn btn-secondary"
+  ) %>
+</header>

@@ -53,7 +53,6 @@ RSpec.describe(ScrapeResultSearchQuery) do
     end
 
     context 'given :partial query type' do
-      # rubocop:disable RSpec/ExampleLength
       it 'returns all URLs satisfy the query pattern grouped by their keyword_id' do
         url_a = 'https://google.com'
         url_b = 'https://www.google.com'
@@ -70,11 +69,9 @@ RSpec.describe(ScrapeResultSearchQuery) do
                                             urls: [url_a, url_b]
                                           }))
       end
-      # rubocop:enable RSpec/ExampleLength
     end
 
     context 'given :pattern query type' do
-      # rubocop:disable RSpec/ExampleLength
       it 'returns all URLs satisfy the query pattern grouped by their keyword_id' do
         url_a = 'https://google.com'
         url_b = 'https://www.google.com'
@@ -91,7 +88,6 @@ RSpec.describe(ScrapeResultSearchQuery) do
                                             urls: [url_a, url_b]
                                           }))
       end
-      # rubocop:enable RSpec/ExampleLength
     end
   end
 end
